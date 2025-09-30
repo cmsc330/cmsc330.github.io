@@ -682,17 +682,15 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> is_empty [];; </span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> is_empty [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>];; </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> is_empty [<span class="st">&quot;a&quot;</span>; <span class="st">&quot;b&quot;</span>; <span class="st">&quot;c&quot;</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> is_empty [<span class="st">&quot;a&quot;</span>; <span class="st">&quot;b&quot;</span>; <span class="st">&quot;c&quot;</span>];;</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> is_empty : &#39;a <span class="dt">list</span> -&gt; <span class="dt">bool</span> = &lt;<span class="kw">fun</span>&gt;</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a># - : <span class="dt">bool</span> = <span class="kw">true</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a># - : <span class="dt">bool</span> = <span class="kw">false</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a># </span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">1</span>, characters <span class="dv">25-25</span>:</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>Error: Syntax error</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a># </span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">bool</span> = <span class="kw">false</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 </p></blockquote></blockquote><p><div class="SIntrapara">Let&#8217;s define a function that computes the sum of all elements in an <span style="font-weight: bold">int list</span>.
 </div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">rec</span> sum l = <span class="kw">match</span> l <span class="kw">with</span> </span>
@@ -2673,14 +2671,12 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 </p></blockquote></blockquote></div><div class="SIntrapara">is same as
 </div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
-class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> add x = (<span class="kw">fun</span> y -&gt; (<span class="kw">fun</span> z -&gt; x+y+z))</span>
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> add x = (<span class="kw">fun</span> y -&gt; (<span class="kw">fun</span> z -&gt; x+y+z));;</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a># </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">1</span>, characters <span class="dv">39-39</span>:</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Error: Syntax error</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a># </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> add : <span class="dt">int</span> -&gt; <span class="dt">int</span> -&gt; <span class="dt">int</span> -&gt; <span class="dt">int</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 </p></blockquote></blockquote></div><div class="SIntrapara">Then
 </div><div class="SIntrapara"><ul><li><p><span style="font-weight: bold">add</span> has type <span style="font-weight: bold">int -&gt; (int -&gt; (int -&gt; int))</span></p></li><li><p><span style="font-weight: bold">add 4</span> has type <span style="font-weight: bold">int -&gt; (int -&gt; int)</span></p></li><li><p><span style="font-weight: bold">add 4 5</span> has type <span style="font-weight: bold">int -&gt; int</span></p></li><li><p><span style="font-weight: bold">add 4 5 6</span> is <span style="font-weight: bold">15</span></p></li></ul></div></p><p><div class="SIntrapara">Because currying is so common, OCaml uses the following conventions:
 </div><div class="SIntrapara"><ul><li><p><span style="font-weight: bold">&#8594;</span> associates from the right. Thus <span style="font-weight: bold">int &#8594; int &#8594; int</span> is the same as <span style="font-weight: bold">int &#8594; (int &#8594; int)</span>. </p></li><li><p>function application associates from the left. Thus &lsquo;add 3 4&lsquo; is the same as &lsquo;(add 3) 4&lsquo;.</p></li></ul></div></p><p><div class="SIntrapara">Syntax note: function vs. fun

@@ -1,0 +1,4 @@
+(tests
+    (names even)
+    (libraries stdio qcheck)
+)

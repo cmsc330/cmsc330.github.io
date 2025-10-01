@@ -1,0 +1,56 @@
+# dune test
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /Users/anwar/.cache/dune/db
+# Workspace root:
+# /Users/anwar/git/2025Fall/CMSC330/cmsc330-notes/notes/code/even_number
+# Auto-detected concurrency: 12
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /Users/anwar/.opam/default/bin/ocamlc.opt -config > /var/folders/zg/bptryffs6wj168mb38hd_hh40000gp/T/dune_a11efa_output
+$ (cd _build/default && /Users/anwar/.opam/default/bin/ocamlc.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -bin-annot -bin-annot-occurrences -I .even.eobjs/byte -I /Users/anwar/.opam/default/lib/base -I /Users/anwar/.opam/default/lib/base/base_internalhash_types -I /Users/anwar/.opam/default/lib/base/shadow_stdlib -I /Users/anwar/.opam/default/lib/ocaml/unix -I /Users/anwar/.opam/default/lib/ocaml_intrinsics_kernel -I /Users/anwar/.opam/default/lib/ounit2 -I /Users/anwar/.opam/default/lib/ounit2/advanced -I /Users/anwar/.opam/default/lib/qcheck -I /Users/anwar/.opam/default/lib/qcheck-core -I /Users/anwar/.opam/default/lib/qcheck-core/runner -I /Users/anwar/.opam/default/lib/qcheck-ounit -I /Users/anwar/.opam/default/lib/seq -I /Users/anwar/.opam/default/lib/sexplib0 -I /Users/anwar/.opam/default/lib/stdio -I /Users/anwar/.opam/default/lib/stdlib-shims -no-alias-deps -opaque -o .even.eobjs/byte/dune__exe__Even.cmo -c -impl even.ml)
+$ (cd _build/default && /Users/anwar/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I .even.eobjs/byte -I .even.eobjs/native -I /Users/anwar/.opam/default/lib/base -I /Users/anwar/.opam/default/lib/base/base_internalhash_types -I /Users/anwar/.opam/default/lib/base/shadow_stdlib -I /Users/anwar/.opam/default/lib/ocaml/unix -I /Users/anwar/.opam/default/lib/ocaml_intrinsics_kernel -I /Users/anwar/.opam/default/lib/ounit2 -I /Users/anwar/.opam/default/lib/ounit2/advanced -I /Users/anwar/.opam/default/lib/qcheck -I /Users/anwar/.opam/default/lib/qcheck-core -I /Users/anwar/.opam/default/lib/qcheck-core/runner -I /Users/anwar/.opam/default/lib/qcheck-ounit -I /Users/anwar/.opam/default/lib/seq -I /Users/anwar/.opam/default/lib/sexplib0 -I /Users/anwar/.opam/default/lib/stdio -I /Users/anwar/.opam/default/lib/stdlib-shims -cmi-file .even.eobjs/byte/dune__exe__Even.cmi -no-alias-deps -opaque -o .even.eobjs/native/dune__exe__Even.cmx -c -impl even.ml)
+$ (cd _build/default && /Users/anwar/.opam/default/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -o even.exe /Users/anwar/.opam/default/lib/base/base_internalhash_types/base_internalhash_types.cmxa -I /Users/anwar/.opam/default/lib/base/base_internalhash_types /Users/anwar/.opam/default/lib/sexplib0/sexplib0.cmxa /Users/anwar/.opam/default/lib/base/shadow_stdlib/shadow_stdlib.cmxa /Users/anwar/.opam/default/lib/ocaml_intrinsics_kernel/ocaml_intrinsics_kernel.cmxa -I /Users/anwar/.opam/default/lib/ocaml_intrinsics_kernel /Users/anwar/.opam/default/lib/base/base.cmxa -I /Users/anwar/.opam/default/lib/base /Users/anwar/.opam/default/lib/stdio/stdio.cmxa /Users/anwar/.opam/default/lib/ocaml/unix/unix.cmxa /Users/anwar/.opam/default/lib/qcheck-core/qcheck_core.cmxa /Users/anwar/.opam/default/lib/qcheck-core/runner/qcheck_runner.cmxa /Users/anwar/.opam/default/lib/stdlib-shims/stdlib_shims.cmxa /Users/anwar/.opam/default/lib/ounit2/advanced/oUnitAdvanced.cmxa /Users/anwar/.opam/default/lib/ounit2/oUnit.cmxa /Users/anwar/.opam/default/lib/qcheck-ounit/qcheck_ounit.cmxa /Users/anwar/.opam/default/lib/qcheck/qcheck.cmxa .even.eobjs/native/dune__exe__Even.cmx)
+$ (cd _build/default && ./even.exe)
+>  seed: 257932476
+> generated error fail pass / total     time test name
+>
+> ~~~ Shrink ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> Test test_even successfully shrunk counter example (step 0) to:
+>
+> 108
+>
+> ~~~ Shrink ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> Test test_even successfully shrunk counter example (step 1) to:
+>
+> 106
+>
+> ~~~ Shrink ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> Test test_even successfully shrunk counter example (step 2) to:
+>
+> 104
+>
+> ~~~ Shrink ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>
+> Test test_even successfully shrunk counter example (step 3) to:
+>
+> 102
+> ✗]    4    0    1    3 / 1000     0.0s test_even
+>
+> --- Failure --------------------------------------------------------------------
+>
+> Test test_even failed (3 shrink steps):
+>
+> 102
+> ================================================================================
+> failure (1 tests failed, 0 tests errored, ran 1 tests)

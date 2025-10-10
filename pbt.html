@@ -98,7 +98,7 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> rev : &#39;a <span class="dt">list</span> -&gt; &#39;a <span class="dt">list</span> = &lt;<span class="kw">fun</span>&gt;</span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> prop_reverse : &#39;a <span class="dt">list</span> -&gt; <span class="dt">bool</span> = &lt;<span class="kw">fun</span>&gt;</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a># # # <span class="kw">val</span> test : QCheck.Test.t = QCheck2.Test.Test &lt;abstr&gt;</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a># [<span class="dv">2</span>Krandom seed: <span class="dv">11025165</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a># [<span class="dv">2</span>Krandom seed: <span class="dv">343144546</span></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>generated error fail pass / total     time test name</span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>K[ ]    <span class="dv">0</span>    <span class="dv">0</span>    <span class="dv">0</span>    <span class="dv">0</span> /   <span class="dv">10</span>     <span class="fl">0.0</span>s reverse_test[<span class="dv">2</span>K[[<span class="dv">32</span>;<span class="dv">1</span>m✓[<span class="dv">0</span>m]   <span class="dv">10</span>    <span class="dv">0</span>    <span class="dv">0</span>   <span class="dv">10</span> /   <span class="dv">10</span>     <span class="fl">0.0</span>s reverse_test</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>================================================================================</span>
@@ -159,13 +159,13 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> prop_delete : &#39;a -&gt; &#39;a <span class="dt">list</span> -&gt; <span class="dt">bool</span> = &lt;<span class="kw">fun</span>&gt;</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> test : QCheck.Test.t = QCheck2.Test.Test &lt;abstr&gt;</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a># </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>Krandom seed: <span class="dv">475296590</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>Krandom seed: <span class="dv">374323612</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>--- [<span class="dv">31</span>;<span class="dv">1</span>mFailure[<span class="dv">0</span>m --------------------------------------------------------------------</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Test delete_test failed (<span class="dv">15</span> shrink steps):</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Test delete_test failed (<span class="dv">3</span> shrink steps):</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>(<span class="dv">0</span>, [<span class="dv">0</span>; <span class="dv">0</span>])</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>(<span class="dv">7</span>, [<span class="dv">7</span>; <span class="dv">7</span>])</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>================================================================================</span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>[<span class="dv">31</span>;<span class="dv">1</span>mfailure[<span class="dv">0</span>m (<span class="dv">1</span> tests failed, <span class="dv">0</span> tests errored, ran <span class="dv">1</span> tests)</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>

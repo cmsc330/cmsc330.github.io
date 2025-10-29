@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=0.8"/><title>7&nbsp;Parsing</title><link rel="stylesheet" type="text/css" href="scribble.css" title="default"/><link rel="stylesheet" type="text/css" href="racket.css" title="default"/><link rel="stylesheet" type="text/css" href="manual-style.css" title="default"/><link rel="stylesheet" type="text/css" href="manual-racket.css" title="default"/><link rel="stylesheet" type="text/css" href="extra.css" title="default"/><link rel="stylesheet" type="text/css" href="fancyverb.css" title="default"/><script type="text/javascript" src="scribble-common.js"></script><script type="text/javascript" src="manual-racket.js"></script><!--[if IE 6]><style type="text/css">.SIEHidden { overflow: hidden; }</style><![endif]--></head><body id="scribble-racket-lang-org"><div class="tocset"><div class="tocview"><div class="tocviewlist tocviewlisttopspace"><div class="tocviewtitle"><table cellspacing="0" cellpadding="0"><tr><td style="width: 1em;"><a href="javascript:void(0);" title="Expand/Collapse" class="tocviewtoggle" onclick="TocviewToggle(this,&quot;tocview_0&quot;);">&#9660;</a></td><td></td><td><a href="index.html" class="tocviewlink" data-pltdoc="x">CMSC 330 Lecture Notes</a></td></tr></table></div><div class="tocviewsublisttop" style="display: block;" id="tocview_0"><table cellspacing="0" cellpadding="0"><tr><td align="right">1&nbsp;</td><td><a href="ocaml.html" class="tocviewlink" data-pltdoc="x">Functional Programming with OCaml</a></td></tr><tr><td align="right">2&nbsp;</td><td><a href="Imperative_OCaml.html" class="tocviewlink" data-pltdoc="x">Imperative Programming with OCaml</a></td></tr><tr><td align="right">3&nbsp;</td><td><a href="pbt.html" class="tocviewlink" data-pltdoc="x">Property-<wbr></wbr>Based Randomized Testing</a></td></tr><tr><td align="right">4&nbsp;</td><td><a href="regexp.html" class="tocviewlink" data-pltdoc="x">OCaml Regular Expressions</a></td></tr><tr><td align="right">5&nbsp;</td><td><a href="Finite_Automata.html" class="tocviewlink" data-pltdoc="x">Finite Automata</a></td></tr><tr><td align="right">6&nbsp;</td><td><a href="Context_Free_Grammars.html" class="tocviewlink" data-pltdoc="x">Context Free Grammars</a></td></tr><tr><td align="right">7&nbsp;</td><td><a href="" class="tocviewselflink" data-pltdoc="x">Parsing</a></td></tr></table></div></div><div class="tocviewlist"><table cellspacing="0" cellpadding="0"><tr><td style="width: 1em;"><a href="javascript:void(0);" title="Expand/Collapse" class="tocviewtoggle" onclick="TocviewToggle(this,&quot;tocview_1&quot;);">&#9658;</a></td><td>7&nbsp;</td><td><a href="" class="tocviewselflink" data-pltdoc="x">Parsing</a></td></tr></table><div class="tocviewsublistbottom" style="display: none;" id="tocview_1"><table cellspacing="0" cellpadding="0"><tr><td align="right">7.1&nbsp;</td><td><a href="#%28part._.Lexing%29" class="tocviewlink" data-pltdoc="x">Lexing</a></td></tr><tr><td align="right">7.2&nbsp;</td><td><a href="#%28part._laxing-parsing%29" class="tocviewlink" data-pltdoc="x">Parsing</a></td></tr><tr><td align="right">7.3&nbsp;</td><td><a href="#%28part._.Recursive_.Descent_.Parser_.Example%29" class="tocviewlink" data-pltdoc="x">Recursive Descent Parser Example</a></td></tr></table></div></div></div><div class="tocsub"><div class="tocsubtitle">On this page:</div><table class="tocsublist" cellspacing="0"><tr><td><span class="tocsublinknumber">7.1<tt>&nbsp;</tt></span><a href="#%28part._.Lexing%29" class="tocsubseclink" data-pltdoc="x">Lexing</a></td></tr><tr><td><span class="tocsublinknumber">7.2<tt>&nbsp;</tt></span><a href="#%28part._laxing-parsing%29" class="tocsubseclink" data-pltdoc="x">Parsing</a></td></tr><tr><td><span class="tocsublinknumber">7.2.1<tt>&nbsp;</tt></span><a href="#%28part._.Recursive_.Descent_.Parser%29" class="tocsubseclink" data-pltdoc="x">Recursive Descent Parser</a></td></tr><tr><td><span class="tocsublinknumber">7.3<tt>&nbsp;</tt></span><a href="#%28part._.Recursive_.Descent_.Parser_.Example%29" class="tocsubseclink" data-pltdoc="x">Recursive Descent Parser Example</a></td></tr></table></div></div><div class="maincolumn"><div class="main"><div class="versionbox"><span class="version">8.17</span></div><div class="navsettop"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="Context_Free_Grammars.html" title="backward to &quot;6 Context Free Grammars&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<span class="nonavigation">next &rarr;</span></span>&nbsp;</div><h3 class="heading">7<tt>&nbsp;</tt><a name="(part._.Parsing)"></a>Parsing<span class="button-group"><a href="#(part._.Parsing)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><table cellspacing="0" cellpadding="0"><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Lexing%29" class="toclink" data-pltdoc="x">7.1<span class="hspace">&nbsp;</span>Lexing</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._laxing-parsing%29" class="toclink" data-pltdoc="x">7.2<span class="hspace">&nbsp;</span>Parsing</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Recursive_.Descent_.Parser_.Example%29" class="toclink" data-pltdoc="x">7.3<span class="hspace">&nbsp;</span>Recursive Descent Parser Example</a></p></td></tr></table><h4 class="heading">7.1<tt>&nbsp;</tt><a name="(part._.Lexing)"></a>Lexing<span class="button-group"><a href="#(part._.Lexing)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>Lexing is the process of converting a program&#8217;s textual input into a sequence of tokens.
+The component that performs this task is called a lexer, tokenizer, or scanner, and the
+process itself is often referred to as scanning. The tokens produced by the lexer
+correspond to the terminals of the parser&#8217;s context-free grammar (CFG), such as keywords,
+identifiers, numeric literals, and punctuation symbols. During this stage, the lexer
+typically ignores or discards whitespace and comments, as they are not needed for
+syntactic analysis.</p><p>We will create a lexer and parser for a simple expression language, which only supports integers addition.
+First, we create the <span style="font-weight: bold">token</span> type that represents all the tokens in the alphabet.
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> token =</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    Tok_Num <span class="kw">of</span> <span class="dt">char</span> <span class="co">(* represents a single digit number *)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  | Tok_Add <span class="co">(* represents + *)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  | Tok_END <span class="co">(* end of token list)</span></span></code></pre></div>
+
+The tokenizer will take a string the splits it into a list of tokens. For example:
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tokenize <span class="st">&quot;1 + 2&quot;</span> = [Tok_Num <span class="ch">&#39;1&#39;</span>; Tok_Add; Tok_Num <span class="ch">&#39;2&#39;</span>; Tok_END]</span></code></pre></div>
+</p><p>Here is the full tokenizer code:
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">#require &quot;str&quot;;;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> re_num = Str.regexp <span class="st">&quot;[1-9][0-9]*&quot;</span>;;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> re_add = Str.regexp <span class="st">&quot;+&quot;</span>;;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> re_sub = Str.regexp <span class="st">&quot;-&quot;</span>;;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> re_lparen = Str.regexp <span class="st">&quot;(&quot;</span>;;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> re_rparen = Str.regexp <span class="st">&quot;)&quot;</span>;;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> re_mult = Str.regexp <span class="st">&quot;*&quot;</span>;;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> re_space = Str.regexp <span class="st">&quot; &quot;</span>;;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">exception</span> ParseError <span class="kw">of</span> <span class="dt">string</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> token =</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  | Tok_Num <span class="kw">of</span> <span class="dt">string</span> <span class="co">(* represent a number *)</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  | Tok_Add</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  | Tok_Mult</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  | Tok_Sub</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  | Tok_lparen</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  | Tok_rparen</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  | Tok_END;;</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> tokenize str =</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> <span class="kw">rec</span> tok pos s =</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> pos &gt;= <span class="dt">String</span>.length s <span class="kw">then</span> [ Tok_END ]</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_num s pos <span class="kw">then</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> token = Str.matched_string s <span class="kw">in</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> len = <span class="dt">String</span>.length token <span class="kw">in</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      Tok_Num token :: tok (pos + len) s</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_space s pos <span class="kw">then</span> tok (pos + <span class="dv">1</span>) s</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_add s pos <span class="kw">then</span> Tok_Add :: tok (pos + <span class="dv">1</span>) s</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_mult s pos <span class="kw">then</span> Tok_Mult :: tok (pos + <span class="dv">1</span>) s</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_sub s pos <span class="kw">then</span> Tok_Sub :: tok (pos + <span class="dv">1</span>) s</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_lparen s pos <span class="kw">then</span> Tok_lparen :: tok (pos + <span class="dv">1</span>) s</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_rparen s pos <span class="kw">then</span> Tok_rparen :: tok (pos + <span class="dv">1</span>) s</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> <span class="dt">raise</span> (ParseError <span class="st">&quot;tokenize&quot;</span>)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="kw">in</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  tok <span class="dv">0</span> str;;</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  tokenize <span class="st">&quot;3 * 4 + 2&quot;</span>;;</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  - : token <span class="dt">list</span> = [Tok_Num <span class="st">&quot;3&quot;</span>; Tok_Mult; Tok_Num <span class="st">&quot;4&quot;</span>; Tok_Add; Tok_Num <span class="st">&quot;2&quot;</span>; Tok_END]</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  tokenize <span class="st">&quot;3 *+++&quot;</span>;;</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a> - : token <span class="dt">list</span> = [Tok_Num <span class="st">&quot;3&quot;</span>; Tok_Mult; Tok_Add; Tok_Add; Tok_Add; Tok_END]</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+</p><p>"2+3*4"
+-&gt; Lexer/Tokenizer/Scanner
+split the input string into tokens
+2, +, 3, *, 4</p><p>int, main, (, void, ), { ..... }
+for3, for,_abc,$abc,</p><h4 class="heading">7.2<tt>&nbsp;</tt><a name="(part._laxing-parsing)"></a>Parsing<span class="button-group"><a href="#(part._laxing-parsing)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>A parser is a program that takes a list of tokens as input, verifies that they conform to a
+specified grammar or format, and transforms them into an abstract syntax tree (AST).</p><p>AST is a shape of a program. Once we have the AST, we can optimize, evaluate, or generate machine code for the program.
+For example,
+given a context free grammar
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   S -&gt; A + S | A</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   A -&gt; n | (S)</span></code></pre></div>
+
+we parse <div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>[Tok_Num <span class="st">&quot;3&quot;</span>; Tok_Mult; Tok_Num <span class="st">&quot;4&quot;</span>; Tok_Add; Tok_Num <span class="st">&quot;2&quot;</span>; Tok_END]</span></code></pre></div>
+ into</p><p><img src="auto-graphg19317.png" alt="" width="227" height="251"/></p><h5 class="heading">7.2.1<tt>&nbsp;</tt><a name="(part._.Recursive_.Descent_.Parser)"></a>Recursive Descent Parser<span class="button-group"><a href="#(part._.Recursive_.Descent_.Parser)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>In practice, parsers are often created using tools known as parser generators. Examples include
+Yacc, Bison, ANTLR, and LALRPOP. In this lecture, we will focus on the Recursive Descent Parser,
+a simple type of parser that can be implemented manually.</p><p>A Recursive Descent Parser attempts to produce a leftmost derivation of the input. Starting
+from the start symbol (S) and the sequence of input tokens (t), it repeatedly rewrites S
+and consumes tokens from t using the grammar&#8217;s production rules, continuing until all
+tokens are matched or a parsing failure occurs.</p><p><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> expr = </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>      Num <span class="kw">of</span> <span class="dt">int</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    | Add <span class="kw">of</span> expr * expr </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    | Mult <span class="kw">of</span> expr * expr </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> lookahead tokens =</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">match</span> tokens <span class="kw">with</span> [] -&gt; <span class="dt">raise</span> (ParseError <span class="st">&quot;no tokens&quot;</span>) | h :: t -&gt; h</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> match_token (toks : token <span class="dt">list</span>) (tok : token) =</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">match</span> toks <span class="kw">with</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  | [] -&gt; <span class="dt">raise</span> (ParseError <span class="st">&quot;error:&quot;</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  | h :: t <span class="kw">when</span> h = tok -&gt; t</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  | h :: _ -&gt; <span class="dt">raise</span> (ParseError <span class="st">&quot;error&quot;</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">(*</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">   Arithmetic expression grammar:</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">   S -&gt; A + S | A</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">   A -&gt; n | (S)</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">  [Basic grammar with tokens]</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">    S -&gt; A Tok_Add S | A</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">    A -&gt; Tok_Num | Tok_LParen S Tok_RParen</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">*)</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">rec</span> parse_S tokens =</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> e1, t1 = parse_A tokens <span class="kw">in</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="kw">match</span> lookahead t1 <span class="kw">with</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  | Tok_Add -&gt;</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> t2 = match_token t1 Tok_Add <span class="kw">in</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> e2, t3 = parse_S t2 <span class="kw">in</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>      (Add (e1, e2), t3)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  | _ -&gt; (e1, t1)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="kw">and</span> parse_A tokens =</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="kw">match</span> lookahead tokens <span class="kw">with</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="co">(* B -&gt; Tok_Num *)</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  | Tok_Num c -&gt;</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> t = match_token tokens (Tok_Num c) <span class="kw">in</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>      (Num (<span class="dt">int_of_string</span> c), t)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="co">(* B -&gt; Tok_LParen E Tok_RParen *)</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  | Tok_lparen -&gt;</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> t = match_token tokens Tok_lparen <span class="kw">in</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> e2, t2 = parse_S t <span class="kw">in</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> _ = <span class="dt">Printf</span>.printf <span class="st">&quot;%s</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span> <span class="st">&quot;error&quot;</span> <span class="kw">in</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> lookahead t2 = Tok_rparen <span class="kw">then</span> (e2, match_token t2 Tok_rparen)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="dt">raise</span> (ParseError <span class="st">&quot;parse_B 1&quot;</span>)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  | _ -&gt; <span class="dt">raise</span> (ParseError <span class="st">&quot;parse_B 2&quot;</span>)</span></code></pre></div>
+</p><h4 class="heading">7.3<tt>&nbsp;</tt><a name="(part._.Recursive_.Descent_.Parser_.Example)"></a>Recursive Descent Parser Example<span class="button-group"><a href="#(part._.Recursive_.Descent_.Parser_.Example)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="ot">#require &quot;str&quot;;; </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="co">(* expr : user-defined variant datatype for arithmetic </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">     expressions </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"> *)</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">type</span> expr = </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      Num <span class="kw">of</span> <span class="dt">int</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    | Add <span class="kw">of</span> expr * expr </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    | Sub <span class="kw">of</span> expr * expr </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    | Mult <span class="kw">of</span> expr * expr </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a> <span class="co">(* </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    function a_to_str : arith -&gt; string </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">          converts arithmetic expression into a string </span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"> *)</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> <span class="kw">rec</span> expr_to_str a = </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">match</span> a <span class="kw">with</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    | Num n -&gt; <span class="dt">string_of_int</span> n <span class="co">(* from Pervasives *)</span> </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    | Add (a1, a2) -&gt; <span class="st">&quot;(&quot;</span> ^ expr_to_str a1 ^ <span class="st">&quot; + &quot;</span> ^ expr_to_str a2 ^ <span class="st">&quot;)&quot;</span> </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    | Sub (a1, a2) -&gt; <span class="st">&quot;(&quot;</span> ^ expr_to_str a1 ^ <span class="st">&quot; - &quot;</span> ^ expr_to_str a2 ^ <span class="st">&quot;)&quot;</span> </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    | Mult (a1, a2) -&gt; <span class="st">&quot;(&quot;</span> ^ expr_to_str a1 ^ <span class="st">&quot; * &quot;</span> ^ expr_to_str a2 ^ <span class="st">&quot;)&quot;</span> </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a> <span class="co">(* </span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">    finds value of arithmetic expression.  always returns (Num n) </span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"> *)</span> </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> <span class="kw">rec</span> eval e = </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">match</span> e <span class="kw">with</span> </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    | Num n -&gt; n </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    | Add (a1, a2) -&gt; ( <span class="kw">match</span> (eval a1, eval a2) <span class="kw">with</span> n1, n2 -&gt; n1 + n2) </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    | Sub (a1, a2) -&gt; ( <span class="kw">match</span> (eval a1, eval a2) <span class="kw">with</span> n1, n2 -&gt; n1 - n2) </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    | Mult (a1, a2) -&gt; ( <span class="kw">match</span> (eval a1, eval a2) <span class="kw">with</span> n1, n2 -&gt; n1 * n2) </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a> <span class="kw">exception</span> IllegalExpression <span class="kw">of</span> <span class="dt">string</span>;; </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a> <span class="kw">exception</span> ParseError <span class="kw">of</span> <span class="dt">string</span>;; </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a> <span class="co">(* Scanner *)</span> </span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a> <span class="kw">type</span> token = </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    | Tok_Num <span class="kw">of</span> <span class="dt">string</span> </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    | Tok_Add </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    | Tok_Sub </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    | Tok_Mult </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    | Tok_LParen </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    | Tok_RParen </span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    | Tok_END </span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> re_num = Str.regexp <span class="st">&quot;[0-9]+&quot;</span> <span class="co">(* single digit number *)</span>;; </span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> re_add = Str.regexp <span class="st">&quot;+&quot;</span>;; </span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> re_sub = Str.regexp <span class="st">&quot;-&quot;</span>;; </span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> re_mult = Str.regexp <span class="st">&quot;*&quot;</span>;; </span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> re_lparen = Str.regexp <span class="st">&quot;(&quot;</span>;; </span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> re_rparen = Str.regexp <span class="st">&quot;)&quot;</span>;; </span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> re_space = Str.regexp <span class="st">&quot; &quot;</span>;; </span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a> <span class="co">(*---------------------------------------------------------- </span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co">    function tokenize : string -&gt; token list </span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="co">    converts string into a list of tokens </span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="co"> *)</span> </span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> tokenize str = </span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">rec</span> tok pos s = </span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> pos &gt;= <span class="dt">String</span>.length s <span class="kw">then</span> [ Tok_END ] </span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_num s pos <span class="kw">then</span> </span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> token = Str.matched_string s <span class="kw">in</span> </span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> len = <span class="dt">String</span>.length token <span class="kw">in</span> </span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>        Tok_Num token :: tok (pos + len) s </span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_space s pos <span class="kw">then</span> tok (pos + <span class="dv">1</span>) s </span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_add s pos <span class="kw">then</span> Tok_Add :: tok (pos + <span class="dv">1</span>) s </span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_sub s pos <span class="kw">then</span> Tok_Sub :: tok (pos + <span class="dv">1</span>) s </span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_mult s pos <span class="kw">then</span> Tok_Mult :: tok (pos + <span class="dv">1</span>) s </span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_lparen s pos <span class="kw">then</span> Tok_LParen :: tok (pos + <span class="dv">1</span>) s </span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">if</span> Str.string_match re_rparen s pos <span class="kw">then</span> Tok_RParen :: tok (pos + <span class="dv">1</span>) s </span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="dt">raise</span> (IllegalExpression <span class="st">&quot;tokenize&quot;</span>) </span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>    <span class="kw">in</span> </span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>    tok <span class="dv">0</span> str </span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a> <span class="co">(* </span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="co">    function tok_to_str : token -&gt; string </span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="co">    converts token into a string </span></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="co"> *)</span> </span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> string1_of_token t = </span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>    <span class="kw">match</span> t <span class="kw">with</span> </span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>    | Tok_Num v -&gt; <span class="st">&quot;Tok_Num &quot;</span> ^ v </span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>    | Tok_Add -&gt; <span class="st">&quot;Tok_Add&quot;</span> </span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>    | Tok_Sub -&gt; <span class="st">&quot;Tok_Sub&quot;</span> </span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>    | Tok_Mult -&gt; <span class="st">&quot;Tok_Mult&quot;</span> </span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>    | Tok_LParen -&gt; <span class="st">&quot;Tok_LParen&quot;</span> </span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>    | Tok_RParen -&gt; <span class="st">&quot;Tok_RParen&quot;</span> </span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>    | Tok_END -&gt; <span class="st">&quot;END&quot;</span> </span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> string2_of_token t = </span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>    <span class="kw">match</span> t <span class="kw">with</span> </span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>    | Tok_Num v -&gt; v <span class="co">(*(Char.escaped v)*)</span> </span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>    | Tok_Add -&gt; <span class="st">&quot;+&quot;</span> </span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>    | Tok_Sub -&gt; <span class="st">&quot;-&quot;</span> </span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>    | Tok_Mult -&gt; <span class="st">&quot;*&quot;</span> </span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>    | Tok_LParen -&gt; <span class="st">&quot;(&quot;</span> </span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>    | Tok_RParen -&gt; <span class="st">&quot;)&quot;</span> </span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>    | Tok_END -&gt; <span class="st">&quot;END&quot;</span> </span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a> <span class="co">(* Parser *)</span> </span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a> <span class="co">(* </span></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="co">     function lookahead : token list -&gt; (token * token list) </span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="co">     Returns tuple of head of token list &amp; tail of token list </span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="co"> *)</span> </span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> lookahead tokens = </span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>    <span class="kw">match</span> tokens <span class="kw">with</span> [] -&gt; <span class="dt">raise</span> (ParseError <span class="st">&quot;no tokens&quot;</span>) | h :: t -&gt; h </span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> match_token (toks : token <span class="dt">list</span>) (tok : token) = </span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>    <span class="kw">match</span> toks <span class="kw">with</span> </span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>    | [] -&gt; <span class="dt">raise</span> (ParseError (string1_of_token tok)) </span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>    | h :: t <span class="kw">when</span> h = tok -&gt; t </span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>    | h :: _ -&gt; <span class="dt">raise</span> (ParseError (string1_of_token tok)) </span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a> <span class="co">(* </span></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a><span class="co"> recursive descent parser </span></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a><span class="co"> </span></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="co"> Returns tuple of ast &amp; token list for remainder of string </span></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="co"> </span></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="co"> Arithmetic expression grammar: </span></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="co"> </span></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a><span class="co">     S -&gt; A + S | A - S| A </span></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a><span class="co">     A -&gt; B * A | B </span></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="co">     B -&gt; n | (S) </span></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a><span class="co"> </span></span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="co">    [Basic grammar withtokens] </span></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="co"> </span></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="co">      S -&gt; A Tok_Add S | A A </span></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="co">      A -&gt; B Tok_Mult A | B </span></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="co">      B -&gt; Tok_Num | Tok_LParen S Tok_RParen </span></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="co"> *)</span> </span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> <span class="kw">rec</span> parse_S tokens = </span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> e1, t1 = parse_A tokens <span class="kw">in</span> </span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>    <span class="kw">match</span> lookahead t1 <span class="kw">with</span> </span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>    | Tok_Add -&gt;  <span class="co">(* S -&gt; A Tok_Add E *)</span> </span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> t2 = match_token t1 Tok_Add <span class="kw">in</span> </span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> e2, t3 = parse_S t2 <span class="kw">in</span> </span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>        (Add (e1, e2), t3) </span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>    | Tok_Sub -&gt; <span class="co">(* S -&gt; A Tok_Add E *)</span> </span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>          <span class="kw">let</span> t2 = match_token t1 Tok_Sub <span class="kw">in</span> </span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>          <span class="kw">let</span> e2, t3 = parse_S t2 <span class="kw">in</span> </span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>          (Sub (e1, e2), t3) </span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>    | _ -&gt; (e1, t1)       <span class="co">(* S -&gt; A *)</span> </span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a> <span class="kw">and</span> parse_A tokens = </span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> e1, tokens = parse_B tokens <span class="kw">in</span> </span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>    <span class="kw">match</span> lookahead tokens <span class="kw">with</span> </span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>    | Tok_Mult -&gt; </span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>        <span class="co">(* A -&gt; B Tok_Mult A *)</span> </span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> t2 = match_token tokens Tok_Mult <span class="kw">in</span> </span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> e2, t3 = parse_A t2 <span class="kw">in</span> </span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>        (Mult (e1, e2), t3) </span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>    | _ -&gt; (e1, tokens) </span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a> <span class="kw">and</span> parse_B tokens = </span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>    <span class="kw">match</span> lookahead tokens <span class="kw">with</span> </span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>    <span class="co">(* B -&gt; Tok_Num *)</span> </span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a>    | Tok_Num c -&gt; </span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> t = match_token tokens (Tok_Num c) <span class="kw">in</span> </span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>        (Num (<span class="dt">int_of_string</span> c), t) </span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>    <span class="co">(* B -&gt; Tok_LParen E Tok_RParen *)</span> </span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>    | Tok_LParen -&gt; </span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> t = match_token tokens Tok_LParen <span class="kw">in</span> </span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> e2, t2 = parse_S t <span class="kw">in</span> </span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> _ = <span class="dt">Printf</span>.printf <span class="st">&quot;%s</span><span class="ch">\n</span><span class="st">&quot;</span> (string1_of_token (lookahead tokens)) <span class="kw">in</span> </span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>        <span class="kw">if</span> lookahead t2 = Tok_RParen <span class="kw">then</span> (e2, match_token t2 Tok_RParen) </span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>        <span class="kw">else</span> <span class="dt">raise</span> (ParseError <span class="st">&quot;parse_B 1&quot;</span>) </span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>    | _ -&gt; <span class="dt">raise</span> (ParseError <span class="st">&quot;parse_B 2&quot;</span>) </span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a> <span class="co">(* </span></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a><span class="co">    function eval_str : given string, parse string, build AST, </span></span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a><span class="co">          evaluate value of AST </span></span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="co"> *)</span> </span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> pp = <span class="dt">Printf</span>.printf;; </span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a> <span class="co">(* </span></span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a><span class="co">    function eval_str : given string, parse string, build AST, </span></span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a><span class="co">          evaluate value of AST </span></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="co"> *)</span> </span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> eval_str str = </span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> tokens = tokenize str <span class="kw">in</span> </span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>    pp <span class="st">&quot;Input token list = [&quot;</span>; </span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>    <span class="dt">List</span>.iter (<span class="kw">fun</span> x -&gt; pp <span class="st">&quot;%s;&quot;</span> (string1_of_token x)) tokens; </span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>    pp <span class="st">&quot;]</span><span class="ch">\n</span><span class="st">&quot;</span>; </span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> (a, t) = parse_S tokens <span class="kw">in</span> </span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> t &lt;&gt; [ Tok_END ] <span class="kw">then</span> <span class="dt">raise</span> (IllegalExpression <span class="st">&quot;parse_S&quot;</span>); </span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>    pp <span class="st">&quot;AST produced = %s</span><span class="ch">\n</span><span class="st">&quot;</span> (expr_to_str a); </span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> v = eval a <span class="kw">in</span> </span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>    pp <span class="st">&quot;Value of AST = %d</span><span class="ch">\n</span><span class="st">&quot;</span> v; </span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a> eval_str <span class="st">&quot;1*2*3-4*5*6&quot;</span>;; </span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a> eval_str <span class="st">&quot;1+2+3*4*5+6&quot;</span>;; </span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a> eval_str <span class="st">&quot;1+(2+3)*4*5+6&quot;</span>;; </span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a> eval_str <span class="st">&quot;100 *      (10 + 20)&quot;</span>;; </span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a> <span class="co">(* eval_str &quot;(2^5)*2&quot;;;  error *)</span> </span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a> <span class="co">(* eval_str &quot;1++12&quot; error *)</span></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a># # <span class="kw">type</span> expr =</span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>    Num <span class="kw">of</span> <span class="dt">int</span></span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>  | Add <span class="kw">of</span> expr * expr</span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>  | Sub <span class="kw">of</span> expr * expr</span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>  | Mult <span class="kw">of</span> expr * expr</span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> expr_to_str : expr -&gt; <span class="dt">string</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> eval : expr -&gt; <span class="dt">int</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a># <span class="kw">exception</span> IllegalExpression <span class="kw">of</span> <span class="dt">string</span></span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a># <span class="kw">exception</span> ParseError <span class="kw">of</span> <span class="dt">string</span></span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a># <span class="kw">type</span> token =</span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>    Tok_Num <span class="kw">of</span> <span class="dt">string</span></span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>  | Tok_Add</span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>  | Tok_Sub</span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a>  | Tok_Mult</span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a>  | Tok_LParen</span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>  | Tok_RParen</span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>  | Tok_END</span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> re_num : Str.regexp = &lt;abstr&gt;</span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> re_add : Str.regexp = &lt;abstr&gt;</span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> re_sub : Str.regexp = &lt;abstr&gt;</span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> re_mult : Str.regexp = &lt;abstr&gt;</span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> re_lparen : Str.regexp = &lt;abstr&gt;</span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> re_rparen : Str.regexp = &lt;abstr&gt;</span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> re_space : Str.regexp = &lt;abstr&gt;</span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> tokenize : <span class="dt">string</span> -&gt; token <span class="dt">list</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> string1_of_token : token -&gt; <span class="dt">string</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> string2_of_token : token -&gt; <span class="dt">string</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> lookahead : &#39;a <span class="dt">list</span> -&gt; &#39;a = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> match_token : token <span class="dt">list</span> -&gt; token -&gt; token <span class="dt">list</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> parse_S : token <span class="dt">list</span> -&gt; expr * token <span class="dt">list</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> parse_A : token <span class="dt">list</span> -&gt; expr * token <span class="dt">list</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> parse_B : token <span class="dt">list</span> -&gt; expr * token <span class="dt">list</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> pp : (&#39;a, <span class="dt">out_channel</span>, <span class="dt">unit</span>) format -&gt; &#39;a = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> eval_str : <span class="dt">string</span> -&gt; <span class="dt">unit</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a># Input token <span class="dt">list</span> = [Tok_Num <span class="dv">1</span>;Tok_Mult;Tok_Num <span class="dv">2</span>;Tok_Mult;Tok_Num <span class="dv">3</span>;Tok_Sub;Tok_Num <span class="dv">4</span>;Tok_Mult;Tok_Num <span class="dv">5</span>;Tok_Mult;Tok_Num <span class="dv">6</span>;END;]</span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>AST produced = ((<span class="dv">1</span> * (<span class="dv">2</span> * <span class="dv">3</span>)) - (<span class="dv">4</span> * (<span class="dv">5</span> * <span class="dv">6</span>)))</span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>Value <span class="kw">of</span> AST = <span class="dv">-114</span></span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">unit</span> = ()</span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a># Input token <span class="dt">list</span> = [Tok_Num <span class="dv">1</span>;Tok_Add;Tok_Num <span class="dv">2</span>;Tok_Add;Tok_Num <span class="dv">3</span>;Tok_Mult;Tok_Num <span class="dv">4</span>;Tok_Mult;Tok_Num <span class="dv">5</span>;Tok_Add;Tok_Num <span class="dv">6</span>;END;]</span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>AST produced = (<span class="dv">1</span> + (<span class="dv">2</span> + ((<span class="dv">3</span> * (<span class="dv">4</span> * <span class="dv">5</span>)) + <span class="dv">6</span>)))</span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>Value <span class="kw">of</span> AST = <span class="dv">69</span></span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">unit</span> = ()</span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a># Input token <span class="dt">list</span> = [Tok_Num <span class="dv">1</span>;Tok_Add;Tok_LParen;Tok_Num <span class="dv">2</span>;Tok_Add;Tok_Num <span class="dv">3</span>;Tok_RParen;Tok_Mult;Tok_Num <span class="dv">4</span>;Tok_Mult;Tok_Num <span class="dv">5</span>;Tok_Add;Tok_Num <span class="dv">6</span>;END;]</span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a>Tok_LParen</span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>AST produced = (<span class="dv">1</span> + (((<span class="dv">2</span> + <span class="dv">3</span>) * (<span class="dv">4</span> * <span class="dv">5</span>)) + <span class="dv">6</span>))</span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>Value <span class="kw">of</span> AST = <span class="dv">107</span></span>
+<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">unit</span> = ()</span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a># Input token <span class="dt">list</span> = [Tok_Num <span class="dv">100</span>;Tok_Mult;Tok_LParen;Tok_Num <span class="dv">10</span>;Tok_Add;Tok_Num <span class="dv">20</span>;Tok_RParen;END;]</span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>Tok_LParen</span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>AST produced = (<span class="dv">100</span> * (<span class="dv">10</span> + <span class="dv">20</span>))</span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>Value <span class="kw">of</span> AST = <span class="dv">3000</span></span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">unit</span> = ()</span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a># </span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+</p></blockquote></blockquote><div class="navsetbottom"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="Context_Free_Grammars.html" title="backward to &quot;6 Context Free Grammars&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<span class="nonavigation">next &rarr;</span></span>&nbsp;</div></div></div><div id="contextindicator">&nbsp;</div></body></html>

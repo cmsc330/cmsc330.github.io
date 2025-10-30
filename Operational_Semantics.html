@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=0.8"/><title>8&nbsp;Operational Semantics</title><link rel="stylesheet" type="text/css" href="scribble.css" title="default"/><link rel="stylesheet" type="text/css" href="racket.css" title="default"/><link rel="stylesheet" type="text/css" href="manual-style.css" title="default"/><link rel="stylesheet" type="text/css" href="manual-racket.css" title="default"/><link rel="stylesheet" type="text/css" href="extra.css" title="default"/><link rel="stylesheet" type="text/css" href="fancyverb.css" title="default"/><script type="text/javascript" src="scribble-common.js"></script><script type="text/javascript" src="manual-racket.js"></script><!--[if IE 6]><style type="text/css">.SIEHidden { overflow: hidden; }</style><![endif]--></head><body id="scribble-racket-lang-org"><div class="tocset"><div class="tocview"><div class="tocviewlist tocviewlisttopspace"><div class="tocviewtitle"><table cellspacing="0" cellpadding="0"><tr><td style="width: 1em;"><a href="javascript:void(0);" title="Expand/Collapse" class="tocviewtoggle" onclick="TocviewToggle(this,&quot;tocview_0&quot;);">&#9660;</a></td><td></td><td><a href="index.html" class="tocviewlink" data-pltdoc="x">CMSC 330 Lecture Notes</a></td></tr></table></div><div class="tocviewsublisttop" style="display: block;" id="tocview_0"><table cellspacing="0" cellpadding="0"><tr><td align="right">1&nbsp;</td><td><a href="ocaml.html" class="tocviewlink" data-pltdoc="x">Functional Programming with OCaml</a></td></tr><tr><td align="right">2&nbsp;</td><td><a href="Imperative_OCaml.html" class="tocviewlink" data-pltdoc="x">Imperative Programming with OCaml</a></td></tr><tr><td align="right">3&nbsp;</td><td><a href="pbt.html" class="tocviewlink" data-pltdoc="x">Property-<wbr></wbr>Based Randomized Testing</a></td></tr><tr><td align="right">4&nbsp;</td><td><a href="regexp.html" class="tocviewlink" data-pltdoc="x">OCaml Regular Expressions</a></td></tr><tr><td align="right">5&nbsp;</td><td><a href="Finite_Automata.html" class="tocviewlink" data-pltdoc="x">Finite Automata</a></td></tr><tr><td align="right">6&nbsp;</td><td><a href="Context_Free_Grammars.html" class="tocviewlink" data-pltdoc="x">Context Free Grammars</a></td></tr><tr><td align="right">7&nbsp;</td><td><a href="Parsing.html" class="tocviewlink" data-pltdoc="x">Parsing</a></td></tr><tr><td align="right">8&nbsp;</td><td><a href="" class="tocviewselflink" data-pltdoc="x">Operational Semantics</a></td></tr></table></div></div><div class="tocviewlist"><table cellspacing="0" cellpadding="0"><tr><td style="width: 1em;"><a href="javascript:void(0);" title="Expand/Collapse" class="tocviewtoggle" onclick="TocviewToggle(this,&quot;tocview_1&quot;);">&#9658;</a></td><td>8&nbsp;</td><td><a href="" class="tocviewselflink" data-pltdoc="x">Operational Semantics</a></td></tr></table><div class="tocviewsublistbottom" style="display: none;" id="tocview_1"><table cellspacing="0" cellpadding="0"><tr><td align="right">8.1&nbsp;</td><td><a href="#%28part._.Substitution_.Based_.Interpreter%29" class="tocviewlink" data-pltdoc="x">Substitution Based Interpreter</a></td></tr><tr><td align="right">8.2&nbsp;</td><td><a href="#%28part._.Environment_.Based_.Intepreter%29" class="tocviewlink" data-pltdoc="x">Environment Based Intepreter</a></td></tr></table></div></div></div><div class="tocsub"><div class="tocsubtitle">On this page:</div><table class="tocsublist" cellspacing="0"><tr><td><span class="tocsublinknumber">8.1<tt>&nbsp;</tt></span><a href="#%28part._.Substitution_.Based_.Interpreter%29" class="tocsubseclink" data-pltdoc="x">Substitution Based Interpreter</a></td></tr><tr><td><span class="tocsublinknumber">8.2<tt>&nbsp;</tt></span><a href="#%28part._.Environment_.Based_.Intepreter%29" class="tocsubseclink" data-pltdoc="x">Environment Based Intepreter</a></td></tr><tr><td><span class="tocsublinknumber">8.2.1<tt>&nbsp;</tt></span><a href="#%28part._.Examples%29" class="tocsubseclink" data-pltdoc="x">Examples</a></td></tr></table></div></div><div class="maincolumn"><div class="main"><div class="versionbox"><span class="version">8.17</span></div><div class="navsettop"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="Parsing.html" title="backward to &quot;7 Parsing&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<span class="nonavigation">next &rarr;</span></span>&nbsp;</div><h3 class="heading">8<tt>&nbsp;</tt><a name="(part._.Operational_.Semantics)"></a>Operational Semantics<span class="button-group"><a href="#(part._.Operational_.Semantics)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><table cellspacing="0" cellpadding="0"><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Substitution_.Based_.Interpreter%29" class="toclink" data-pltdoc="x">8.1<span class="hspace">&nbsp;</span>Substitution Based Interpreter</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Environment_.Based_.Intepreter%29" class="toclink" data-pltdoc="x">8.2<span class="hspace">&nbsp;</span>Environment Based Intepreter</a></p></td></tr></table><h4 class="heading">8.1<tt>&nbsp;</tt><a name="(part._.Substitution_.Based_.Interpreter)"></a>Substitution Based Interpreter<span class="button-group"><a href="#(part._.Substitution_.Based_.Interpreter)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> id = <span class="dt">string</span>;; </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">type</span> num = <span class="dt">int</span>;; </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">type</span> <span class="dt">exp</span> = </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> | Ident <span class="kw">of</span> id </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> | Num <span class="kw">of</span> num </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> | Plus <span class="kw">of</span> <span class="dt">exp</span> * <span class="dt">exp</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> | Let <span class="kw">of</span> id * <span class="dt">exp</span> * <span class="dt">exp</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> <span class="co">(*  substitute x in e2 with e1  *)</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> <span class="kw">rec</span> subst x e1 e2 = </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>          <span class="kw">match</span> e2 <span class="kw">with</span> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    | Ident y -&gt; <span class="kw">if</span> x=y <span class="kw">then</span> e1 <span class="kw">else</span> e2 </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    | Num c -&gt; Num c </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    | Plus(el,er) -&gt; Plus(subst x e1 el, subst x e1 er) </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    | Let(y,ebind,ebody) -&gt; </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> x=y <span class="kw">then</span> Let(y, subst x e1 ebind, ebody) </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> Let(y, subst x e1 ebind, subst x e1 ebody) </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> <span class="kw">rec</span> eval <span class="dt">exp</span> = </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">match</span> <span class="dt">exp</span> <span class="kw">with</span> </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    |Num n -&gt; n </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    |Plus(e1,e2)-&gt; </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> n1 = eval e1 <span class="kw">in</span> </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> n2 = eval e2 <span class="kw">in</span> </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> n3 = n1 + n2 </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      <span class="kw">in</span> n3 </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    |Let (x,e1,e2) -&gt; </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> e2&#39; = subst x e1 e2 <span class="kw">in</span> </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> v2 = eval e2&#39; <span class="kw">in</span> v2 </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      |_-&gt;<span class="dt">failwith</span> <span class="st">&quot;error 1&quot;</span> </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a> ;; </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a> <span class="co">(* let x = 10 in x + 10 *)</span> </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a> eval (Let(<span class="st">&quot;x&quot;</span>, Num <span class="dv">10</span>, Plus(Ident <span class="st">&quot;x&quot;</span>,Num <span class="dv">10</span>)));; </span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a> <span class="co">(* let x = 10 in let y = x+1 in x+y;; *)</span> </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> e2 =(Let(<span class="st">&quot;y&quot;</span>, Plus(Ident <span class="st">&quot;x&quot;</span>, Num <span class="dv">1</span>), </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>                  Plus(Ident <span class="st">&quot;x&quot;</span>, Ident <span class="st">&quot;y&quot;</span>)));; </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a> eval (Let(<span class="st">&quot;x&quot;</span>, Num <span class="dv">10</span>, e2));; </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a> ;;</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a># <span class="kw">type</span> id = <span class="dt">string</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a># <span class="kw">type</span> num = <span class="dt">int</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a># <span class="kw">type</span> <span class="dt">exp</span> =</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    Ident <span class="kw">of</span> id</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  | Num <span class="kw">of</span> num</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  | Plus <span class="kw">of</span> <span class="dt">exp</span> * <span class="dt">exp</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  | Let <span class="kw">of</span> id * <span class="dt">exp</span> * <span class="dt">exp</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> subst : id -&gt; <span class="dt">exp</span> -&gt; <span class="dt">exp</span> -&gt; <span class="dt">exp</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> eval : <span class="dt">exp</span> -&gt; num = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a># - : num = <span class="dv">20</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> e2 : <span class="dt">exp</span> =</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  Let (<span class="st">&quot;y&quot;</span>, Plus (Ident <span class="st">&quot;x&quot;</span>, Num <span class="dv">1</span>), Plus (Ident <span class="st">&quot;x&quot;</span>, Ident <span class="st">&quot;y&quot;</span>))</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a># - : num = <span class="dv">21</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a># </span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+</p></blockquote></blockquote><h4 class="heading">8.2<tt>&nbsp;</tt><a name="(part._.Environment_.Based_.Intepreter)"></a>Environment Based Intepreter<span class="button-group"><a href="#(part._.Environment_.Based_.Intepreter)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> id = <span class="dt">string</span>;;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">(* v ::= n | true | false *)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> value = Int <span class="kw">of</span> <span class="dt">int</span> | Bool <span class="kw">of</span> <span class="dt">bool</span>;;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">(*  e ::= x </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">         | v </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">         | e + e </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">         | let x = e in e </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">         | eq0 e </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">         | if e then e else e</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"> *)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">exp</span> = </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>| Ident <span class="kw">of</span> id </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>| Val <span class="kw">of</span> value</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>| Plus <span class="kw">of</span> <span class="dt">exp</span> * <span class="dt">exp</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>| Let <span class="kw">of</span> id * <span class="dt">exp</span> * <span class="dt">exp</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>| Eq0 <span class="kw">of</span> <span class="dt">exp</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>| GT <span class="kw">of</span> <span class="dt">exp</span> * <span class="dt">exp</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>| If <span class="kw">of</span> <span class="dt">exp</span> * <span class="dt">exp</span> * <span class="dt">exp</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>;;</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> env = (id * value) <span class="dt">list</span>;;</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> extend env x v = (x,v)::env;;</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">rec</span> lookup env x =</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="kw">match</span> env <span class="kw">with</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    [] -&gt; <span class="dt">failwith</span> <span class="st">&quot;Undefined variable&quot;</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  | (y,v)::env&#39; -&gt; </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> x = y <span class="kw">then</span> v</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">else</span> lookup env&#39; x</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>;;</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">rec</span> eval env e =</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="kw">match</span> e <span class="kw">with</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    Ident x -&gt; lookup env x</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  | Val v -&gt; v</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  | Plus (e1,e2) -&gt;</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>     <span class="kw">let</span> Int n1 = eval env e1 <span class="kw">in</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>     <span class="kw">let</span> Int n2 = eval env e2 <span class="kw">in</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>     <span class="kw">let</span> n3 = n1+n2 <span class="kw">in</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>     Int n3</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  | Let (x,e1,e2) -&gt;</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>     <span class="kw">let</span> v1 = eval env e1 <span class="kw">in</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>     <span class="kw">let</span> env&#39; = extend env x v1 <span class="kw">in</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>     <span class="kw">let</span> v2 = eval env&#39; e2 <span class="kw">in</span> v2</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  | Eq0 e1 -&gt;</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>     <span class="kw">let</span> Int n = eval env e1 <span class="kw">in</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>     <span class="kw">if</span> n=<span class="dv">0</span> <span class="kw">then</span> Bool <span class="kw">true</span> <span class="kw">else</span> Bool <span class="kw">false</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  | GT (e1,e2) -&gt;</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> Int v1 = eval env e1 <span class="kw">in</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> Int v2 = eval env e2 <span class="kw">in</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> v1 &gt;= v2 <span class="kw">then</span> Bool <span class="kw">true</span> <span class="kw">else</span> Bool <span class="kw">false</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  | If (e1,e2,e3) -&gt;</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>     <span class="kw">let</span> Bool b = eval env e1 <span class="kw">in</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>     <span class="kw">if</span> b <span class="kw">then</span> eval env e2</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>     <span class="kw">else</span> eval env e3</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>;;</span></code></pre></div>
+</p><h5 class="heading">8.2.1<tt>&nbsp;</tt><a name="(part._.Examples)"></a>Examples<span class="button-group"><a href="#(part._.Examples)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> + x</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>eval [(<span class="st">&quot;x&quot;</span>,Int <span class="dv">100</span>)] (Plus(Val (Int <span class="dv">20</span>),Ident <span class="st">&quot;x&quot;</span>));;</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x = <span class="dv">10</span> <span class="kw">in</span> <span class="kw">let</span> x = x+ <span class="dv">1</span> <span class="kw">in</span> x+<span class="dv">2</span>;;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>eval [] (Let(<span class="st">&quot;x&quot;</span>, Val(Int <span class="dv">10</span>), Let(<span class="st">&quot;x&quot;</span>, Plus(Ident <span class="st">&quot;x&quot;</span>, Val(Int <span class="dv">1</span>)), </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            Plus(Ident <span class="st">&quot;x&quot;</span>, Val(Int <span class="dv">2</span>)))));;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x = <span class="dv">10</span> <span class="kw">in</span> Let y = x+ <span class="dv">1</span> <span class="kw">in</span> x+y;;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>eval [] (Let(<span class="st">&quot;x&quot;</span>, Val(Int <span class="dv">10</span>), Let(<span class="st">&quot;y&quot;</span>, Plus(Ident <span class="st">&quot;x&quot;</span>, Val(Int <span class="dv">1</span>)), </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            Plus(Ident <span class="st">&quot;x&quot;</span>, Ident <span class="st">&quot;y&quot;</span>))));;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x = <span class="kw">let</span> x = <span class="dv">10</span> <span class="kw">in</span> x+<span class="dv">1</span> <span class="kw">in</span> x+ <span class="dv">2</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>eval []   (Let(<span class="st">&quot;x&quot;</span>, (Let(<span class="st">&quot;x&quot;</span>, Val(Int <span class="dv">10</span>), Plus(Ident <span class="st">&quot;x&quot;</span>, Val(Int <span class="dv">1</span>)))), </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>            Plus(Ident <span class="st">&quot;x&quot;</span>, Val(Int <span class="dv">2</span>))));;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="dv">4</span>+<span class="dv">2</span> = <span class="dv">0</span> <span class="kw">then</span> <span class="dv">100</span> <span class="kw">else</span> <span class="dv">200</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>eval [] (If(Eq0 (Plus(Val(Int <span class="dv">4</span>), Val(Int <span class="dv">2</span>))), Val(Int <span class="dv">100</span>), Val(Int <span class="dv">200</span>)));;</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="dv">4</span>+<span class="dv">2</span> &gt;= <span class="dv">6</span>  <span class="kw">then</span> <span class="dv">100</span> <span class="kw">else</span> <span class="dv">200</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>eval [] (If(GT (Plus(Val(Int <span class="dv">4</span>), Val(Int <span class="dv">2</span>)), Val(Int <span class="dv">6</span>)), Val(Int <span class="dv">100</span>), Val(Int <span class="dv">200</span>)));;</span></code></pre></div>
+</p><div class="navsetbottom"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="Parsing.html" title="backward to &quot;7 Parsing&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<span class="nonavigation">next &rarr;</span></span>&nbsp;</div></div></div><div id="contextindicator">&nbsp;</div></body></html>

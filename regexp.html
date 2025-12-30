@@ -17,11 +17,12 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> Re.matches r <span class="st">&quot;a12#b22abcd&quot;</span>;; </span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> ;;</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>J[H[<span class="dv">2</span>J# # <span class="kw">val</span> str2re : <span class="dt">string</span> -&gt; Re__.Core.re = &lt;<span class="kw">fun</span>&gt;</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> r : Re__.Core.re = &lt;abstr&gt;</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a># - : <span class="dt">string</span> <span class="dt">list</span> = [<span class="st">&quot;a12&quot;</span>; <span class="st">&quot;b22&quot;</span>]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a># </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> str2re : <span class="dt">string</span> -&gt; Re__.Core.re = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> r : Re__.Core.re = &lt;abstr&gt;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> <span class="dt">list</span> = [<span class="st">&quot;a12&quot;</span>; <span class="st">&quot;b22&quot;</span>]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 </p></blockquote></blockquote></div></p><h4 class="heading">4.2<tt>&nbsp;</tt><a name="(part._.Basic_.Concepts)"></a>Basic Concepts<span class="button-group"><a href="#(part._.Basic_.Concepts)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">Regular expressions (regex) provide a formal way of describing patterns in
 strings. They form the foundation for pattern matching, and we will implement
 them in our next project.

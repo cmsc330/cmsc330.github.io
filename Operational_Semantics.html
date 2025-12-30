@@ -44,21 +44,22 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a> eval (Let(<span class="st">&quot;x&quot;</span>, Num <span class="dv">10</span>, e2));; </span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a> ;;</span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>J[H[<span class="dv">2</span>J# <span class="kw">type</span> id = <span class="dt">string</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a># <span class="kw">type</span> num = <span class="dt">int</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a># <span class="kw">type</span> <span class="dt">exp</span> =</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    Ident <span class="kw">of</span> id</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  | Num <span class="kw">of</span> num</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  | Plus <span class="kw">of</span> <span class="dt">exp</span> * <span class="dt">exp</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  | Let <span class="kw">of</span> id * <span class="dt">exp</span> * <span class="dt">exp</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> subst : id -&gt; <span class="dt">exp</span> -&gt; <span class="dt">exp</span> -&gt; <span class="dt">exp</span> = &lt;<span class="kw">fun</span>&gt;</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> eval : <span class="dt">exp</span> -&gt; num = &lt;<span class="kw">fun</span>&gt;</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a># - : num = <span class="dv">20</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a># <span class="kw">val</span> e2 : <span class="dt">exp</span> =</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  Let (<span class="st">&quot;y&quot;</span>, Plus (Ident <span class="st">&quot;x&quot;</span>, Num <span class="dv">1</span>), Plus (Ident <span class="st">&quot;x&quot;</span>, Ident <span class="st">&quot;y&quot;</span>))</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a># - : num = <span class="dv">21</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a># </span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> id = <span class="dt">string</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> num = <span class="dt">int</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> <span class="dt">exp</span> =</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    Ident <span class="kw">of</span> id</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  | Num <span class="kw">of</span> num</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  | Plus <span class="kw">of</span> <span class="dt">exp</span> * <span class="dt">exp</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  | Let <span class="kw">of</span> id * <span class="dt">exp</span> * <span class="dt">exp</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> subst : id -&gt; <span class="dt">exp</span> -&gt; <span class="dt">exp</span> -&gt; <span class="dt">exp</span> = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> eval : <span class="dt">exp</span> -&gt; num = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>- : num = <span class="dv">20</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> e2 : <span class="dt">exp</span> =</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  Let (<span class="st">&quot;y&quot;</span>, Plus (Ident <span class="st">&quot;x&quot;</span>, Num <span class="dv">1</span>), Plus (Ident <span class="st">&quot;x&quot;</span>, Ident <span class="st">&quot;y&quot;</span>))</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>- : num = <span class="dv">21</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
 </p></blockquote></blockquote><h4 class="heading">8.2<tt>&nbsp;</tt><a name="(part._.Environment_.Based_.Intepreter)"></a>Environment Based Intepreter<span class="button-group"><a href="#(part._.Environment_.Based_.Intepreter)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> id = <span class="dt">string</span>;;</span>

@@ -8,7 +8,7 @@ properties hold true in a wide variety of cases.</p><p>Instead of writing specif
 outputs (as in unit testing), you write rules or properties
 about the expected behavior, and let the testing framework generate
 many random test cases to verify those rules.</p><p><div class="SIntrapara">Let&rsquo;s test &lsquo;rev&lsquo; (list reverse) with a unit test
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">rec</span> rev l = </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">match</span> l <span class="kw">with</span> </span>
@@ -23,21 +23,21 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> test_reverse : <span class="dt">bool</span> = <span class="kw">true</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">But this test does not show if the &lsquo;rev&lsquo; function works correctly with large
+</div></p></blockquote></blockquote></div><div class="SIntrapara">But this test does not show if the &lsquo;rev&lsquo; function works correctly with large
 lists, lists with large integers, lists with duplicate values,
 string lists with unicode characters, etc.</div></p><p>Instead of unit tests on specific inputs and outputs, what if we could test
 properties that hold for all inputs? For example, &lsquo;rev&lsquo; function has
 the following property: reversing a list twice gives back the original list.
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> prop_reverse l = rev (rev l) = l</span></code></pre></div>
-
+</div>
 In other words, each of the following evaluates to true:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>prop_reverse []</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>prop_reverse [<span class="dv">1</span>; <span class="dv">2</span>; <span class="dv">3</span>]</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>prop_reverse [<span class="fl">1.0</span>; <span class="fl">2.22</span>]</span></code></pre></div>
-</p><p>Now, we can randomly generate large lists of various types and feed them as
+</div></p><p>Now, we can randomly generate large lists of various types and feed them as
 input to the property <span style="font-weight: bold">prop_reverse</span>.
 If <span style="font-weight: bold">prop_reverse</span> returns false for any input, we&rsquo;ve found a bug.
 If it returns true for millions of inputs, it doesn&rsquo;t guarantee the absence of bugs &#8212;
@@ -49,27 +49,27 @@ how to test OCaml programs using
 property based testing library called QCheck.</div></p><h4 class="heading">3.2<tt>&nbsp;</tt><a name="(part._.Q.Check__.Property-based_.Randomized_.Testing)"></a>QCheck: Property-based Randomized Testing<span class="button-group"><a href="#(part._.Q.Check__.Property-based_.Randomized_.Testing)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><a href="https://c-cube.github.io/qcheck/0.6/QCheck.html">QCheck</a> is a Property-Based Testing framework for OCaml. It is a framework that repeatedly
 generates random inputs, and uses them to confirm that properties hold. For example, it
 randomly generaly lists to confirm the &lsquo;prop-reverse&lsquo; property of the &lsquo;rev&lsquo; function hold.
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> prop_reverse l = rev (rev l) = l;;</span></code></pre></div>
-
+</div>
 QCheck tests are described by a generator that generates random inputs and a property,
 a bool-valued function. The input generator generates a random input and tests if
 the property holds with the input. If the property holds, it will try again with another
 random input. If the property does not hold, we just found a counterexample, or a bug.
 <img src="pbt.png" alt="" width="764" height="213"/></p><h5 class="heading">3.2.1<tt>&nbsp;</tt><a name="(part._.Setting_.Up_.Q.Check)"></a>Setting Up QCheck<span class="button-group"><a href="#(part._.Setting_.Up_.Q.Check)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><div class="SIntrapara"><ul><li><p>To install QCheck module, run
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>opam install qcheck</span></code></pre></div>
-</p></li><li><p>In the test module, open the Qcheck module
-<div class="sourceCode" id="cb1"><pre
+</div></p></li><li><p>In the test module, open the Qcheck module
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> QCheck</span></code></pre></div>
-</p></li><li><p>In utop, before open QCheck, run
-<div class="sourceCode" id="cb1"><pre
+</div></p></li><li><p>In utop, before open QCheck, run
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">#require &quot;qcheck&quot;</span></span></code></pre></div>
-</p></li><li><p>In a <span style="font-weight: bold">dune</span> project, add the following to the <span style="font-weight: bold">dune</span> file:
-<div class="sourceCode" id="cb1"><pre
+</div></p></li><li><p>In a <span style="font-weight: bold">dune</span> project, add the following to the <span style="font-weight: bold">dune</span> file:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(libraries qcheck)</span></code></pre></div>
-</p></li></ul></div><div class="SIntrapara">Here is a complete example of using QCheck to test a property:
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p></li></ul></div><div class="SIntrapara">Here is a complete example of using QCheck to test a property:
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">(* List reverse *)</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">rec</span> rev l = </span>
@@ -106,7 +106,7 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">Use [nat_small] instead</span></span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">val test : QCheck.Test.t = QCheck2.Test.Test &lt;abstr&gt;</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">[2Krandom seed: 409969548</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">[2Krandom seed: 256451977</span></span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">generated error fail pass / total     time test name</span></span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">[2K[ ]    0    0    0    0 /   10     0.0s reverse_test[2K[[32;1m✓[0m]   10    0    0   10 /   10     0.0s reverse_test</span></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co">================================================================================</span></span>
@@ -114,36 +114,36 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co">- : int = 0</span></span>
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div></p><p>It shows that QCheck generated 10 random tests and all of the 10 tests passed.</p><h5 class="heading">3.2.2<tt>&nbsp;</tt><a name="(part._.Buggy_.Reverse)"></a>Buggy Reverse<span class="button-group"><a href="#(part._.Buggy_.Reverse)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>Assume the &lsquo;rev&lsquo; function is implemented as:
-<div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote></div></p><p>It shows that QCheck generated 10 random tests and all of the 10 tests passed.</p><h5 class="heading">3.2.2<tt>&nbsp;</tt><a name="(part._.Buggy_.Reverse)"></a>Buggy Reverse<span class="button-group"><a href="#(part._.Buggy_.Reverse)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>Assume the &lsquo;rev&lsquo; function is implemented as:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> rev l = l  <span class="co">(* returns the same list *)</span></span></code></pre></div>
-
+</div>
 Obviously, this implementation of &lsquo;rev&lsquo; is not correct. A simple unit test would catch the bug:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> test_reverse = rev [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>] = [<span class="dv">3</span>;<span class="dv">2</span>;<span class="dv">1</span>]</span></code></pre></div>
-
+</div>
 However, the property &lsquo;prop_reverse&lsquo; does not catch the bug!
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> prop_reverse l = rev (rev l) = l</span></code></pre></div>
-
+</div>
 because the property always holds if &lsquo;rev&lsquo; returns the original
 list without reversing it. Therefore, we need a better property.
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> prop_reverse2 l1 m l2 =</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   rev (l1 @ [m] @ l2) = rev l2 @ [m] @ rev l1</span></code></pre></div>
-
+</div>
 This property does not hold for the buggy implementation of <span style="font-weight: bold">rev</span>. Fox example:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>rev [<span class="dv">1</span>;<span class="dv">2</span>]@[<span class="dv">3</span>]@[<span class="dv">4</span>;<span class="dv">5</span>] = rev [<span class="dv">4</span>;<span class="dv">5</span>] @ rev [<span class="dv">3</span>] @ rev [<span class="dv">1</span>;<span class="dv">2</span>]</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>;<span class="dv">4</span>;<span class="dv">5</span>] = [<span class="dv">4</span>;<span class="dv">5</span>;<span class="dv">3</span>;<span class="dv">1</span>;<span class="dv">2</span>] <span class="co">(* property fails *)</span></span></code></pre></div>
-
+</div>
 This property holds only if rev is implemented correctly.
 Lesson learned: garbage in, garbage out &#8212; if the property
 itself is flawed, property-based testing won&#8217;t catch the bug.</p><h4 class="heading">3.3<tt>&nbsp;</tt><a name="(part._.Another_example__.Delete_an_item_from_the_list)"></a>Another example: Delete an item from the list<span class="button-group"><a href="#(part._.Another_example__.Delete_an_item_from_the_list)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">We want to test the property that if &lsquo;x&lsquo; is deleted from the list,
 it shoud not be a member of this list.
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">#require &quot;qcheck&quot;;; </span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">open</span> QCheck;; </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> </span>
@@ -180,35 +180,35 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> test : QCheck.Test.t = QCheck2.Test.Test &lt;abstr&gt;</span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>Krandom seed: <span class="dv">3548757</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>Krandom seed: <span class="dv">205444849</span></span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>--- [<span class="dv">31</span>;<span class="dv">1</span>mFailure[<span class="dv">0</span>m --------------------------------------------------------------------</span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Test delete_test failed (<span class="dv">8</span> shrink steps):</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Test delete_test failed (<span class="dv">14</span> shrink steps):</span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span>, [<span class="dv">1</span>; <span class="dv">1</span>])</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>(<span class="dv">3</span>, [<span class="dv">3</span>; <span class="dv">3</span>])</span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>================================================================================</span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>[<span class="dv">31</span>;<span class="dv">1</span>mfailure[<span class="dv">0</span>m (<span class="dv">1</span> tests failed, <span class="dv">0</span> tests errored, ran <span class="dv">1</span> tests)</span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">1</span></span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">It immediately finds a counterexample. The counterexample shows
+</div></p></blockquote></blockquote></div><div class="SIntrapara">It immediately finds a counterexample. The counterexample shows
 that when are duplicates in the list, The &lsquo;delete&lsquo; only deleted the
 first occurrence. For example:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>delete <span class="dv">2</span> [<span class="dv">2</span>;<span class="dv">2</span>;<span class="dv">3</span>]  returns [<span class="dv">2</span>;<span class="dv">3</span>]</span></code></pre></div>
-</div></p><h4 class="heading">3.4<tt>&nbsp;</tt><a name="(part._.Arbitrary)"></a>Arbitrary<span class="button-group"><a href="#(part._.Arbitrary)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">An &lsquo;&rsquo;a arbitrary&lsquo; represents an "arbitrary" value of type &lsquo;&rsquo;a&lsquo;.
+</div></div></p><h4 class="heading">3.4<tt>&nbsp;</tt><a name="(part._.Arbitrary)"></a>Arbitrary<span class="button-group"><a href="#(part._.Arbitrary)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">An &lsquo;&rsquo;a arbitrary&lsquo; represents an "arbitrary" value of type &lsquo;&rsquo;a&lsquo;.
 It is used to describe how to
 </div><div class="SIntrapara"><ul><li><p>generate random values</p></li><li><p>shrink them (make counter-examples as small as possible)</p></li><li><p>print them.</p></li></ul></div><div class="SIntrapara">Here a some examples of the arbitraries QCehck offers:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>small_int:  <span class="dt">int</span> arbitrary</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">list</span>:       &#39;a arbitrary -&gt; &#39;a <span class="dt">list</span> arbitrary</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>triple:     &#39;a arbitrary -&gt; &#39;b arbitrary -&gt; </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            &#39;c arbitrary -&gt; (&#39;a * &#39;b * &#39;c) arbitrary</span></code></pre></div>
-
+</div>
 The type &lsquo;arbitrary&lsquo; is defined as:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> &#39;a arbitrary = {</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   gen: &#39;a Gen.t;</span>
@@ -218,9 +218,9 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>   collect: (&#39;a ‑&gt; <span class="dt">string</span>) <span class="dt">option</span>; <span class="co">(** map value to tag, and group by tag *)</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>   stats : &#39;a stat <span class="dt">list</span>;  <span class="co">(** statistics to collect and print *)</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-
+</div>
 We can build custom an &lsquo;arbitrary&lsquo; by calling &lsquo;QCheck.make&lsquo;.
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>make :</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  ?print:&#39;a Print.t -&gt;</span>
@@ -229,17 +229,17 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  ?collect:(&#39;a -&gt; <span class="dt">string</span>) -&gt;</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  ?stats:&#39;a stat <span class="dt">list</span> -&gt; &#39;a Gen.t -&gt; &#39;a arbitrary</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-
+</div>
 For example: Let&rsquo;s build an arbitrary that generates random ints:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a># make (Gen.<span class="dt">int</span>);;</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> arbitrary =</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>{gen = &lt;<span class="kw">fun</span>&gt;; print = <span class="dt">None</span>; small = <span class="dt">None</span>; shrink = <span class="dt">None</span>; collect = <span class="dt">None</span>;stats = []}</span></code></pre></div>
-</div></p><h5 class="heading">3.4.1<tt>&nbsp;</tt><a name="(part._.Random_.Generator)"></a>Random Generator<span class="button-group"><a href="#(part._.Random_.Generator)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><span style="font-weight: bold">&rsquo;a QCheck.Gen.t</span> is a function that takes in a Pseudorandom number generator, uses it to produce a random value of type &lsquo;&#8216;a&lsquo;.
+</div></div></p><h5 class="heading">3.4.1<tt>&nbsp;</tt><a name="(part._.Random_.Generator)"></a>Random Generator<span class="button-group"><a href="#(part._.Random_.Generator)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><span style="font-weight: bold">&rsquo;a QCheck.Gen.t</span> is a function that takes in a Pseudorandom number generator, uses it to produce a random value of type &lsquo;&#8216;a&lsquo;.
 For example, &lsquo;QCheck.Gen.int&lsquo; generates random integers, while <span style="font-weight: bold">QCheck.Gen.string</span>
  generates random strings. Let us look at  a few more of them:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> Gen : </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">sig</span></span>
@@ -251,42 +251,42 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="kw">val</span> small_string : ?gen:<span class="dt">char</span> t -&gt; <span class="dt">string</span> t</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      ...</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span></code></pre></div>
-</p><h5 class="heading">3.4.2<tt>&nbsp;</tt><a name="(part._.Sampling_.Generators)"></a>Sampling Generators<span class="button-group"><a href="#(part._.Sampling_.Generators)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>Generate a random small integer
-<div class="sourceCode" id="cb1"><pre
+</div></p><h5 class="heading">3.4.2<tt>&nbsp;</tt><a name="(part._.Sampling_.Generators)"></a>Sampling Generators<span class="button-group"><a href="#(part._.Sampling_.Generators)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>Generate a random small integer
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Gen.generate1 Gen.small_int</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span></span></code></pre></div>
-
+</div>
 Generate 10 random small integers
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Gen.generate ~n:<span class="dv">10</span> Gen.small_int</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="dt">int</span> <span class="dt">list</span> =[<span class="dv">6</span>;<span class="dv">8</span>;<span class="dv">78</span>;<span class="dv">87</span>;<span class="dv">9</span>;<span class="dv">9</span>;<span class="dv">6</span>;<span class="dv">2</span>;<span class="dv">3</span>;<span class="dv">27</span>]</span></code></pre></div>
-
+</div>
 Generate 5 int  lists
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> t = Gen.generate ~n:<span class="dv">5</span> (Gen.<span class="dt">list</span> Gen.small_int);;</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t : <span class="dt">int</span> <span class="dt">list</span> <span class="dt">list</span> =[[<span class="dv">4</span>;<span class="dv">2</span>;<span class="dv">7</span>;<span class="dv">8</span>;…];…;[<span class="dv">0</span>;<span class="dv">2</span>;<span class="dv">97</span>]]</span></code></pre></div>
-
+</div>
 Generate two string lists
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> s = Gen.generate ~n:<span class="dv">2</span> (Gen.<span class="dt">list</span> Gen.<span class="dt">string</span>);;</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> s : <span class="dt">string</span> <span class="dt">list</span> <span class="dt">list</span> =[[ “A”;”B”;…]; [“C”;”d”;…]]</span></code></pre></div>
-</p><h5 class="heading">3.4.3<tt>&nbsp;</tt><a name="(part._.Combining_.Generators)"></a>Combining Generators<span class="button-group"><a href="#(part._.Combining_.Generators)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><div class="sourceCode" id="cb1"><pre
+</div></p><h5 class="heading">3.4.3<tt>&nbsp;</tt><a name="(part._.Combining_.Generators)"></a>Combining Generators<span class="button-group"><a href="#(part._.Combining_.Generators)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>frequency:(<span class="dt">int</span> * ‘a) <span class="dt">list</span> -&gt;‘a ‘a Gen.t</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>oneof: &#39;a Gen.t <span class="dt">list</span> -&gt; &#39;a Gen.t </span></code></pre></div>
-
+</div>
 Generate 80% letters, and 20% space
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> Gen.generate ~n:<span class="dv">10</span> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    (Gen.frequency [(<span class="dv">1</span>,Gen.return &#39; ‘);</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">4</span>,Gen.char_range <span class="ch">&#39;a&#39;</span> <span class="ch">&#39;z&#39;</span>)]);;</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">char</span> <span class="dt">list</span>=[<span class="ch">&#39;i&#39;</span>;<span class="ch">&#39; &#39;</span>;<span class="ch">&#39;j&#39;</span>;<span class="ch">&#39;h&#39;</span>;<span class="ch">&#39;t&#39;</span>;<span class="ch">&#39; &#39;</span>;<span class="ch">&#39; &#39;</span>;<span class="ch">&#39; &#39;</span>;<span class="ch">&#39;k&#39;</span>;<span class="ch">&#39;b&#39;</span>]</span></code></pre></div>
-</p><p>Generate one of the parenthesis &lsquo;[,],(,),{,}&lsquo;
-<div class="sourceCode" id="cb1"><pre
+</div></p><p>Generate one of the parenthesis &lsquo;[,],(,),{,}&lsquo;
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Gen.generate1 (Gen.oneof [</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>              return <span class="st">&quot;[&quot;</span>;</span>
@@ -297,36 +297,36 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>              return <span class="st">&quot;}&quot;</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>            ]);;</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> = <span class="st">&quot;]&quot;</span></span></code></pre></div>
-</p><h5 class="heading">3.4.4<tt>&nbsp;</tt><a name="(part._.Shrinking)"></a>Shrinking<span class="button-group"><a href="#(part._.Shrinking)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>Shrinking is used to reduce the size of a counter-example. It tries to make the counter-example smaller by decreasing it, or removing elements, until the property to test holds again; then it returns the smallest value that still made the test fail. Therefore, a shrinker attempts to cut a counterexample down to something more comprehensible for humans.  A QCheck shrinker is a function from a counterexample to an iterator of simpler values:
-<div class="sourceCode" id="cb1"><pre
+</div></p><h5 class="heading">3.4.4<tt>&nbsp;</tt><a name="(part._.Shrinking)"></a>Shrinking<span class="button-group"><a href="#(part._.Shrinking)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>Shrinking is used to reduce the size of a counter-example. It tries to make the counter-example smaller by decreasing it, or removing elements, until the property to test holds again; then it returns the smallest value that still made the test fail. Therefore, a shrinker attempts to cut a counterexample down to something more comprehensible for humans.  A QCheck shrinker is a function from a counterexample to an iterator of simpler values:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>&#39;a Shrink.t = &#39;a -&gt; &#39;a QCheck.Iter.t</span></code></pre></div>
-
+</div>
 Without shrinking, the &lsquo;delete&lsquo; test would return the following counterexample.
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>--- <span class="dt">Failure</span> -------------------------------</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Test anon_test_1 failed (<span class="dv">0</span> shrink steps):</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>(<span class="dv">7</span>, [<span class="dv">0</span>; <span class="dv">4</span>; <span class="dv">3</span>; <span class="dv">7</span>; <span class="dv">0</span>; <span class="dv">2</span>; <span class="dv">7</span>; <span class="dv">1</span>; <span class="dv">1</span>; <span class="dv">2</span>])</span></code></pre></div>
-
+</div>
 With shrinking, it returns:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>--- <span class="dt">Failure</span> -------------------------------</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Test anon_test_1 failed (<span class="dv">8</span> shrink steps):</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span>, [<span class="dv">2</span>; <span class="dv">2</span>])</span></code></pre></div>
-
+</div>
 It is much easier to debug the &lsquo;delete&lsquo; function with the counterexample &lsquo;[2;2]&lsquo; than &lsquo;[0; 4; 3; 7; 0; 2; 7; 1; 1; 2]&lsquo;.</p><p><div class="SIntrapara">How does shrink work?
 How do we go from:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">7</span>, [<span class="dv">0</span>; <span class="dv">4</span>; <span class="dv">3</span>; <span class="dv">7</span>; <span class="dv">0</span>; <span class="dv">2</span>; <span class="dv">7</span>; <span class="dv">1</span>; <span class="dv">1</span>; <span class="dv">2</span>])</span></code></pre></div>
-
+</div>
 to:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">2</span>, [<span class="dv">2</span>; <span class="dv">2</span>])</span></code></pre></div>
-
+</div>
 Given a counterexample, QCheck calls the iterator to find a
 simpler value, that is still a counterexample. The steps are as follows:
 </div><div class="SIntrapara"><ul><li><p>Given a shrinking function  f ::&#8216;a -&gt; &#8216;a list </p></li><li><p>And a counterexample x :: &#8216;a</p></li><li><p>Try all elements of (f x) to find another failing input&#8230;</p></li><li><p>Repeat until a minimal one is found.</p></li></ul></div><div class="SIntrapara"><img src="shrink.png" alt="" width="812" height="217"/></div></p><p><div class="SIntrapara">QCheck&#8217;s Shrink contains a number of builtin shrinkers:
@@ -334,9 +334,9 @@ simpler value, that is still a counterexample. The steps are as follows:
 <a href="https://github.com/anwarmamat/cmsc330spring2024/tree/main/examples/qcheck/even_number">Even Numner</a>
  and <a href="https://github.com/anwarmamat/cmsc330spring2024/tree/main/examples/qcheck/balanced_brackets_buggy">Balanced Brackets</a>.</p><h5 class="heading">3.4.5<tt>&nbsp;</tt><a name="(part._.Printers)"></a>Printers<span class="button-group"><a href="#(part._.Printers)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><div class="SIntrapara">Printers print a values of type &rsquo;a.
 Type:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> ‘a printer = ‘a -&gt; <span class="dt">string</span></span></code></pre></div>
-
+</div>
 Printers for primitives:
 </div><div class="SIntrapara"><ul><li><p>val pr_bool : bool printer</p></li><li><p>val pr_int  : int  printer</p></li><li><p>val pr_list : &#8216;a printer -&gt; &#8216;a list printer</p></li></ul></div></p><h4 class="heading">3.5<tt>&nbsp;</tt><a name="(part._.Example__.Even_.Number)"></a>Example: Even Number<span class="button-group"><a href="#(part._.Example__.Even_.Number)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>Property-based testing generates numerous random inputs. When a test fails,
 the generated input may be extremely large or complex (e.g., a massive list or
@@ -348,14 +348,59 @@ and simpler while still preserving the failure.
 The following example demonstrates how custom shrinkers work. It shows a buggy
 implementation of the function <span style="font-weight: bold">even</span>, which checks whether a given number is even.
 However, there is a bug in the code: if the input is greater than 101,
-the function always returns false. We want to find the bug using the property <div class="sourceCode" id="cb1"><pre
+the function always returns false. We want to find the bug using the property <div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>even n = (n <span class="kw">mod</span> <span class="dv">2</span> = <span class="dv">0</span>)</span></code></pre></div>
-.
+</div>.
 The custom shrinker <span style="font-weight: bold">shrink_int32</span> shrinks the counterexample by
-repeatedly subtracting 2. It stops when the counterexample becomes minimal.</p><p><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><a href="code/even_number/even.ml"><span class="stt">even_number/even.ml</span></a></span></p><blockquote class="Rfilecontent"><table cellspacing="0" cellpadding="0" class="RktBlk"><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktSym">open</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">QCheck</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta">&#160;</span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">*</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">buggy</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">even</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">number</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">function.</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">It</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">fails</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">if</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">the</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">input</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">is</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">greater</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">than</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">101</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">*</span><span class="RktPn">)</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">let</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">even</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">n</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">=</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">if</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">n</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">&gt;</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">101</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">then</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">false</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">else</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">n</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">mod</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">2</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">=</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">0</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktCmt">;;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta">&#160;</span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">*</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">Srinks</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">the</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">integer</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">by</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">subtracting</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">2</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">*</span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">let</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">shrink_int32</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">x</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">yield</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">=</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">if</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">x&gt;0</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">then</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">yield</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">x-2</span><span class="RktPn">)</span><span class="RktCmt">;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta">&#160;</span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">let</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">g</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">=</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">set_shrink</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">shrink_int32</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">int_range</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">1</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">200</span><span class="RktPn">)</span><span class="RktCmt">;;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">let</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">t</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">=</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">set_shrink</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">Shrink.nil</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">int_range</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">1</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">1000</span><span class="RktPn">)</span><span class="RktCmt">;;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta">&#160;</span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta">&#160;</span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">*</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">Property</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">test</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">for</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">even</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">*</span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">let</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">test_even</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">=</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">Test.make</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">~name:</span><span class="RktVal">"test_even"</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">~count:1000</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">*</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">number</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">of</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">tests</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">*</span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">set_shrink</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">shrink_int32</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">int_range</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">1</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">200</span><span class="RktPn">)</span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">fun</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">n</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym"><span class="nobreak">-&gt;</span></span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">even</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">n</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">=</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">n</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">mod</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">2</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">=</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktVal">0</span><span class="RktPn">)</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktCmt">;;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta">&#160;</span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">*</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">run</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">the</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">test</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">*</span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">*</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">debug_shrink</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">shows</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">the</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">steps</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">of</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">shrinking</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">a</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">random</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">integer</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">by</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">repeatedly</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">subtracting</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">2*</span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta">&#160;</span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">QCheck_runner.run_tests</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">~verbose:true</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">?debug_shrink:</span><span class="RktPn">(</span><span class="RktSym">Some</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">Some</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">Stdio.stdout</span><span class="RktPn">)</span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">[</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktSym">test_even</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">]</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktCmt">;;</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta">&#160;</span></td></tr></table></blockquote></blockquote></div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><a href="code/even_number/dune"><span class="stt">even_number/dune</span></a></span></p><blockquote class="Rfilecontent"><table cellspacing="0" cellpadding="0" class="RktBlk"><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktPn">(</span><span class="RktSym">tests</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">names</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">even</span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">(</span><span class="RktSym">libraries</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">stdio</span><span class="RktMeta"></span><span class="hspace">&nbsp;</span><span class="RktMeta"></span><span class="RktSym">qcheck</span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta"></span><span class="RktPn">)</span><span class="RktMeta"></span></td></tr><tr><td><span class="hspace">&nbsp;&nbsp;</span><span class="RktMeta">&#160;</span></td></tr></table></blockquote></blockquote></div><div class="SIntrapara">Here is the result of running <span style="font-weight: bold">dune test</span>. As you can see, QCheck found a
+repeatedly subtracting 2. It stops when the counterexample becomes minimal.</p><p><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><a href="code/even_number/even.ml"><span class="stt">even_number/even.ml</span></a></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> QCheck</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">(* buggy even number function. It fails if the input is greater than 101 *)</span>   </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> even n = </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> n &gt; <span class="dv">101</span> <span class="kw">then</span> <span class="kw">false</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">else</span> n <span class="kw">mod</span> <span class="dv">2</span> = <span class="dv">0</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>;;</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">(* Srinks the integer by subtracting 2 *)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> shrink_int32 x yield =</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">if</span> x&gt;<span class="dv">0</span> <span class="kw">then</span> yield (x<span class="dv">-2</span>);</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    ()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> g = set_shrink shrink_int32  (int_range <span class="dv">1</span> <span class="dv">200</span>);;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> t = set_shrink Shrink.nil  (int_range <span class="dv">1</span> <span class="dv">1000</span>);;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">(* Property test for even  *)</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span>  test_even = </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  Test.make</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    ~name:<span class="st">&quot;test_even&quot;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    ~count:<span class="dv">1000</span> <span class="co">(* number of tests *)</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>   (set_shrink shrink_int32  (int_range <span class="dv">1</span> <span class="dv">200</span>))</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    (<span class="kw">fun</span> n -&gt;</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      even n  = (n <span class="kw">mod</span> <span class="dv">2</span> = <span class="dv">0</span>) </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>;;</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">(* run the test *)</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">(* </span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">debug_shrink shows the steps of shrinking a random integer by repeatedly subtracting 2*)</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>QCheck_runner.run_tests </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  ~verbose:<span class="kw">true</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  ?debug_shrink:(<span class="dt">Some</span> (<span class="dt">Some</span> Stdio.<span class="dt">stdout</span>))</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  [</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    test_even</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>;;</span></code></pre></div>
+</div></p></blockquote></blockquote></div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><a href="code/even_number/dune"><span class="stt">even_number/dune</span></a></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(tests</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    (names even)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    (libraries stdio qcheck)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+</div></p></blockquote></blockquote></div><div class="SIntrapara">Here is the result of running <span style="font-weight: bold">dune test</span>. As you can see, QCheck found a
 counterexample of 108, and the shrinker reduced it to 106, then 104, and finally
 stopped at 102, which is the minimal counterexample
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>random seed: <span class="dv">257932476</span>            </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>generated error fail pass / total     time test name</span>
@@ -392,4 +437,4 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="dv">102</span></span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>================================================================================</span>
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>failure (<span class="dv">1</span> tests failed, <span class="dv">0</span> tests errored, ran <span class="dv">1</span> tests)</span></code></pre></div>
-</div></p><div class="navsetbottom"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="Imperative_OCaml.html" title="backward to &quot;2 Imperative Programming with OCaml&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<a href="regexp.html" title="forward to &quot;4 OCaml Regular Expressions&quot;" data-pltdoc="x" rel="next">next &rarr;</a></span>&nbsp;</div></div></div><div id="contextindicator">&nbsp;</div></body></html>
+</div></div></p><div class="navsetbottom"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="Imperative_OCaml.html" title="backward to &quot;2 Imperative Programming with OCaml&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<a href="regexp.html" title="forward to &quot;4 OCaml Regular Expressions&quot;" data-pltdoc="x" rel="next">next &rarr;</a></span>&nbsp;</div></div></div><div id="contextindicator">&nbsp;</div></body></html>

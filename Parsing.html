@@ -7,19 +7,19 @@ identifiers, numeric literals, and punctuation symbols. During this stage, the l
 typically ignores or discards whitespace and comments, as they are not needed for
 syntactic analysis.</p><p>We will create a lexer and parser for a simple expression language, which only supports integers addition.
 First, we create the <span style="font-weight: bold">token</span> type that represents all the tokens in the alphabet.
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> token =</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    Tok_Num <span class="kw">of</span> <span class="dt">char</span> <span class="co">(* represents a single digit number *)</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  | Tok_Add <span class="co">(* represents + *)</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  | Tok_END <span class="co">(* end of token list)</span></span></code></pre></div>
-
+</div>
 The tokenizer will take a string the splits it into a list of tokens. For example:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tokenize <span class="st">&quot;1 + 2&quot;</span> = [Tok_Num <span class="ch">&#39;1&#39;</span>; Tok_Add; Tok_Num <span class="ch">&#39;2&#39;</span>; Tok_END]</span></code></pre></div>
-</p><p>Here is the full tokenizer code:
-<div class="sourceCode" id="cb1"><pre
+</div></p><p>Here is the full tokenizer code:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">#require &quot;str&quot;;;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -66,7 +66,7 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  tokenize <span class="st">&quot;3 *+++&quot;</span>;;</span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a> - : token <span class="dt">list</span> = [Tok_Num <span class="st">&quot;3&quot;</span>; Tok_Mult; Tok_Add; Tok_Add; Tok_Add; Tok_END]</span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p><p>"2+3*4"
+</div></p><p>"2+3*4"
 -&gt; Lexer/Tokenizer/Scanner
 split the input string into tokens
 2, +, 3, *, 4</p><p>int, main, (, void, ), { ..... }
@@ -74,19 +74,19 @@ for3, for,_abc,$abc,</p><h4 class="heading">7.2<tt>&nbsp;</tt><a name="(part._la
 specified grammar or format, and transforms them into an abstract syntax tree (AST).</p><p>AST is a shape of a program. Once we have the AST, we can optimize, evaluate, or generate machine code for the program.
 For example,
 given a context free grammar
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   S -&gt; A + S | A</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>   A -&gt; n | (S)</span></code></pre></div>
-
-we parse <div class="sourceCode" id="cb1"><pre
+</div>
+we parse <div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>[Tok_Num <span class="st">&quot;3&quot;</span>; Tok_Mult; Tok_Num <span class="st">&quot;4&quot;</span>; Tok_Add; Tok_Num <span class="st">&quot;2&quot;</span>; Tok_END]</span></code></pre></div>
- into</p><p><img src="auto-graphg24190.png" alt="" width="227" height="251"/></p><h5 class="heading">7.2.1<tt>&nbsp;</tt><a name="(part._.Recursive_.Descent_.Parser)"></a>Recursive Descent Parser<span class="button-group"><a href="#(part._.Recursive_.Descent_.Parser)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>In practice, parsers are often created using tools known as parser generators. Examples include
+</div> into</p><p><img src="auto-graphg24190.png" alt="" width="227" height="251"/></p><h5 class="heading">7.2.1<tt>&nbsp;</tt><a name="(part._.Recursive_.Descent_.Parser)"></a>Recursive Descent Parser<span class="button-group"><a href="#(part._.Recursive_.Descent_.Parser)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>In practice, parsers are often created using tools known as parser generators. Examples include
 Yacc, Bison, ANTLR, and LALRPOP. In this lecture, we will focus on the Recursive Descent Parser,
 a simple type of parser that can be implemented manually.</p><p>A Recursive Descent Parser attempts to produce a leftmost derivation of the input. Starting
 from the start symbol (S) and the sequence of input tokens (t), it repeatedly rewrites S
 and consumes tokens from t using the grammar&#8217;s production rules, continuing until all
-tokens are matched or a parsing failure occurs.</p><p><div class="sourceCode" id="cb1"><pre
+tokens are matched or a parsing failure occurs.</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> expr = </span>
@@ -139,7 +139,7 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> lookahead t2 = Tok_rparen <span class="kw">then</span> (e2, match_token t2 Tok_rparen)</span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="dt">raise</span> (ParseError <span class="st">&quot;parse_B 1&quot;</span>)</span>
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  | _ -&gt; <span class="dt">raise</span> (ParseError <span class="st">&quot;parse_B 2&quot;</span>)</span></code></pre></div>
-</p><h4 class="heading">7.3<tt>&nbsp;</tt><a name="(part._.Recursive_.Descent_.Parser_.Example)"></a>Recursive Descent Parser Example<span class="button-group"><a href="#(part._.Recursive_.Descent_.Parser_.Example)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p><h4 class="heading">7.3<tt>&nbsp;</tt><a name="(part._.Recursive_.Descent_.Parser_.Example)"></a>Recursive Descent Parser Example<span class="button-group"><a href="#(part._.Recursive_.Descent_.Parser_.Example)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="ot">#require &quot;str&quot;;; </span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="co">(* expr : user-defined variant datatype for arithmetic </span></span>
@@ -401,4 +401,4 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">unit</span> = ()</span>
 <span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote><div class="navsetbottom"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="Context_Free_Grammars.html" title="backward to &quot;6 Context Free Grammars&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<a href="Operational_Semantics.html" title="forward to &quot;8 Operational Semantics&quot;" data-pltdoc="x" rel="next">next &rarr;</a></span>&nbsp;</div></div></div><div id="contextindicator">&nbsp;</div></body></html>
+</div></p></blockquote></blockquote><div class="navsetbottom"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="Context_Free_Grammars.html" title="backward to &quot;6 Context Free Grammars&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<a href="Operational_Semantics.html" title="forward to &quot;8 Operational Semantics&quot;" data-pltdoc="x" rel="next">next &rarr;</a></span>&nbsp;</div></div></div><div id="contextindicator">&nbsp;</div></body></html>

@@ -14,7 +14,7 @@ and <span style="font-weight: bold">arrays</span> that are actually mutable, I.e
 expensive. Mutability reduces this overhead in performance-critical code.</p><p>For example, Java&#8217;s &lsquo;StringBuilder&lsquo; is mutable to support efficient string construction, avoiding the creation of many temporary immutable strings.</p></li></ul></div></p><h5 class="heading">2.2.3<tt>&nbsp;</tt><a name="(part._.Interfacing_with_the_.Real_.World__.I_.O_and_.Stateful_.A.P.Is_)"></a>Interfacing with the Real World (I/O and Stateful APIs)<span class="button-group"><a href="#(part._.Interfacing_with_the_.Real_.World__.I_.O_and_.Stateful_.A.P.Is_)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><div class="SIntrapara">The real world is inherently mutable:
 </div><div class="SIntrapara"><ul><li><p>Files change</p></li><li><p>Network connections open and close</p></li><li><p>GUIs respond to events</p></li><li><p>Databases update records</p></li></ul></div></p><p>Interacting with these systems naturally involves state changes, making controlled mutability essential.</p><h5 class="heading">2.2.4<tt>&nbsp;</tt><a name="(part._.Algorithms_.That_.Are_.Naturally_.Stateful)"></a>Algorithms That Are Naturally Stateful<span class="button-group"><a href="#(part._.Algorithms_.That_.Are_.Naturally_.Stateful)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>Some algorithms are conceptually clearer when expressed with mutation.</p><p>Examples include graph algorithms such as <span style="font-weight: bold">DFS</span> and <span style="font-weight: bold">BFS</span>, which involve:</p><ul><li><p>Marking nodes as visited</p></li><li><p>Updating distances</p></li><li><p>Maintaining queues or priority queues</p></li></ul><p>Using immutable data structures is possible, but often:</p><ul><li><p>More complex</p></li><li><p>Slower</p></li><li><p>Harder to understand</p></li></ul><p>Mutation makes the algorithm&#8217;s intent explicit.</p><h5 class="heading">2.2.5<tt>&nbsp;</tt><a name="(part._4__.Caching_and_.Memoization)"></a>4. Caching and Memoization<span class="button-group"><a href="#(part._4__.Caching_and_.Memoization)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p>Caching stores the results of expensive computations so they can be reused.</p><p><div class="SIntrapara">Mutation is useful because:
 </div><div class="SIntrapara"><ul><li><p>The cache persists across function calls</p></li><li><p>Recomputation is avoided</p></li><li><p>The implementation is clear and efficient</p></li></ul></div></p><p>Pure memoization is possible but often awkward or slower.</p><p><div class="SIntrapara">OCaml example:
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> expensive x = x * x;; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> memo_f = </span>
@@ -33,7 +33,7 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> memo_f : <span class="dt">int</span> -&gt; <span class="dt">int</span> = &lt;<span class="kw">fun</span>&gt;</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div></p><h5 class="heading">2.2.6<tt>&nbsp;</tt><a name="(part._.Modeling_.Evolving_.State__.Simulations__.Games__.Systems_)"></a>Modeling Evolving State (Simulations, Games, Systems)<span class="button-group"><a href="#(part._.Modeling_.Evolving_.State__.Simulations__.Games__.Systems_)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><div class="SIntrapara">Many real-world systems naturally evolve over time:
+</div></p></blockquote></blockquote></div></p><h5 class="heading">2.2.6<tt>&nbsp;</tt><a name="(part._.Modeling_.Evolving_.State__.Simulations__.Games__.Systems_)"></a>Modeling Evolving State (Simulations, Games, Systems)<span class="button-group"><a href="#(part._.Modeling_.Evolving_.State__.Simulations__.Games__.Systems_)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><div class="SIntrapara">Many real-world systems naturally evolve over time:
 </div><div class="SIntrapara"><ul><li><p>Game state (player position, score)</p></li><li><p>Simulations (time steps, physical systems)</p></li><li><p>Servers maintaining session state</p></li></ul></div></p><p>It is often more intuitive to model a car by <span style="font-weight: bold">updating its fuel level</span> than by creating a new car object for every change.</p><p>Mutability matches the mental model:</p><p>&#8220;This thing changes over time.&#8221;</p><p>Forcing immutability in such cases can obscure the logic.</p><h5 class="heading">2.2.7<tt>&nbsp;</tt><a name="(part._.Internal_.Implementation_of_.Pure_.Abstractions)"></a>Internal Implementation of Pure Abstractions<span class="button-group"><a href="#(part._.Internal_.Implementation_of_.Pure_.Abstractions)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><p><div class="SIntrapara">Even in functional languages, many abstractions use mutation internally while exposing a pure interface, including:
 </div><div class="SIntrapara"><ul><li><p>Maps and sets</p></li><li><p>Compilers</p></li><li><p>Garbage collectors</p></li></ul></div></p><p><div class="SIntrapara">This approach combines:
 </div><div class="SIntrapara"><ul><li><p>The performance benefits of mutability</p></li><li><p>The reasoning benefits of immutability</p></li></ul></div></p><h5 class="heading">2.2.8<tt>&nbsp;</tt><a name="(part._.Programming_.Paradigms_and_.Algorithms)"></a>Programming Paradigms and Algorithms<span class="button-group"><a href="#(part._.Programming_.Paradigms_and_.Algorithms)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h5><ul><li><p><span style="font-weight: bold">Object-Oriented Programming (OOP)</span> often relies on mutable objects whose state changes over their lifetime.</p></li><li><p><span style="font-weight: bold">Certain algorithms</span>, such as some in-place sorting algorithms, are simpler or more efficient when
@@ -43,7 +43,7 @@ It says <span style="font-weight: bold">&#8220;Use immutability by default, and 
 </div><div class="SIntrapara"><ul><li><p>Keep mutation local</p></li><li><p>Hide it behind clean interfaces</p></li><li><p>Avoid shared, uncontrolled mutable state</p></li></ul></div></p><p>This balance is why languages such as <span style="font-weight: bold">OCaml, F#, Scala</span>, and even <span style="font-weight: bold">Haskell</span> (via &lsquo;ST&lsquo; and &lsquo;IO&lsquo;) support mutability.</p><h4 class="heading">2.3<tt>&nbsp;</tt><a name="(part._.Refs)"></a>Refs<span class="button-group"><a href="#(part._.Refs)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>There are two built-in mutable data structures in OCaml: &lsquo;refs&lsquo; and &lsquo;arrays&lsquo;.
 &lsquo;&rsquo;a ref&lsquo; is pointer to a mutable value of type &lsquo;&rsquo;a&lsquo;. There are three
 basic operations on references:
-Allocate a reference: ref e creates a new reference cell containing the value of expression e.</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+Allocate a reference: ref e creates a new reference cell containing the value of expression e.</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">ref</span> ;; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> x = <span class="dt">ref</span> <span class="dv">10</span>;; </span>
@@ -56,8 +56,8 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> y : <span class="dt">string</span> <span class="dt">ref</span> = {contents = <span class="st">&quot;hello&quot;</span>}</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote><p><div class="SIntrapara">Read the value stored in reference: !t dereferences the reference cell t to get the current value.
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote><p><div class="SIntrapara">Read the value stored in reference: !t dereferences the reference cell t to get the current value.
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(!) ;; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t = <span class="dt">ref</span> <span class="dv">10</span>;; </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> !t ;;</span>
@@ -69,8 +69,8 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">10</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">Change the value stored in reference: t := e updates the reference cell t with the value of expression e.
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote></div><div class="SIntrapara">Change the value stored in reference: t := e updates the reference cell t with the value of expression e.
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(:=) ;; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t = <span class="dt">ref</span> <span class="st">&quot;hello&quot;</span>;; </span>
@@ -87,8 +87,8 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> = <span class="st">&quot;world&quot;</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div></p><p><div class="SIntrapara">Binding variable &lsquo;x&lsquo; to a reference is immutable. The contents of the reference x points to may change.
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote></div></p><p><div class="SIntrapara">Binding variable &lsquo;x&lsquo; to a reference is immutable. The contents of the reference x points to may change.
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> z = <span class="dv">3</span>;; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> x = <span class="dt">ref</span> z;; </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> y = x;; </span>
@@ -105,26 +105,26 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">4</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">Here, &lsquo;z&lsquo; is bound to 3. It is immutable.  &lsquo;x&lsquo; and &lsquo;y&lsquo; are bound to a reference.
+</div></p></blockquote></blockquote></div><div class="SIntrapara">Here, &lsquo;z&lsquo; is bound to 3. It is immutable.  &lsquo;x&lsquo; and &lsquo;y&lsquo; are bound to a reference.
 The &lsquo;contents&lsquo; of the reference is mutable.
 <span style="font-weight: bold">x := 4</span> will update the &lsquo;contests&lsquo; to 4. &lsquo;x&lsquo; and &lsquo;y&lsquo; now points to the value 4.
 Therefore, reading <span style="font-weight: bold">y</span> using <span style="font-weight: bold"> !y</span> will return <span style="font-weight: bold">int = 4</span>.</div></p><p>Here, variables y and x are aliases. In &lsquo;let y = x&lsquo;, variable &lsquo;x&lsquo; evaluates to a
 location, and &lsquo;y&lsquo; is bound to the same location. So, changing the contents of that
 location will cause both &lsquo;!x&lsquo; and &lsquo;!y&lsquo; to change.</p><p>Evaluation of References</p><p>Evaluate &lsquo;e&lsquo; to a value &lsquo;v&lsquo;, allocate a new location loc in memory to hold &lsquo;v&lsquo;, store &lsquo;v&lsquo; in &lsquo;contents&lsquo; of memory at loc, return loc (which is itself a value).
 For example, e1 := e2 evaluates &lsquo;e2&lsquo; to a value &lsquo;v2&lsquo;, evaluates e1 to a location loc, stores &lsquo;v2&lsquo; in &lsquo;contents&lsquo; of memory at loc, returns &lsquo;()&lsquo;</p><p>Type checking Rules:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>(<span class="dt">ref</span> e)  : t <span class="dt">ref</span>  <span class="kw">if</span>  e : t </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>(e1 := e2)  : <span class="dt">unit</span> <span class="kw">if</span> e1 : t <span class="dt">ref</span> <span class="kw">and</span> e2 : t </span></code></pre></div>
-</p><h4 class="heading">2.4<tt>&nbsp;</tt><a name="(part._.Sequence)"></a>Sequence<span class="button-group"><a href="#(part._.Sequence)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>In OCaml, the semicolon ; is used to sequence expressions. It means &#8220;evaluate the first
+</div></p><h4 class="heading">2.4<tt>&nbsp;</tt><a name="(part._.Sequence)"></a>Sequence<span class="button-group"><a href="#(part._.Sequence)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>In OCaml, the semicolon ; is used to sequence expressions. It means &#8220;evaluate the first
 expression for its side effects, discard its result, then evaluate the second expression
 and return its result.&#8221;
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>e1; e2</span></code></pre></div>
-</p><p><div class="SIntrapara">&lsquo;e1; e2&lsquo; is the same as &lsquo;let () = e1 in e2&lsquo;. When evaluating, evaluate e1 to a value &lsquo;v1&lsquo;,
+</div></p><p><div class="SIntrapara">&lsquo;e1; e2&lsquo; is the same as &lsquo;let () = e1 in e2&lsquo;. When evaluating, evaluate e1 to a value &lsquo;v1&lsquo;,
 evaluate &lsquo;e2&lsquo; to a value &lsquo;v2&lsquo;, return &lsquo;v2&lsquo;. It throws away &lsquo;v1&lsquo; &#8211; so &lsquo;e1&lsquo; is useful only if
 it has side effects, e.g., if it modifies a reference&#8217;s contents or accesses a file.
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> print_both (s, t) = </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">print_string</span> s; </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">print_string</span> t; </span>
@@ -135,11 +135,11 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> print_both : <span class="dt">string</span> * <span class="dt">string</span> -&gt; <span class="dt">string</span> = &lt;<span class="kw">fun</span>&gt;</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">For typechecking, e1;e2  : t if e1 : unit and e2 : t.</div></p><blockquote class="refpara"><blockquote class="refcolumn"><blockquote class="refcontent"><p>Note: Dafny verification may timeout. Bold{;;} versus &lsquo;;&lsquo;.
+</div></p></blockquote></blockquote></div><div class="SIntrapara">For typechecking, e1;e2  : t if e1 : unit and e2 : t.</div></p><blockquote class="refpara"><blockquote class="refcolumn"><blockquote class="refcontent"><p>Note: Dafny verification may timeout. Bold{;;} versus &lsquo;;&lsquo;.
 &lsquo;;;&lsquo; ends an expression in the top-level of OCaml. Use it to say:  &#8220;Give me the value of
 this expression&#8221;. It is not used in the body of a function. It is not needed after each
 function definition.</p></blockquote></blockquote></blockquote><p>Grouping Sequences</p><p><div class="SIntrapara">If you&#8217;re not sure about the scoping rules, use begin...end, or parentheses, to group together statements with semicolons
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> x = <span class="dt">ref</span> <span class="dv">0</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> f () = </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="kw">begin</span> </span>
@@ -163,8 +163,8 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> x : <span class="dt">int</span> <span class="dt">ref</span> = {contents = <span class="dv">0</span>}</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> f : <span class="dt">unit</span> -&gt; <span class="dt">unit</span> = &lt;<span class="kw">fun</span>&gt;</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">Semicolon Examples
-<div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote></div><div class="SIntrapara">Semicolon Examples
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> ; <span class="dv">2</span> ;;</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">(* 2 – value of 2nd expression is returned *)</span>   </span>
@@ -174,7 +174,7 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">(* 5 – value of 2nd expression is returned to 1 + *)</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> + <span class="dv">2</span> ; <span class="dv">4</span> ;;</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">(* 4 – because + has higher precedence than ; *)</span></span></code></pre></div>
-</div></p><h4 class="heading">2.5<tt>&nbsp;</tt><a name="(part._.Implement_a_.Counter)"></a>Implement a Counter<span class="button-group"><a href="#(part._.Implement_a_.Counter)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></div></p><h4 class="heading">2.5<tt>&nbsp;</tt><a name="(part._.Implement_a_.Counter)"></a>Implement a Counter<span class="button-group"><a href="#(part._.Implement_a_.Counter)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> counter = <span class="dt">ref</span> <span class="dv">0</span> ;; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> next = </span>
@@ -191,8 +191,8 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">2</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">In this implementation, the &lsquo;counter&lsquo; is visible outside the &lsquo;next&lsquo; function. For example:
-<div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote></div><div class="SIntrapara">In this implementation, the &lsquo;counter&lsquo; is visible outside the &lsquo;next&lsquo; function. For example:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>next ();;</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> : <span class="dt">int</span> = <span class="dv">1</span></span>
@@ -201,9 +201,9 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> _ = count := <span class="dv">0</span>;</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>next ();;</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> : <span class="dt">int</span> = <span class="dv">1</span></span></code></pre></div>
-
+</div>
 The last call to &lsquo;next&lsquo; did not increment the counter, instead returned 1. It is not the preferred behavior of &lsquo;next&lsquo;.</div></p><p><div class="SIntrapara">To avoid this, we can hide the reference
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> next = </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> ctr = <span class="dt">ref</span> <span class="dv">0</span> <span class="kw">in</span> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">fun</span> () -&gt; </span>
@@ -214,10 +214,10 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> next : <span class="dt">unit</span> -&gt; <span class="dt">int</span> = &lt;<span class="kw">fun</span>&gt;</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">Here is the visulization of hiding the Reference
+</div></p></blockquote></blockquote></div><div class="SIntrapara">Here is the visulization of hiding the Reference
 <img src="counter.png" alt="" width="572" height="337"/></div></p><h4 class="heading">2.6<tt>&nbsp;</tt><a name="(part._.The_.Trade-.Off_.Of_.Side_.Effects)"></a>The Trade-Off Of Side Effects<span class="button-group"><a href="#(part._.The_.Trade-.Off_.Of_.Side_.Effects)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">Side effects are necessary. That&#8217;s usually why we run software!  We want something to happen that we can observe. But they also make reasoning harder.
 </div><div class="SIntrapara"><ul><li><p>Order of evaluation now matters</p></li><li><p>No referential transparency. Calling the same function with the same arguments may produce different results</p></li><li><p>Aliasing may result in hard-to-understand bugs. If we call a function with refs r1 and r2, it might do strange things if r1 and r2 are aliases</p></li></ul></div><div class="SIntrapara">Order of Evaluation</div></p><p><div class="SIntrapara">Consider this example
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y = <span class="dt">ref</span> <span class="dv">1</span>;; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> f _ z = z+<span class="dv">1</span>;;  <span class="co">(* ignores first arg *)</span> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> w = f (y:=<span class="dv">2</span>) !y;; </span>
@@ -231,31 +231,31 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">2</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">What is w if f&#8217;s arguments are evaluated left to right?
+</div></p></blockquote></blockquote></div><div class="SIntrapara">What is w if f&#8217;s arguments are evaluated left to right?
 3</div></p><p>What if they are evaluated right to left?
 2</p><p>In OCaml, the order of evaluation is unspecified. This means that the language doesn&#8217;t take a stand,
 and different implementations may do different things. On Mac, OCaml bytecode interpreter and x86
 native code evaluates right to left. You should strive to make your programs produce the same
 answer regardless of evaluation order.</p><p>Quiz: If evaluation order is left to right, rather than right to left?
 Will &lsquo;w&lsquo;&#8217;s value differ?
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y   =  <span class="dt">ref</span> <span class="dv">1</span> <span class="kw">in</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> f z =  z := !z+<span class="dv">1</span>; !z <span class="kw">in</span> </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> w   =  (f y) + (f y) <span class="kw">in</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>w</span></code></pre></div>
-
+</div>
 Answer: No</p><p>Quiz: If evaluation order is left to right, rather than right to left?
 , will w&#8217;s value differ?
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> y   =  <span class="dt">ref</span> <span class="dv">1</span> <span class="kw">in</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> f z =  z := !z+<span class="dv">1</span>; !z <span class="kw">in</span> </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> w   =  (f y) + !y <span class="kw">in</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>w</span></code></pre></div>
-
+</div>
 Answer: Yes.</p><p>Quiz: Which f is not referentially transparent? (I.e., not the case that f x = f y for all x = y) ?
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>A. <span class="kw">let</span> f z =</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> y = <span class="dt">ref</span> z <span class="kw">in</span></span>
@@ -269,17 +269,17 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> y = z <span class="kw">in</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    y+z</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>D. <span class="kw">let</span> f z = z+<span class="dv">1</span></span></code></pre></div>
-
-Answer: B</p><h4 class="heading">2.7<tt>&nbsp;</tt><a name="(part._.Structural_vs__.Physical_.Equality)"></a>Structural vs. Physical Equality<span class="button-group"><a href="#(part._.Structural_vs__.Physical_.Equality)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><ul><li><p>&lsquo;=&lsquo; compares objects structurally. &lsquo;&lt;&gt;&lsquo; is the negation of structural equality</p></li><li><p>&lsquo;==&lsquo; compares objects physically.  &lsquo;!=&lsquo; is the negation of physical equality</p></li></ul><p><div class="sourceCode" id="cb1"><pre
+</div>
+Answer: B</p><h4 class="heading">2.7<tt>&nbsp;</tt><a name="(part._.Structural_vs__.Physical_.Equality)"></a>Structural vs. Physical Equality<span class="button-group"><a href="#(part._.Structural_vs__.Physical_.Equality)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><ul><li><p>&lsquo;=&lsquo; compares objects structurally. &lsquo;&lt;&gt;&lsquo; is the negation of structural equality</p></li><li><p>&lsquo;==&lsquo; compares objects physically.  &lsquo;!=&lsquo; is the negation of physical equality</p></li></ul><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>([<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>]  =  [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>]) = <span class="kw">true</span>    </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>([<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>] &lt;&gt; [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>]) = <span class="kw">false</span> </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>([<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>] == [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>]) = <span class="kw">false</span>  </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>([<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>]  != [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>]) = <span class="kw">true</span></span></code></pre></div>
-</p><p>We mostly use &lsquo;=&lsquo; and &lsquo;&lt;&gt;&lsquo;. E.g., the &lsquo;=&lsquo; operator is used for pattern matching.
+</div></p><p>We mostly use &lsquo;=&lsquo; and &lsquo;&lt;&gt;&lsquo;. E.g., the &lsquo;=&lsquo; operator is used for pattern matching.
 But &lsquo;=&lsquo; is a problem with cyclic data structures. If a linked list have a cycle,
 &lsquo;=&lsquo; will not terminate.</p><p>Equality of refs</p><p><div class="SIntrapara">Refs are compared structurally by their contents, physically by their addresses
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">ref</span> <span class="dv">1</span> = <span class="dt">ref</span> <span class="dv">1</span>;;                 <span class="co">(* true *)</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="dt">ref</span> <span class="dv">1</span> &lt;&gt; <span class="dt">ref</span> <span class="dv">2</span> ;;              <span class="co">(* true *)</span> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="dt">ref</span> <span class="dv">1</span> != <span class="dt">ref</span> <span class="dv">1</span>;;                <span class="co">(* true *)</span> </span>
@@ -293,8 +293,8 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">bool</span> = <span class="kw">true</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div></p><h4 class="heading">2.8<tt>&nbsp;</tt><a name="(part._.Mutable_fields)"></a>Mutable fields<span class="button-group"><a href="#(part._.Mutable_fields)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">Fields of a record type can be declared as mutable.  For example, here is a record type for students whose field &lsquo;grade&lsquo; is mutable:
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote></div></p><h4 class="heading">2.8<tt>&nbsp;</tt><a name="(part._.Mutable_fields)"></a>Mutable fields<span class="button-group"><a href="#(part._.Mutable_fields)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">Fields of a record type can be declared as mutable.  For example, here is a record type for students whose field &lsquo;grade&lsquo; is mutable:
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* create a record type student with fields name, id, and grade *)</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">type</span> point={name:<span class="dt">string</span>; id:<span class="dt">int</span>; <span class="kw">mutable</span> grade:<span class="dt">char</span>};; </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> </span>
@@ -313,8 +313,8 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>- : point = {name = <span class="st">&quot;john&quot;</span>; id = <span class="dv">1234</span>; grade = <span class="ch">&#39;A&#39;</span>}</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div></p><h4 class="heading">2.9<tt>&nbsp;</tt><a name="(part._.Implementing_.Refs)"></a>Implementing Refs<span class="button-group"><a href="#(part._.Implementing_.Refs)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">Ref cells are essentially syntactic sugar for a record type with a mutable fiels called &lsquo;contents&lsquo;.
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote></div></p><h4 class="heading">2.9<tt>&nbsp;</tt><a name="(part._.Implementing_.Refs)"></a>Implementing Refs<span class="button-group"><a href="#(part._.Implementing_.Refs)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">Ref cells are essentially syntactic sugar for a record type with a mutable fiels called &lsquo;contents&lsquo;.
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> &#39;a <span class="dt">ref</span> = { <span class="kw">mutable</span> contents: &#39;a };; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> <span class="dt">ref</span> x = { contents = x };; </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> (!) r = r.contents;; </span>
@@ -328,8 +328,8 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> ( := ) : &#39;a <span class="dt">ref</span> -&gt; &#39;a -&gt; <span class="dt">unit</span> = &lt;<span class="kw">fun</span>&gt;</span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">&lsquo;ref&lsquo; type is declared in Stdlib. &lsquo;ref&lsquo; functions are compiled to equivalents of above.</div></p><h4 class="heading">2.10<tt>&nbsp;</tt><a name="(part._.Arrays)"></a>Arrays<span class="button-group"><a href="#(part._.Arrays)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">Arrays generalize ref cells from a single mutable value to a sequence of mutable values
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote></div><div class="SIntrapara">&lsquo;ref&lsquo; type is declared in Stdlib. &lsquo;ref&lsquo; functions are compiled to equivalents of above.</div></p><h4 class="heading">2.10<tt>&nbsp;</tt><a name="(part._.Arrays)"></a>Arrays<span class="button-group"><a href="#(part._.Arrays)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">Arrays generalize ref cells from a single mutable value to a sequence of mutable values
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> v = [|<span class="dv">0</span>.; <span class="dv">1</span>.|];; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> v.(<span class="dv">0</span>) &lt;- <span class="dv">5</span>.;; </span>
@@ -343,42 +343,42 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">float</span> <span class="dt">array</span> = [|<span class="dv">5</span>.; <span class="dv">1</span>.|]</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">Arrays Syntax:
-<div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote></div><div class="SIntrapara">Arrays Syntax:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>[|e1; ...; en|]</span></code></pre></div>
-</div></p><p>It evaluates to an n-element array, whose elements are initialized to v1 &#8230; vn, where e1 evaluates to v1, ..., en evaluates to vn
+</div></div></p><p>It evaluates to an n-element array, whose elements are initialized to v1 &#8230; vn, where e1 evaluates to v1, ..., en evaluates to vn
 Evaluates them right to left</p><p>Here is the type checking rule for arrays;
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>[|e1; …; en|] : t <span class="dt">array</span>  If <span class="kw">for</span> all i, each ei : t</span></code></pre></div>
-</p><p>Random access
-<div class="sourceCode" id="cb1"><pre
+</div></p><p>Random access
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>e1.(e2) </span></code></pre></div>
-</p><p>It evaluate e2 to integer value v2, evaluate e1 to array value v1, If 0 &#8804; v2 &lt; n, where n is the length of array v1, then return element at offset v2 of v1
+</div></p><p>It evaluate e2 to integer value v2, evaluate e1 to array value v1, If 0 &#8804; v2 &lt; n, where n is the length of array v1, then return element at offset v2 of v1
 Else raise Invalid_argument exception</p><p>Here is the type checking rule for the array access:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> e1.(e2) : t <span class="kw">if</span> e1 : t <span class="dt">array</span> <span class="kw">and</span> e2 : <span class="dt">int</span> </span></code></pre></div>
-</p><p>Array update
-<div class="sourceCode" id="cb1"><pre
+</div></p><p>Array update
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>e1.(e2) &lt;- e3</span></code></pre></div>
-
+</div>
 To evaluate array update, you evaluate e3 to v3, evaluate e2 to integer value v2, evaluate e1 to
 array value v1, if 0 &#8804; v2 &lt; n, where n is the length of array v1, then update element at offset
 v2 of v1 to v3, else raise Invalid_argument exception. It returns &lsquo;()&lsquo;.</p><p>Here is the type checking rule for the array update:
-<div class="sourceCode" id="cb1"><pre
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>e1.(e2) &lt;- e3 : <span class="dt">unit</span> <span class="kw">if</span> e1 : t <span class="dt">array</span> <span class="kw">and</span> e2 : <span class="dt">int</span> <span class="kw">and</span> e3 : t</span></code></pre></div>
-</p><h4 class="heading">2.11<tt>&nbsp;</tt><a name="(part._.Control_structures)"></a>Control structures<span class="button-group"><a href="#(part._.Control_structures)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>Traditional loop structures are useful with imperative features:
-<div class="sourceCode" id="cb1"><pre
+</div></p><h4 class="heading">2.11<tt>&nbsp;</tt><a name="(part._.Control_structures)"></a>Control structures<span class="button-group"><a href="#(part._.Control_structures)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>Traditional loop structures are useful with imperative features:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">while</span> e1 <span class="kw">do</span> e2 <span class="kw">done</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> x=e1 <span class="kw">to</span> e2 <span class="kw">do</span> e3 <span class="kw">done</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> x=e1 <span class="kw">downto</span> e2 <span class="kw">do</span> e3 <span class="kw">done</span></span></code></pre></div>
-</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> i = <span class="dv">1</span> <span class="kw">to</span> <span class="dv">5</span>  <span class="kw">do</span> </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">Printf</span>.printf <span class="st">&quot;%d &quot;</span> i </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">done</span>;;</span>
@@ -388,7 +388,7 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> </span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">unit</span> = ()</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote><h4 class="heading">2.12<tt>&nbsp;</tt><a name="(part._.Hashtbl_.Module)"></a>Hashtbl Module<span class="button-group"><a href="#(part._.Hashtbl_.Module)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote><h4 class="heading">2.12<tt>&nbsp;</tt><a name="(part._.Hashtbl_.Module)"></a>Hashtbl Module<span class="button-group"><a href="#(part._.Hashtbl_.Module)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> h = <span class="dt">Hashtbl</span>.create <span class="dv">1331</span>;; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="dt">Hashtbl</span>.add h <span class="st">&quot;alice&quot;</span> <span class="dv">100</span>;; </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="dt">Hashtbl</span>.add h <span class="st">&quot;bob&quot;</span> <span class="dv">200</span>;; </span>
@@ -404,8 +404,8 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">unit</span> = ()</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote><h4 class="heading">2.13<tt>&nbsp;</tt><a name="(part._.List_assoc_as_.Map)"></a>List.assoc as Map<span class="button-group"><a href="#(part._.List_assoc_as_.Map)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">An association list is an easy implementation of a map (aka dictionary)
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div></p></blockquote></blockquote><h4 class="heading">2.13<tt>&nbsp;</tt><a name="(part._.List_assoc_as_.Map)"></a>List.assoc as Map<span class="button-group"><a href="#(part._.List_assoc_as_.Map)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">An association list is an easy implementation of a map (aka dictionary)
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> d = [(<span class="st">&quot;alice&quot;</span>, <span class="dv">100</span>); (<span class="st">&quot;bob&quot;</span>, <span class="dv">200</span>); </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>          (<span class="st">&quot;cathy&quot;</span>, <span class="dv">300</span>)];; <span class="co">(* (string * int) list *)</span> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> </span>
@@ -417,9 +417,9 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Exception: <span class="dt">Not_found</span>.</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div></p><h4 class="heading">2.14<tt>&nbsp;</tt><a name="(part._.Build_a_.Map_.Using_.Functions)"></a>Build a Map Using Functions<span class="button-group"><a href="#(part._.Build_a_.Map_.Using_.Functions)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">Here&#8217;s a functional implementation of the Hashmap, which is noticeably simpler
+</div></p></blockquote></blockquote></div></p><h4 class="heading">2.14<tt>&nbsp;</tt><a name="(part._.Build_a_.Map_.Using_.Functions)"></a>Build a Map Using Functions<span class="button-group"><a href="#(part._.Build_a_.Map_.Using_.Functions)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">Here&#8217;s a functional implementation of the Hashmap, which is noticeably simpler
 than the equivalent version in C or Java.
-</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class="sourceCode" id="cb1"><pre
+</div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> empty v = <span class="kw">fun</span> _-&gt; <span class="dv">0</span>;; </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> update m k v = <span class="kw">fun</span> s-&gt;<span class="kw">if</span> k=s <span class="kw">then</span> v <span class="kw">else</span> m s </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> m = empty <span class="dv">0</span>;; </span>
@@ -445,4 +445,4 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">101</span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</p></blockquote></blockquote></div><div class="SIntrapara">Challenge: change the code to return all the values for a key</div></p><div class="navsetbottom"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="ocaml.html" title="backward to &quot;1 Functional Programming with OCaml&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<a href="pbt.html" title="forward to &quot;3 Property-Based Randomized Testing&quot;" data-pltdoc="x" rel="next">next &rarr;</a></span>&nbsp;</div></div></div><div id="contextindicator">&nbsp;</div></body></html>
+</div></p></blockquote></blockquote></div><div class="SIntrapara">Challenge: change the code to return all the values for a key</div></p><div class="navsetbottom"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="ocaml.html" title="backward to &quot;1 Functional Programming with OCaml&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<a href="pbt.html" title="forward to &quot;3 Property-Based Randomized Testing&quot;" data-pltdoc="x" rel="next">next &rarr;</a></span>&nbsp;</div></div></div><div id="contextindicator">&nbsp;</div></body></html>

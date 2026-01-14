@@ -69,3 +69,11 @@ a, .toclink, .toptoclink, .tocviewlink, .tocviewselflink, .tocviewtoggle, .plain
 .boxed {
     background: linear-gradient(to bottom left, hsl(0, 0%, 99%) 0%, hsl(293, 33%, 90%) 100%);
 }
+
+
+.fancy-box {
+  border: 1px solid #4e9a06;
+  padding: 1em;
+  background: #f6fff6;
+  #font-weight: bold;
+}

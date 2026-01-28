@@ -1,7 +1,0 @@
-# dune init project HelloWorld
-# OCAMLPARAM: unset
-# Shared cache: enabled-except-user-rules
-# Shared cache location: /Users/anwar/.cache/dune/db
-# Workspace root:
-# /Users/anwar/git/2025Fall/CMSC330/cmsc330-notes/notes/code/HelloWorld
-# Auto-detected concurrency: 12

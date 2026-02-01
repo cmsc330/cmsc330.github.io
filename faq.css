@@ -1,8 +1,8 @@
 /* Modern Details/Summary Styling */
 
 details {
-  background: #f6fff6;
-  border: 1px solid #e5e7eb;
+  background: #ebedf7;
+  border: 1px solid #ef0c27;
   border-radius: 8px;
   padding: 0;
   margin-bottom: 12px;
@@ -11,7 +11,7 @@ details {
 
 /* Striped/Alternating backgrounds */
 details:nth-child(odd) {
-  background: #ffffff;
+  background: #c2f3b3;
 }
 
 details:nth-child(even) {

@@ -71,8 +71,78 @@ a, .toclink, .toptoclink, .tocviewlink, .tocviewselflink, .tocviewtoggle, .plain
 }
 
 .fancy-box {
-  border: 1px solid #4e9a06;
-  padding: 1em;
-  background: #f6fff6;
-  #font-weight: bold;
+  border: 1px solid #d0d0d0;
+  border-left: 3px solid hsl(296, 100%, 22%);
+  border-radius: 4px;
+  padding: 0.8em 1em;
+  background: #f8f8f8;
+  overflow-x: auto;
+}
+
+/* Scribble built-in code blocks */
+.SCodeFlow {
+  border-left: 3px solid hsl(296, 100%, 22%);
+  border-radius: 4px;
+  padding: 0.6em 1em;
+  background-color: #f8f8f8;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Pandoc-generated code blocks inside fancy-box */
+.fancy-box pre {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.fancy-box div.sourceCode {
+  margin: 0;
+  background: transparent;
+}
+
+/* Quiz styling */
+.quiz-container {
+  margin: 0.5em 0;
+}
+
+.quiz-option {
+  display: block;
+  padding: 0.4em 0.8em;
+  margin: 0.25em 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.quiz-option:hover {
+  background-color: #f0e8f5;
+  border-color: hsl(296, 100%, 22%);
+}
+
+.quiz-option input[type="radio"] {
+  margin-right: 0.5em;
+  accent-color: hsl(296, 100%, 22%);
+}
+
+.quiz-correct {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.quiz-correct:hover {
+  background-color: #d4edda;
+}
+
+.quiz-incorrect {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+.quiz-incorrect:hover {
+  background-color: #f8d7da;
 }

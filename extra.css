@@ -146,3 +146,22 @@ a, .toclink, .toptoclink, .tocviewlink, .tocviewselflink, .tocviewtoggle, .plain
 .quiz-incorrect:hover {
   background-color: #f8d7da;
 }
+
+/* Accordion section numbering */
+details.accordion-section {
+  counter-reset: question;
+}
+
+details.accordion-section > details {
+  counter-increment: question;
+}
+
+details.accordion-section > details > summary::before {
+  content: counter(question) ". ";
+  font-weight: bold;
+}
+
+.question-count {
+  font-weight: normal;
+  color: #666;
+}

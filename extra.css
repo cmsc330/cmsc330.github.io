@@ -1,18 +1,46 @@
-
 .boxedtable {
-
     background-color: inherit;
-    border-collapse:collapse;
+    border-collapse: collapse;
 }
 
 .boxedtable td {
-    border: 1px solid black;
-    padding-left: 10px;
-    padding-right: 10px;
+    border: 1px solid hsl(296, 15%, 80%);
+    padding: 0.4em 0.8em;
+}
+
+table.boxed {
+    background: none;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+table.boxed td {
+    border: 1px solid hsl(296, 15%, 80%) !important;
+    padding: 0.4em 0.8em !important;
+    vertical-align: top;
+}
+
+table.boxed tr:first-child td {
+    background: hsl(296, 20%, 95%);
+}
+
+.SIntrapara table:not(.boxed) {
+    border-collapse: collapse;
+    margin: 0.5em 0;
+}
+
+.SIntrapara table:not(.boxed) td:not(:has(.hspace)) {
+    border: 1px solid hsl(296, 15%, 80%);
+    padding: 0.4em 0.8em;
+}
+
+.SIntrapara table:not(.boxed) tr:first-child td:not(:has(.hspace)) {
+    background: hsl(296, 20%, 95%);
+    font-weight: 600;
 }
 
 .version {
-visibility:hidden;
+    visibility: hidden;
 }
 
 .strike {
@@ -20,16 +48,10 @@ visibility:hidden;
 }
 
 .accessibility-link {
-   float: right;
+    float: right;
 }
 
-.stale-warning {
-    color: red;
-    background-color: #fbc9c7;
-    border: 1px solid red;
-    padding: 10px;
-}
-
+.stale-warning,
 .warning {
     color: red;
     background-color: #fbc9c7;
@@ -38,130 +60,337 @@ visibility:hidden;
 }
 
 .tocset td a.tocviewselflink {
-   color: black;
-   text-decoration: underline;
+    color: hsl(296, 100%, 22%);
+    font-weight: 600;
+    text-decoration: none;
 }
 
 .ExerciseBody {
-  padding: 0px 0px 0.5em 10px;
-  border-left-style: solid;
-  border-width: 5px;
-  border-color: orange;
-  background-color: #ffebcd;
+    padding: 0px 0px 0.5em 10px;
+    border-left-style: solid;
+    border-width: 5px;
+    border-color: orange;
+    background-color: #ffebcd;
 }
 
 .Exercise {
-   font-weight: bold;
-   background-color: #ffb167;
-   padding: 5px 0px 5px 10px;
-   margin-left: -10px;
+    font-weight: bold;
+    background-color: #ffb167;
+    padding: 5px 0px 5px 10px;
+    margin-left: -10px;
 }
 
 .tocset {
-    background-color: hsl(293, 33%, 90%);
+    background-color: #f8f8f8;
+    border-right: 1px solid hsl(296, 15%, 88%);
+    border-top-color: #f8f8f8;
+    width: 16rem;
+    box-sizing: border-box;
 }
 
-a, .toclink, .toptoclink, .tocviewlink, .tocviewselflink, .tocviewtoggle, .plainlink,
-.techinside, .techoutside:hover, .techinside:hover {
+.navsettop {
+    background: #f8f8f8;
+    border-right: 1px solid hsl(296, 15%, 88%);
+    border-bottom: 1px solid hsl(296, 15%, 88%);
+    width: 16rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 1rem;
+    gap: 0.5rem;
+    box-sizing: border-box;
+}
+
+.nosearchform {
+    display: none;
+}
+
+.navsettop a {
+    color: hsl(296, 100%, 22%);
+}
+
+.navsettop a:hover {
+    background: hsl(296, 30%, 96%);
+}
+
+.nonavigation {
+    color: #bbb;
+}
+
+.versionbox {
+    left: 19rem;
+}
+
+.tocviewsublist,
+.tocviewsublistonly,
+.tocviewsublisttop,
+.tocviewsublistbottom {
+    border-left-color: hsl(296, 15%, 82%);
+}
+
+.tocviewlist table,
+.tocviewsublist td,
+.tocviewsublistonly td,
+.tocviewsublisttop td,
+.tocviewsublistbottom td,
+.tocsub td {
+    font-size: 1rem;
+}
+
+a,
+.toclink,
+.toptoclink,
+.tocviewlink,
+.tocviewselflink,
+.tocviewtoggle,
+.plainlink,
+.techinside,
+.techoutside:hover,
+.techinside:hover {
     color: hsl(296, 100%, 22%);
 }
 
 .boxed {
-    background: linear-gradient(to bottom left, hsl(0, 0%, 99%) 0%, hsl(293, 33%, 90%) 100%);
+    background: linear-gradient(
+        to bottom left,
+        hsl(0, 0%, 99%) 0%,
+        hsl(293, 33%, 90%) 100%
+    );
 }
 
 .fancy-box {
-  border: 1px solid #d0d0d0;
-  border-left: 3px solid hsl(296, 100%, 22%);
-  border-radius: 4px;
-  padding: 0.8em 1em;
-  background: #f8f8f8;
-  overflow-x: auto;
+    border: 1px solid #d0d0d0;
+    border-left: 3px solid hsl(296, 100%, 22%);
+    border-radius: 4px;
+    padding: 0.8em 1em;
+    background: #f8f8f8;
+    overflow-x: auto;
+    margin: 1em 0;
 }
 
-/* Scribble built-in code blocks */
 .SCodeFlow {
-  border-left: 3px solid hsl(296, 100%, 22%);
-  border-radius: 4px;
-  padding: 0.6em 1em;
-  background-color: #f8f8f8;
-  overflow-x: auto;
-  white-space: pre;
+    border-left: 3px solid hsl(296, 100%, 22%);
+    border-radius: 4px;
+    padding: 0.6em 1em;
+    background-color: #f8f8f8;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 1em 0;
 }
 
-/* Pandoc-generated code blocks inside fancy-box */
 .fancy-box pre {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  border: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
 }
 
 .fancy-box div.sourceCode {
-  margin: 0;
-  background: transparent;
-}
-
-/* Quiz styling */
-.quiz-container {
-  margin: 0.5em 0;
+    margin: 0;
+    background: transparent;
 }
 
 .quiz-option {
-  display: block;
-  padding: 0.4em 0.8em;
-  margin: 0.25em 0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
+    display: block;
+    padding: 0.25em 0.5em;
+    margin: 0.4em 0;
+    cursor: pointer;
 }
 
 .quiz-option:hover {
-  background-color: #f0e8f5;
-  border-color: hsl(296, 100%, 22%);
+    background-color: hsl(296, 30%, 94%);
 }
 
 .quiz-option input[type="radio"] {
-  margin-right: 0.5em;
-  accent-color: hsl(296, 100%, 22%);
+    margin-right: 0.5em;
+    accent-color: hsl(296, 100%, 22%);
 }
 
 .quiz-correct {
-  background-color: #d4edda;
-  border-color: #28a745;
-  color: #155724;
-}
-
-.quiz-correct:hover {
-  background-color: #d4edda;
+    background-color: #d4edda;
+    color: #155724;
 }
 
 .quiz-incorrect {
-  background-color: #f8d7da;
-  border-color: #dc3545;
-  color: #721c24;
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
-.quiz-incorrect:hover {
-  background-color: #f8d7da;
+.quiz-correct::after {
+    content: " ✓";
 }
 
-/* Accordion section numbering */
+.quiz-incorrect::after {
+    content: " ✕";
+}
+
 details.accordion-section {
-  counter-reset: question;
+    counter-reset: question;
 }
 
 details.accordion-section > details {
-  counter-increment: question;
+    counter-increment: question;
 }
 
 details.accordion-section > details > summary::before {
-  content: counter(question) ". ";
-  font-weight: bold;
+    content: counter(question) ". ";
+    font-weight: bold;
 }
 
 .question-count {
-  font-weight: normal;
-  color: #666;
+    font-weight: normal;
+    color: #666;
+}
+
+.maincolumn {
+    max-width: 760px;
+    min-width: 370px;
+    margin-top: 4rem;
+    margin-left: max(17rem, calc(12rem + (100vw - 16rem - 760px) / 2));
+    margin-right: auto;
+    margin-bottom: 10rem;
+    font-size: 1.1rem;
+}
+
+p,
+.SIntrapara {
+    margin: 0 0 1em 0;
+    line-height: 1.6;
+}
+
+h1 {
+    width: auto;
+    margin-top: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+h2 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    padding-top: 0.4em;
+}
+
+h3 {
+    font-size: 1.55rem;
+    font-weight: 600;
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+    padding-top: 0.35em;
+}
+
+h4,
+h5,
+h6 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-bottom: 0.6em;
+    padding-top: 0.25em;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    border-top-color: hsl(296, 15%, 88%);
+}
+
+.main > section:first-of-type > h2:first-child {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+li {
+    margin-bottom: 0.25em;
+}
+
+p > img {
+    display: block;
+    margin: 1.5em auto;
+    max-width: 100%;
+}
+
+pre {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+blockquote.Rfilebox,
+blockquote.Rfilecontent {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+blockquote.quiz-container {
+    margin: 0;
+}
+
+.refcolumn {
+    float: none;
+    margin: 2rem;
+    width: auto;
+}
+
+@media all and (max-width: 720px) {
+    .maincolumn {
+        margin-left: 1em;
+        margin-right: 1em;
+        margin-top: 7rem;
+        margin-bottom: 2rem;
+    }
+
+    .navsettop {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+        gap: 0;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+    h3 {
+        font-size: 1.35rem;
+    }
+    h4,
+    h5,
+    h6 {
+        font-size: 1.2rem;
+    }
+}
+
+.Rfilebox {
+    position: relative;
+}
+
+.Rfiletitle {
+    position: absolute;
+    top: 0.2em;
+    right: 0.2em;
+    margin: 0;
+    background: none;
+}
+
+.Rfilename,
+.Rfilename * {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-style: normal;
+    font-weight: normal;
+    color: #999;
+    background: none;
+    border: none;
+}
+
+.Rfilecontent {
+    margin: 0;
+}
+
+.RpackageSpec {
+    padding-right: 0;
 }

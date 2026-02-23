@@ -1,7 +1,8 @@
 (*
   Lists all words from "war and peace" that match the pattern
 
-  More documentation about the Re library: https://ocaml.org/p/re/latest/doc/Re/index.html
+  More documentation about the Re library: 
+  https://ocaml.org/p/re/latest/doc/Re/index.html
 *)
 
 (* Read a file line by line*)
@@ -34,9 +35,3 @@ let match_words p =
       lines
   in
   h
-
-(*
-    let r = str2re "[a-z]*([0-9]+) [a-z]*([0-9]+)";;    
-    let t = Re.exec t "cmsc330 Spring2024";;
-    Re.Group.get t 1;; 
-    *)

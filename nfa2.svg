@@ -47,20 +47,20 @@
 </g>
 <!-- 1&#45;&gt;3 -->
 <g id="edge3" class="edge"><title>1&#45;&gt;3</title>
-<path fill="none" stroke="black" d="M77.8367,-15.1393C97.1941,-12.2323 129.916,-8.48807 158,-11 169.335,-12.0138 181.714,-14.0671 192.341,-16.128"/>
-<polygon fill="black" stroke="black" points="191.782,-19.5861 202.28,-18.1533 193.18,-12.727 191.782,-19.5861"/>
+<path fill="none" stroke="blue" d="M77.8367,-15.1393C97.1941,-12.2323 129.916,-8.48807 158,-11 169.335,-12.0138 181.714,-14.0671 192.341,-16.128"/>
+<polygon fill="blue" stroke="blue" points="191.782,-19.5861 202.28,-18.1533 193.18,-12.727 191.782,-19.5861"/>
 <text text-anchor="middle" x="140" y="-13.8" font-family="Helvetica,Arial,sans-serif" font-size="14.00">ε</text>
 </g>
 <!-- 2&#45;&gt;2 -->
 <g id="edge4" class="edge"><title>2&#45;&gt;2</title>
-<path fill="none" stroke="black" d="M132.969,-68.6641C131.406,-78.625 133.75,-88 140,-88 144.004,-88 146.405,-84.1525 147.202,-78.7682"/>
-<polygon fill="black" stroke="black" points="150.7,-78.6033 147.031,-68.6641 143.701,-78.7219 150.7,-78.6033"/>
+<path fill="none" stroke="blue" d="M132.969,-68.6641C131.406,-78.625 133.75,-88 140,-88 144.004,-88 146.405,-84.1525 147.202,-78.7682"/>
+<polygon fill="blue" stroke="blue" points="150.7,-78.6033 147.031,-68.6641 143.701,-78.7219 150.7,-78.6033"/>
 <text text-anchor="middle" x="140" y="-90.8" font-family="Helvetica,Arial,sans-serif" font-size="14.00">a</text>
 </g>
 <!-- 2&#45;&gt;3 -->
 <g id="edge5" class="edge"><title>2&#45;&gt;3</title>
-<path fill="none" stroke="black" d="M157.162,-45.784C167.62,-41.7615 181.462,-36.4379 193.397,-31.8472"/>
-<polygon fill="black" stroke="black" points="194.782,-35.0646 202.859,-28.2081 192.269,-28.5312 194.782,-35.0646"/>
+<path fill="none" stroke="blue" d="M157.162,-45.784C167.62,-41.7615 181.462,-36.4379 193.397,-31.8472"/>
+<polygon fill="blue" stroke="blue" points="194.782,-35.0646 202.859,-28.2081 192.269,-28.5312 194.782,-35.0646"/>
 <text text-anchor="middle" x="180" y="-39.8" font-family="Helvetica,Arial,sans-serif" font-size="14.00">a</text>
 </g>
 <!-- 3&#45;&gt;4 -->

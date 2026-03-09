@@ -1,0 +1,56 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="170pt" height="188pt" viewBox="0.00 0.00 170.00 188.00">
+<g id="graph0" class="graph" transform="translate(4,184) scale(1)" data-name="parse_tree">
+
+<polygon fill="white" stroke="none" points="-4,4 -4,-184 166,-184 166,4 -4,4" style=""/>
+<!-- E0 -->
+<g id="node1" class="node" pointer-events="visible" data-name="E0">
+
+<text text-anchor="middle" x="63" y="-157.8" font-family="Times,serif" font-size="14.00" style="">*</text>
+</g>
+<!-- E1 -->
+<g id="node2" class="node" pointer-events="visible" data-name="E1">
+
+<text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00" style="">+</text>
+</g>
+<!-- E0&#45;&gt;E1 -->
+<g id="edge2" class="edge" data-name="E0-&gt;E1">
+
+<path fill="none" stroke="black" d="M71.71,-144.05C75.74,-136.23 80.62,-126.75 85.13,-117.98" style=""/>
+<polygon fill="black" stroke="black" points="88.21,-119.63 89.67,-109.13 81.99,-116.43 88.21,-119.63" style=""/>
+</g>
+<!-- c -->
+<g id="node3" class="node" pointer-events="visible" data-name="c">
+
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00" style="">c</text>
+</g>
+<!-- E0&#45;&gt;c -->
+<g id="edge1" class="edge" data-name="E0-&gt;c">
+
+<path fill="none" stroke="black" d="M54.29,-144.05C50.26,-136.23 45.38,-126.75 40.87,-117.98" style=""/>
+<polygon fill="black" stroke="black" points="44.01,-116.43 36.33,-109.13 37.79,-119.63 44.01,-116.43" style=""/>
+</g>
+<!-- b -->
+<g id="node4" class="node" pointer-events="visible" data-name="b">
+
+<text text-anchor="middle" x="63" y="-13.8" font-family="Times,serif" font-size="14.00" style="">b</text>
+</g>
+<!-- E1&#45;&gt;b -->
+<g id="edge3" class="edge" data-name="E1-&gt;b">
+
+<path fill="none" stroke="black" d="M90.29,-72.05C86.26,-64.23 81.38,-54.75 76.87,-45.98" style=""/>
+<polygon fill="black" stroke="black" points="80.01,-44.43 72.33,-37.13 73.79,-47.63 80.01,-44.43" style=""/>
+</g>
+<!-- d -->
+<g id="node5" class="node" pointer-events="visible" data-name="d">
+
+<text text-anchor="middle" x="135" y="-13.8" font-family="Times,serif" font-size="14.00" style="">d</text>
+</g>
+<!-- E1&#45;&gt;d -->
+<g id="edge4" class="edge" data-name="E1-&gt;d">
+
+<path fill="none" stroke="black" d="M107.71,-72.05C111.74,-64.23 116.62,-54.75 121.13,-45.98" style=""/>
+<polygon fill="black" stroke="black" points="124.21,-47.63 125.67,-37.13 117.99,-44.43 124.21,-47.63" style=""/>
+</g>
+</g>
+</svg>

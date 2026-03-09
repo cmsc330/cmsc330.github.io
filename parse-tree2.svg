@@ -1,0 +1,24 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="62pt" height="116pt" viewBox="0.00 0.00 62.00 116.00">
+<g id="graph0" class="graph" transform="translate(4,112) scale(1)" data-name="parse_tree">
+
+<polygon fill="white" stroke="none" points="-4,4 -4,-112 58,-112 58,4 -4,4"/>
+<!-- E -->
+<g id="node1" class="node" pointer-events="visible" data-name="E">
+
+<ellipse fill="none" stroke="black" cx="27" cy="-90" rx="18" ry="18"/>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00">E</text>
+</g>
+<!-- a -->
+<g id="node2" class="node" pointer-events="visible" data-name="a">
+
+<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00">a</text>
+</g>
+<!-- E&#45;&gt;a -->
+<g id="edge1" class="edge" data-name="E-&gt;a">
+
+<path fill="none" stroke="black" d="M27,-71.7C27,-64.21 27,-55.26 27,-46.88"/>
+<polygon fill="black" stroke="black" points="30.5,-47.14 27,-37.14 23.5,-47.14 30.5,-47.14"/>
+</g>
+</g>
+</svg>

@@ -196,7 +196,21 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <img src="parse-tree4.svg" alt="" width="260pt" height="332pt"/></p></section><section class="SsectionLevel4" id="section 7.5.2"><h4 class="heading">7.5.2<span class="stt">&nbsp;</span><a name="(part._.Abstract_.Syntax_.Trees_vs__.Parse_.Trees)"></a>Abstract Syntax Trees vs. Parse Trees<span class="button-group"><a href="#(part._.Abstract_.Syntax_.Trees_vs__.Parse_.Trees)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>A parse tree and an AST are <span style="font-weight: bold">not</span> the same thing. The AST is a
 data structure produced by parsing &#8212; it drops syntactic noise
 (like parentheses and grammar nonterminals) and records only the
-key semantic elements.</p><p><div class="SIntrapara">Here is the parse tree and AST for <span class="stt">a*c</span>:
+key semantic elements.</p><p>An AST can be expressed with an OCaml datatype that is very close to the CFG that describes the language syntax
+CFG for arithmetic expressions:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>E → a | b | c | d </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    | E+E  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  | E-E</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    | E*E </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    | (E)</span></code></pre></div>
+</div></p><p>AST:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> expr = A | B | C | D</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  | Plus <span class="kw">of</span> expr * expr</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  | Minus <span class="kw">of</span> expr * expr</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  | Mult <span class="kw">of</span> expr * expr</span></code></pre></div>
+</div></p><p><table cellspacing="0" cellpadding="0" class="boxed" style="border-collapse: collapse;"><tr><td align="center" style="border: 1px solid black;"><p><span style="font-weight: bold">Expression</span></p></td><td align="center" style="border: 1px solid black;"><p><span style="font-weight: bold">Parses to</span></p></td></tr><tr><td align="center" style="border: 1px solid black;"><p><span class="stt">a-c</span></p></td><td align="center" style="border: 1px solid black;"><p><span class="stt">Minus (A, C)</span></p></td></tr><tr><td align="center" style="border: 1px solid black;"><p><span class="stt">a-(b*a)</span></p></td><td align="center" style="border: 1px solid black;"><p><span class="stt">Minus (A, Mult (B,A))</span></p></td></tr><tr><td align="center" style="border: 1px solid black;"><p><span class="stt">c*(b+d)</span></p></td><td align="center" style="border: 1px solid black;"><p><span class="stt">Mult (C, Plus (B,D))</span></p></td></tr></table></p><p><div class="SIntrapara">Here is the parse tree and AST for <span class="stt">a*c</span>:
 </div><div class="SIntrapara"><table cellspacing="0" cellpadding="0"><tr><td><p>Parse tree for <span class="stt">a*c</span>:
 <img src="parse-tree3.svg" alt="" width="188/5pt" height="188/5pt"/></p></td><td><p><span class="hspace">&nbsp;&nbsp;</span></p></td><td><p>AST <span class="stt">a*c</span>:
 <img src="ast3.svg" alt="" width="134pt" height="116pt"/></p></td></tr></table></div></p><p>In OCaml code, we can represent the AST as: <span class="stt">Mult(Var("a"), Var("c"))</span></p><p><div class="SIntrapara">For <span class="stt">c*(b+d)</span>:

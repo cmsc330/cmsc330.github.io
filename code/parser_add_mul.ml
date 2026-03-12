@@ -1,4 +1,3 @@
-#require "str"
 
 (* expr : user-defined variant datatype for arithmetic 
    expressions  
@@ -46,19 +45,20 @@ type token =
   | Tok_RParen
   | Tok_END
 
-let re_num = Str.regexp "[0-9]+" (* single digit number *)
-let re_add = Str.regexp "+"
-let re_sub = Str.regexp "-"
-let re_mult = Str.regexp "*"
-let re_lparen = Str.regexp "("
-let re_rparen = Str.regexp ")"
-let re_space = Str.regexp " "
-
 (*----------------------------------------------------------
   function tokenize : string -> token list
   converts string into a list of tokens
 *)
 let tokenize str =
+  let re_num = Str.regexp "[0-9]+" in
+  (* single digit number *)
+  let re_add = Str.regexp "+" in
+  let re_sub = Str.regexp "-" in
+  let re_mult = Str.regexp "*" in
+  let re_lparen = Str.regexp "(" in
+  let re_rparen = Str.regexp ")" in
+  let re_space = Str.regexp " " in
+
   let rec tok pos s =
     if pos >= String.length s then [ Tok_END ]
     else if Str.string_match re_num s pos then
@@ -184,6 +184,7 @@ let pp = Printf.printf
   function eval_str : given string, parse string, build AST,
   	evaluate value of AST
 *)
+
 let eval_str str =
   let tokens = tokenize str in
 
@@ -197,10 +198,13 @@ let eval_str str =
   let v = eval a in
   pp "Value of AST = %d\n" v
 ;;
-
+Printf.printf "\nExample 1:\n";;
 eval_str "1*2*3-4*5*6";;
+Printf.printf "\nExample 2:\n";;
 eval_str "1+2+3*4*5+6";;
+Printf.printf "\nExample 3:\n";;
 eval_str "1+(2+3)*4*5+6";;
-eval_str "100 *      (10 + 20)";;
+Printf.printf "\nExample 4:\n";;
+eval_str "100 *      (10 + 20)"
 (* eval_str "(2^5)*2";;  error *)
 (* eval_str "1++12" error *)

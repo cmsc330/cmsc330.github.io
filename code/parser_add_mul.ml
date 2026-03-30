@@ -1,3 +1,9 @@
+(* This expression parser uses the OCaml Str module.
+   To run, use:
+
+     utop -require str parser_add_mul.ml
+
+*)
 
 (* expr : user-defined variant datatype for arithmetic 
    expressions  
@@ -10,8 +16,8 @@ type expr =
   | Mult of expr * expr
 
 (*
-  function a_to_str : arith -> string
-        converts arithmetic expression into a string
+  function expr_to_str : expr -> string
+  converts arithmetic expression into a string
 *)
 
 let rec expr_to_str a =
@@ -22,12 +28,12 @@ let rec expr_to_str a =
   | Mult (a1, a2) -> "(" ^ expr_to_str a1 ^ " * " ^ expr_to_str a2 ^ ")"
 
 (*
-  finds value of arithmetic expression.  always returns (Num n)
+  finds value of arithmetic expression.  always returns int
 *)
 let rec eval e =
   match e with
   | Num n -> n
-  | Add (a1, a2) -> ( match (eval a1, eval a2) with n1, n2 -> n1 + n2)
+  | Add (a1, a2) -> eval a1 + eval a2
   | Sub (a1, a2) -> ( match (eval a1, eval a2) with n1, n2 -> n1 - n2)
   | Mult (a1, a2) -> ( match (eval a1, eval a2) with n1, n2 -> n1 * n2)
 
@@ -51,13 +57,12 @@ type token =
 *)
 let tokenize str =
   let re_num = Str.regexp "[0-9]+" in
-  (* single digit number *)
   let re_add = Str.regexp "+" in
   let re_sub = Str.regexp "-" in
   let re_mult = Str.regexp "*" in
   let re_lparen = Str.regexp "(" in
   let re_rparen = Str.regexp ")" in
-  let re_space = Str.regexp " " in
+  let re_space = Str.regexp "[ \t\n]+" in
 
   let rec tok pos s =
     if pos >= String.length s then [ Tok_END ]
@@ -65,7 +70,9 @@ let tokenize str =
       let token = Str.matched_string s in
       let len = String.length token in
       Tok_Num token :: tok (pos + len) s
-    else if Str.string_match re_space s pos then tok (pos + 1) s
+    else if Str.string_match re_space s pos then
+      let matched = Str.matched_string s in
+      tok (pos + String.length matched) s
     else if Str.string_match re_add s pos then Tok_Add :: tok (pos + 1) s
     else if Str.string_match re_sub s pos then Tok_Sub :: tok (pos + 1) s
     else if Str.string_match re_mult s pos then Tok_Mult :: tok (pos + 1) s
@@ -76,11 +83,11 @@ let tokenize str =
   tok 0 str
 
 (*
-  function tok_to_str : token -> string
-  converts token into a string
+  function token_to_name: token -> string
+  converts token into its constructor name
 *)
 
-let string1_of_token t =
+let token_to_name t =
   match t with
   | Tok_Num v -> "Tok_Num " ^ v
   | Tok_Add -> "Tok_Add"
@@ -90,9 +97,13 @@ let string1_of_token t =
   | Tok_RParen -> "Tok_RParen"
   | Tok_END -> "END"
 
-let string2_of_token t =
+(*
+  function token_to_str: token -> string
+  converts token into its symbol representation
+*)
+let token_to_str t =
   match t with
-  | Tok_Num v -> v (*(Char.escaped v)*)
+  | Tok_Num v -> v
   | Tok_Add -> "+"
   | Tok_Sub -> "-"
   | Tok_Mult -> "*"
@@ -102,17 +113,17 @@ let string2_of_token t =
 
 (* Parser *)
 (*
-   function lookahead : token list -> (token * token list)
-   Returns tuple of head of token list & tail of token list
+   function lookahead : token list -> token
+   Returns the first token in the token list
 *)
 let lookahead tokens =
-  match tokens with [] -> raise (ParseError "no tokens") | h :: t -> h
+  match tokens with [] -> raise (ParseError "no tokens") | h :: _ -> h
 
 let match_token (toks : token list) (tok : token) =
   match toks with
-  | [] -> raise (ParseError (string1_of_token tok))
+  | [] -> raise (ParseError (token_to_name tok))
   | h :: t when h = tok -> t
-  | h :: _ -> raise (ParseError (string1_of_token tok))
+  | h :: _ -> raise (ParseError (token_to_name tok))
 
 (*
 recursive descent parser
@@ -125,9 +136,9 @@ Arithmetic expression grammar:
    A -> B * A | B
    B -> n | (S)
   
-  [Basic grammar withtokens]
+  [Basic grammar with tokens]
 
-    S -> A Tok_Add S | A A
+    S -> A Tok_Add S | A Tok_Sub S | A
     A -> B Tok_Mult A | B
     B -> Tok_Num | Tok_LParen S Tok_RParen
 *)
@@ -136,12 +147,12 @@ let rec parse_S tokens =
   let e1, t1 = parse_A tokens in
   match lookahead t1 with
   | Tok_Add ->
-      (* S -> A Tok_Add E *)
+      (* S -> A Tok_Add S *)
       let t2 = match_token t1 Tok_Add in
       let e2, t3 = parse_S t2 in
       (Add (e1, e2), t3)
   | Tok_Sub ->
-      (* S -> A Tok_Add E *)
+      (* S -> A Tok_Sub S *)
       let t2 = match_token t1 Tok_Sub in
       let e2, t3 = parse_S t2 in
       (Sub (e1, e2), t3)
@@ -168,15 +179,8 @@ and parse_B tokens =
   | Tok_LParen ->
       let t = match_token tokens Tok_LParen in
       let e2, t2 = parse_S t in
-      let _ = Printf.printf "%s\n" (string1_of_token (lookahead tokens)) in
-      if lookahead t2 = Tok_RParen then (e2, match_token t2 Tok_RParen)
-      else raise (ParseError "parse_B 1")
+      (e2, match_token t2 Tok_RParen)
   | _ -> raise (ParseError "parse_B 2")
-
-(*
-  function eval_str : given string, parse string, build AST,
-  	evaluate value of AST
-*)
 
 let pp = Printf.printf
 
@@ -189,7 +193,7 @@ let eval_str str =
   let tokens = tokenize str in
 
   pp "Input token list = [";
-  List.iter (fun x -> pp "%s;" (string1_of_token x)) tokens;
+  List.iter (fun x -> pp "%s;" (token_to_name x)) tokens;
   pp "]\n";
 
   let a, t = parse_S tokens in
@@ -198,6 +202,7 @@ let eval_str str =
   let v = eval a in
   pp "Value of AST = %d\n" v
 ;;
+
 Printf.printf "\nExample 1:\n";;
 eval_str "1*2*3-4*5*6";;
 Printf.printf "\nExample 2:\n";;

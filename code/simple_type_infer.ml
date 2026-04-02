@@ -17,15 +17,6 @@ type expr =
   | App of expr * expr
   | Let of var * expr * expr
 
-let rec string_of_exptype t =
-  match t with
-  | TInt -> "int"
-  | TBool -> "bool"
-  | TArrow (t1, t2) ->
-      "(" ^ string_of_exptype t1 ^ "->" ^ string_of_exptype t2 ^ ")"
-  | Guess_t (i, { contents = None }) -> Printf.sprintf "?%d" i
-  | Guess_t (_, { contents = Some t }) -> string_of_exptype t
-
 type 'a env = (var * 'a) list
 
 exception TypeError of string
@@ -35,7 +26,7 @@ let extend (env : 'a env) (x : var) (v : 'a) : 'a env = (x, v) :: env
 
 let rec lookup (env : 'a env) (x : var) : 'a =
   match env with
-  | [] -> error ("unbound variable" ^ x)
+  | [] -> error ("unbound variable " ^ x)
   | (y, v) :: rest -> if x = y then v else lookup rest x
 
 let fresh_guess =
@@ -55,6 +46,15 @@ let rec compress (t : exptype) : exptype =
       t''
   | Guess_t (_, { contents = None }) | TInt | TBool | TArrow (_, _) -> t
 
+let rec string_of_exptype t =
+  match compress t with
+  | TInt -> "int"
+  | TBool -> "bool"
+  | TArrow (t1, t2) ->
+      "(" ^ string_of_exptype t1 ^ "->" ^ string_of_exptype t2 ^ ")"
+  | Guess_t (i, { contents = None }) -> Printf.sprintf "?%d" i
+  | Guess_t (_, { contents = Some t }) -> string_of_exptype t
+
 (* occurs check -- determine if a guess is in a type *)
 let rec occurs (r : exptype option ref) (t : exptype) : bool =
   match t with
@@ -72,10 +72,7 @@ let rec unify (t1 : exptype) (t2 : exptype) : unit =
           error
             (Printf.sprintf "occurs check failed:  %s <> %s"
                (string_of_exptype t1) (string_of_exptype t2))
-        else r := Some t;
-        print_string "\nType:";
-        print_string
-          (match !r with Some x -> string_of_exptype x | None -> "None")
+        else r := Some t
     | TArrow (t1a, t1b), TArrow (t2a, t2b) ->
         unify t1a t2a;
         unify t1b t2b
@@ -139,6 +136,5 @@ let e9 =
 let e10 = Fun ("x", Binop (Add, Int 2, ID "x"))
 let e11 = Fun ("f", App (ID "f", Int 2))
 let e12 = Fun ("x", Binop (Add, ID "x", ID "x"))
-let e13 = App (e11, e12);;
-
-string_of_exptype (compress (infer e13 []))
+let e13 = App (e11, e12)
+let () = print_endline (string_of_exptype (infer e13 []))

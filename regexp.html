@@ -16,19 +16,9 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> Re.matches r <span class="st">&quot;a12#b22abcd&quot;</span>;;</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>[Output]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Unknown directive require.</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">1</span>, characters <span class="dv">16-18</span>:</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> |  <span class="kw">let</span> str2re t = Re.Posix.compile (Re.Posix.re t);; </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                    ^^</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Error: Unbound <span class="kw">module</span> Re</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">2</span>, characters <span class="dv">9-15</span>:</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> |  <span class="kw">let</span> r = str2re <span class="st">&quot;[a-z][0-9]+&quot;</span>;; </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>             ^^^^^^</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Error: Unbound value str2re</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">3</span>, characters <span class="dv">1-3</span>:</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> |  Re.matches r <span class="st">&quot;a12#b22abcd&quot;</span>;;</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>     ^^</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>Error: Unbound <span class="kw">module</span> Re</span></code></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> str2re : <span class="dt">string</span> -&gt; Re__.Core.re = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> r : Re__.Core.re = &lt;abstr&gt;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> <span class="dt">list</span> = [<span class="st">&quot;a12&quot;</span>; <span class="st">&quot;b22&quot;</span>]</span></code></pre></div>
 </div></p></blockquote></blockquote></div></p></section><section class="SsectionLevel3" id="section 5.2"><h3 class="heading">5.2<span class="stt">&nbsp;</span><a name="(part._.Basic_.Concepts)"></a>Basic Concepts<span class="button-group"><a href="#(part._.Basic_.Concepts)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p>Regular expressions (regex) provide a formal way of describing patterns in
 strings. They form the basis for pattern matching, which we will implement
  in our next project.</p><section class="SsectionLevel4" id="section 5.2.1"><h4 class="heading">5.2.1<span class="stt">&nbsp;</span><a name="(part._.Components_of_.Regular_.Expressions)"></a>Components of Regular Expressions<span class="button-group"><a href="#(part._.Components_of_.Regular_.Expressions)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p><div class="SIntrapara">A regular expression is constructed from two types of components:
@@ -85,32 +75,13 @@ class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> Re.Group.get t <span class="dv">3</span>;; <span class="co">(* day *)</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>[Output]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Unknown directive require.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">1</span>, characters <span class="dv">16-18</span>:</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> |  <span class="kw">let</span> str2re t = Re.Posix.compile (Re.Posix.re t);; </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                    ^^</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>Error: Unbound <span class="kw">module</span> Re</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">1</span>, characters <span class="dv">15-21</span>:</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> |  <span class="kw">let</span> pattern = str2re <span class="st">&quot;([0-9]{4})-([0-9]{2})-([0-9]{2})&quot;</span>;; </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                   ^^^^^^</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Error: Unbound value str2re</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> text : <span class="dt">string</span> = <span class="st">&quot;The date is 2026-02-23.&quot;</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">1</span>, characters <span class="dv">9-11</span>:</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> |  <span class="kw">let</span> t = Re.exec pattern text;; </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>             ^^</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>Error: Unbound <span class="kw">module</span> Re</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">1</span>, characters <span class="dv">1-3</span>:</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> |  Re.Group.get t <span class="dv">1</span>;; <span class="co">(* year *)</span> </span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>     ^^</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Error: Unbound <span class="kw">module</span> Re</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">1</span>, characters <span class="dv">1-3</span>:</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> |  Re.Group.get t <span class="dv">2</span>;; <span class="co">(* month *)</span> </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>     ^^</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>Error: Unbound <span class="kw">module</span> Re</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">1</span>, characters <span class="dv">1-3</span>:</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> |  Re.Group.get t <span class="dv">3</span>;; <span class="co">(* day *)</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>     ^^</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>Error: Unbound <span class="kw">module</span> Re</span></code></pre></div>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> str2re : <span class="dt">string</span> -&gt; Re__.Core.re = &lt;<span class="kw">fun</span>&gt;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> pattern : Re__.Core.re = &lt;abstr&gt;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> text : <span class="dt">string</span> = <span class="st">&quot;The date is 2026-02-23.&quot;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t : Re.Group.t = &lt;abstr&gt;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> = <span class="st">&quot;2026&quot;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> = <span class="st">&quot;02&quot;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> = <span class="st">&quot;23&quot;</span></span></code></pre></div>
 </div></p></blockquote></blockquote></div></p><p>Example: Capturing Groups
 <div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>

@@ -30,7 +30,12 @@ class="sourceCode fish"><code class="sourceCode fish"><span id="cb1-1"><a href="
 </div></p></blockquote></blockquote></div><div class="SIntrapara">It creates a <span style="font-weight: bold">hello_cargo</span> project with the following files:
 </div><div class="SIntrapara"><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">shell</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode fish"><code class="sourceCode fish"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="er">&gt;</span> tree hello_cargo</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/bin/</span><span class="fu">sh:</span> tree: command not found</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hello_cargo</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>├── <span class="fu">Cargo.toml</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>└── <span class="fu">src</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    └── <span class="fu">main.rs</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>2 <span class="fu">directories,</span> 2 files</span></code></pre></div>
 </div></p></blockquote></blockquote></div></p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode rust"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span> cd hello_cargo</span>
@@ -654,9 +659,9 @@ class="sourceCode rust"><code class="sourceCode rust"><span id="cb1-1"><a href="
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>[Output]</span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>Alice<span class="ot">&#39;s</span> score<span class="op">:</span> <span class="dv">10</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>Alice<span class="op">:</span> <span class="dv">10</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>Bob<span class="op">:</span> <span class="dv">20</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>Final map<span class="op">:</span> <span class="op">{</span><span class="st">&quot;Alice&quot;</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span> <span class="st">&quot;Charlie&quot;</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="st">&quot;Bob&quot;</span><span class="op">:</span> <span class="dv">20</span><span class="op">}</span></span></code></pre></div>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>Bob<span class="op">:</span> <span class="dv">20</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>Alice<span class="op">:</span> <span class="dv">10</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>Final map<span class="op">:</span> <span class="op">{</span><span class="st">&quot;Bob&quot;</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span> <span class="st">&quot;Charlie&quot;</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="st">&quot;Alice&quot;</span><span class="op">:</span> <span class="dv">15</span><span class="op">}</span></span></code></pre></div>
 </div></p></blockquote></blockquote></div></p></section><section class="SsectionLevel4" id="section 12.6.6"><h4 class="heading">12.6.6<span class="stt">&nbsp;</span><a name="(part._.Primitive_.Data_.Conversion_with_as)"></a>Primitive Data Conversion with <span class="stt">as</span><span class="button-group"><a href="#(part._.Primitive_.Data_.Conversion_with_as)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>Unlike C, Rust performs <span style="font-weight: bold">no implicit numeric conversions</span>. To convert
 between primitive types use the <span class="stt">as</span> keyword:</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">Rust REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
 class="sourceCode rust"><code class="sourceCode rust"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> main() <span class="op">{</span> </span>

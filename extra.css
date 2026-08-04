@@ -394,3 +394,47 @@ blockquote.quiz-container {
 .RpackageSpec {
     padding-right: 0;
 }
+
+/* Copy-to-clipboard button on code boxes (see css/copy-code.js).
+   Inside a filebox it rides along in the absolutely-positioned .Rfiletitle;
+   a bare .fancy-box gets a .copy-wrap to anchor it, since the box itself is
+   overflow-x: auto and would scroll the button out of view. */
+.copy-wrap {
+    position: relative;
+}
+
+.copy-code-btn {
+    font-family: inherit;
+    font-size: 0.85rem;
+    line-height: 1;
+    color: #999;
+    background: none;
+    border: none;
+    padding: 0 0.25em;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+.copy-wrap > .copy-code-btn {
+    position: absolute;
+    top: 0.2em;
+    right: 0.2em;
+}
+
+.copy-code-btn:hover {
+    color: hsl(296, 100%, 22%);
+}
+
+.Rfilebox:hover .copy-code-btn,
+.copy-wrap:hover .copy-code-btn,
+.copy-code-btn:focus-visible,
+.copy-code-btn.copied {
+    opacity: 1;
+}
+
+@media (hover: none) {
+    .copy-code-btn {
+        opacity: 1;
+    }
+}

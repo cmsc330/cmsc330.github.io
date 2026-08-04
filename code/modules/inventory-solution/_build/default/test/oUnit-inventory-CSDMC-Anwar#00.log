@@ -1,0 +1,178 @@
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Runner: processes
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Chooser: simple
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration suite_name = "inventory"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration cache_filename = "/Users/anwar/git/umd/cmsc330-notes/notes/code/modules/inventory-solution/_build/default/test/oUnit-$(suite_name).cache"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration run_gc_full_major = "true"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration display = "true"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration results_style_1_X = "false"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration testdata_dir = "none"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration health_check_interval = "1."
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration verbose = "false"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration chooser = "simple"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration output_html_dir = "none"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration processes_kill_period = "5."
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration runner = "processes"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration shards = "2"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration processes_grace_period = "5."
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration log_encoding = "utf-8"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration output_junit_file = "none"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration ci = "false"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Configuration output_file = "/Users/anwar/git/umd/cmsc330-notes/notes/code/modules/inventory-solution/_build/default/test/oUnit-$(suite_name)-$(shard_id).log"
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Using 2 workers maximum.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Starting worker number CSDMC-Anwar#01.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Worker CSDMC-Anwar#01 started.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Starting worker number CSDMC-Anwar#02.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Worker CSDMC-Anwar#02 started.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:1:make_negative_price, inventory:0:Item:0:make_and_accessors.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Start test inventory:0:Item:0:make_and_accessors.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:1:make_negative_price, inventory:0:Item:0:make_and_accessors.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Start test inventory:0:Item:1:make_negative_price.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:1:make_negative_price, inventory:0:Item:0:make_and_accessors.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Test inventory:0:Item:0:make_and_accessors is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:1:make_negative_price, inventory:0:Item:0:make_and_accessors.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: End test inventory:0:Item:0:make_and_accessors.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:1:make_negative_price, inventory:0:Item:0:make_and_accessors.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:2:make_negative_qty, inventory:0:Item:1:make_negative_price.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Start test inventory:0:Item:2:make_negative_qty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:2:make_negative_qty, inventory:0:Item:1:make_negative_price.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Test inventory:0:Item:1:make_negative_price is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:2:make_negative_qty, inventory:0:Item:1:make_negative_price.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: End test inventory:0:Item:1:make_negative_price.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:2:make_negative_qty, inventory:0:Item:1:make_negative_price.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:3:value, inventory:0:Item:2:make_negative_qty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Start test inventory:0:Item:3:value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:3:value, inventory:0:Item:2:make_negative_qty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Test inventory:0:Item:2:make_negative_qty is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:3:value, inventory:0:Item:2:make_negative_qty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: End test inventory:0:Item:2:make_negative_qty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:3:value, inventory:0:Item:2:make_negative_qty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:4:restock, inventory:0:Item:3:value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Start test inventory:0:Item:4:restock.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:4:restock, inventory:0:Item:3:value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Test inventory:0:Item:3:value is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:4:restock, inventory:0:Item:3:value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: End test inventory:0:Item:3:value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:4:restock, inventory:0:Item:3:value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:5:restock_negative, inventory:0:Item:4:restock.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Start test inventory:0:Item:5:restock_negative.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:5:restock_negative, inventory:0:Item:4:restock.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Test inventory:0:Item:4:restock is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:5:restock_negative, inventory:0:Item:4:restock.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: End test inventory:0:Item:4:restock.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:0:Item:5:restock_negative, inventory:0:Item:4:restock.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:0:empty_is_empty, inventory:0:Item:5:restock_negative.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Start test inventory:1:Stock:0:empty_is_empty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:0:empty_is_empty, inventory:0:Item:5:restock_negative.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Test inventory:0:Item:5:restock_negative is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:0:empty_is_empty, inventory:0:Item:5:restock_negative.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: End test inventory:0:Item:5:restock_negative.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:0:empty_is_empty, inventory:0:Item:5:restock_negative.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:1:add_and_find, inventory:1:Stock:0:empty_is_empty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Start test inventory:1:Stock:1:add_and_find.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:1:add_and_find, inventory:1:Stock:0:empty_is_empty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Test inventory:1:Stock:0:empty_is_empty is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:1:add_and_find, inventory:1:Stock:0:empty_is_empty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: End test inventory:1:Stock:0:empty_is_empty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:1:add_and_find, inventory:1:Stock:0:empty_is_empty.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:2:find_missing, inventory:1:Stock:1:add_and_find.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Start test inventory:1:Stock:2:find_missing.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:2:find_missing, inventory:1:Stock:1:add_and_find.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Test inventory:1:Stock:1:add_and_find is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:2:find_missing, inventory:1:Stock:1:add_and_find.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: End test inventory:1:Stock:1:add_and_find.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:2:find_missing, inventory:1:Stock:1:add_and_find.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:3:add_merges_quantities, inventory:1:Stock:2:find_missing.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Start test inventory:1:Stock:3:add_merges_quantities.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:3:add_merges_quantities, inventory:1:Stock:2:find_missing.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Test inventory:1:Stock:2:find_missing is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:3:add_merges_quantities, inventory:1:Stock:2:find_missing.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: End test inventory:1:Stock:2:find_missing.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:3:add_merges_quantities, inventory:1:Stock:2:find_missing.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:4:remove_some, inventory:1:Stock:3:add_merges_quantities.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Start test inventory:1:Stock:4:remove_some.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:4:remove_some, inventory:1:Stock:3:add_merges_quantities.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Test inventory:1:Stock:3:add_merges_quantities is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:4:remove_some, inventory:1:Stock:3:add_merges_quantities.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: End test inventory:1:Stock:3:add_merges_quantities.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:4:remove_some, inventory:1:Stock:3:add_merges_quantities.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:5:remove_all_drops_item, inventory:1:Stock:4:remove_some.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Start test inventory:1:Stock:5:remove_all_drops_item.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:5:remove_all_drops_item, inventory:1:Stock:4:remove_some.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Test inventory:1:Stock:4:remove_some is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:5:remove_all_drops_item, inventory:1:Stock:4:remove_some.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: End test inventory:1:Stock:4:remove_some.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:5:remove_all_drops_item, inventory:1:Stock:4:remove_some.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:6:remove_missing_raises, inventory:1:Stock:5:remove_all_drops_item.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Start test inventory:1:Stock:6:remove_missing_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:6:remove_missing_raises, inventory:1:Stock:5:remove_all_drops_item.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Test inventory:1:Stock:5:remove_all_drops_item is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:6:remove_missing_raises, inventory:1:Stock:5:remove_all_drops_item.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: End test inventory:1:Stock:5:remove_all_drops_item.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:6:remove_missing_raises, inventory:1:Stock:5:remove_all_drops_item.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:7:remove_too_many_raises, inventory:1:Stock:6:remove_missing_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Start test inventory:1:Stock:7:remove_too_many_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:7:remove_too_many_raises, inventory:1:Stock:6:remove_missing_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Test inventory:1:Stock:6:remove_missing_raises is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:7:remove_too_many_raises, inventory:1:Stock:6:remove_missing_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: End test inventory:1:Stock:6:remove_missing_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:7:remove_too_many_raises, inventory:1:Stock:6:remove_missing_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:8:total_value, inventory:1:Stock:7:remove_too_many_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Start test inventory:1:Stock:8:total_value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:8:total_value, inventory:1:Stock:7:remove_too_many_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Test inventory:1:Stock:7:remove_too_many_raises is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:8:total_value, inventory:1:Stock:7:remove_too_many_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: End test inventory:1:Stock:7:remove_too_many_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:8:total_value, inventory:1:Stock:7:remove_too_many_raises.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Still 2 tests running : inventory:1:Stock:9:persistence, inventory:1:Stock:8:total_value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:9:persistence, inventory:1:Stock:8:total_value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Start test inventory:1:Stock:9:persistence.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Still 2 tests running : inventory:1:Stock:9:persistence, inventory:1:Stock:8:total_value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:9:persistence, inventory:1:Stock:8:total_value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: Test inventory:1:Stock:8:total_value is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Still 2 tests running : inventory:1:Stock:9:persistence, inventory:1:Stock:8:total_value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:9:persistence, inventory:1:Stock:8:total_value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#01 I: End test inventory:1:Stock:8:total_value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Still 2 tests running : inventory:1:Stock:9:persistence, inventory:1:Stock:8:total_value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 2 tests running: inventory:1:Stock:9:persistence, inventory:1:Stock:8:total_value.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Still 1 tests running : inventory:1:Stock:9:persistence.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 1 tests running: inventory:1:Stock:9:persistence.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: Test inventory:1:Stock:9:persistence is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Still 1 tests running : inventory:1:Stock:9:persistence.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 1 tests running: inventory:1:Stock:9:persistence.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#02 I: End test inventory:1:Stock:9:persistence.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Still 1 tests running : inventory:1:Stock:9:persistence.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 1 tests running: inventory:1:Stock:9:persistence.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: 0 tests running: .
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Worker CSDMC-Anwar#01 has ended.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Worker CSDMC-Anwar#02 has ended.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Used 2 worker during test execution.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Run 8 tests with shard CSDMC-Anwar#01.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Run 8 tests with shard CSDMC-Anwar#02.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Check health of shard CSDMC-Anwar#01, 4 times.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Check health of shard CSDMC-Anwar#02, 1 times.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: ==============
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Summary:
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:1:Stock:9:persistence is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:1:Stock:8:total_value is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:1:Stock:7:remove_too_many_raises is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:1:Stock:6:remove_missing_raises is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:1:Stock:5:remove_all_drops_item is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:1:Stock:4:remove_some is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:1:Stock:3:add_merges_quantities is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:1:Stock:2:find_missing is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:1:Stock:1:add_and_find is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:1:Stock:0:empty_is_empty is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:0:Item:5:restock_negative is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:0:Item:4:restock is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:0:Item:3:value is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:0:Item:2:make_negative_qty is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:0:Item:1:make_negative_price is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Test inventory:0:Item:0:make_and_accessors is successful.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Ran: 16 tests in: 0.11 seconds.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Cases: 16.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Tried: 16.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Errors: 0.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Failures: 0.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Skip: 0.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Todo: 0.
+2026-07-15T16:57:10+00:00 CSDMC-Anwar#00 I: Timeout: 0.

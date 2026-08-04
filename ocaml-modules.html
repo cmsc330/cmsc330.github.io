@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=0.8"/><title>3&nbsp;OCaml Modules</title><link rel="stylesheet" type="text/css" href="scribble.css" title="default"/><link rel="stylesheet" type="text/css" href="racket.css" title="default"/><link rel="stylesheet" type="text/css" href="manual-style.css" title="default"/><link rel="stylesheet" type="text/css" href="manual-racket.css" title="default"/><link rel="stylesheet" type="text/css" href="extra.css" title="default"/><link rel="stylesheet" type="text/css" href="faq.css" title="default"/><link rel="stylesheet" type="text/css" href="fancyverb.css" title="default"/><script type="text/javascript" src="scribble-common.js"></script><script type="text/javascript" src="copy-code.js"></script><script type="text/javascript" src="quiz.js"></script><script type="text/javascript" src="manual-racket.js"></script></head><body id="scribble-racket-lang-org"><div class="tocset"><div class="tocview"><div class="tocviewlist tocviewlisttopspace"><div class="tocviewtitle"><table cellspacing="0" cellpadding="0"><tr><td style="width: 1em;"><a href="javascript:void(0);" title="Expand/Collapse" class="tocviewtoggle" onclick="TocviewToggle(this,&quot;tocview_0&quot;);">&#9660;</a></td><td></td><td><a href="index.html" class="tocviewlink" data-pltdoc="x">CMSC 330 Lecture Notes</a></td></tr></table></div><div class="tocviewsublisttop" style="display: block;" id="tocview_0"><table cellspacing="0" cellpadding="0"><tr><td align="right">1&nbsp;</td><td><a href="intro.html" class="tocviewlink" data-pltdoc="x">Introduction</a></td></tr><tr><td align="right">2&nbsp;</td><td><a href="ocaml.html" class="tocviewlink" data-pltdoc="x">Functional Programming with OCaml</a></td></tr><tr><td align="right">3&nbsp;</td><td><a href="" class="tocviewselflink" data-pltdoc="x">OCaml Modules</a></td></tr><tr><td align="right">4&nbsp;</td><td><a href="imperative-ocaml.html" class="tocviewlink" data-pltdoc="x">Imperative Programming with OCaml</a></td></tr><tr><td align="right">5&nbsp;</td><td><a href="pbt.html" class="tocviewlink" data-pltdoc="x">Property-<wbr></wbr>Based Randomized Testing (PBT)</a></td></tr><tr><td align="right">6&nbsp;</td><td><a href="regexp.html" class="tocviewlink" data-pltdoc="x">Regular Expressions</a></td></tr><tr><td align="right">7&nbsp;</td><td><a href="finite-automata.html" class="tocviewlink" data-pltdoc="x">Finite Automata</a></td></tr><tr><td align="right">8&nbsp;</td><td><a href="cfg.html" class="tocviewlink" data-pltdoc="x">Context Free Grammars</a></td></tr><tr><td align="right">9&nbsp;</td><td><a href="Parsing.html" class="tocviewlink" data-pltdoc="x">Parsing</a></td></tr><tr><td align="right">10&nbsp;</td><td><a href="operational-semantics.html" class="tocviewlink" data-pltdoc="x">Operational Semantics</a></td></tr><tr><td align="right">11&nbsp;</td><td><a href="type-system.html" class="tocviewlink" data-pltdoc="x">Type System</a></td></tr><tr><td align="right">12&nbsp;</td><td><a href="garbage-collection.html" class="tocviewlink" data-pltdoc="x">Memory Management and Garbage Collection</a></td></tr><tr><td align="right">13&nbsp;</td><td><a href="rust.html" class="tocviewlink" data-pltdoc="x">Rust</a></td></tr><tr><td align="right">14&nbsp;</td><td><a href="Lambda_Calculus.html" class="tocviewlink" data-pltdoc="x">Lambda Calculus</a></td></tr><tr><td align="right">15&nbsp;</td><td><a href="Software_Security.html" class="tocviewlink" data-pltdoc="x">Software Security</a></td></tr><tr><td align="right">16&nbsp;</td><td><a href="exercises.html" class="tocviewlink" data-pltdoc="x">Exercises</a></td></tr></table></div></div><div class="tocviewlist"><table cellspacing="0" cellpadding="0"><tr><td style="width: 1em;"><a href="javascript:void(0);" title="Expand/Collapse" class="tocviewtoggle" onclick="TocviewToggle(this,&quot;tocview_1&quot;);">&#9658;</a></td><td>3&nbsp;</td><td><a href="" class="tocviewselflink" data-pltdoc="x">OCaml Modules</a></td></tr></table><div class="tocviewsublistbottom" style="display: none;" id="tocview_1"><table cellspacing="0" cellpadding="0"><tr><td align="right">3.1&nbsp;</td><td><a href="#%28part._.Why_.Modules_%29" class="tocviewlink" data-pltdoc="x">Why Modules?</a></td></tr><tr><td align="right">3.2&nbsp;</td><td><a href="#%28part._.Creating_a_.Module%29" class="tocviewlink" data-pltdoc="x">Creating a Module</a></td></tr><tr><td align="right">3.3&nbsp;</td><td><a href="#%28part._.Scope_and_the_.Dot_.Operator%29" class="tocviewlink" data-pltdoc="x">Scope and the Dot Operator</a></td></tr><tr><td align="right">3.4&nbsp;</td><td><a href="#%28part._.Module_.Signatures%29" class="tocviewlink" data-pltdoc="x">Module Signatures</a></td></tr><tr><td align="right">3.5&nbsp;</td><td><a href="#%28part._.The_.Stack_.Signature%29" class="tocviewlink" data-pltdoc="x">The Stack Signature</a></td></tr><tr><td align="right">3.6&nbsp;</td><td><a href="#%28part._.Abstract_.Types%29" class="tocviewlink" data-pltdoc="x">Abstract Types</a></td></tr><tr><td align="right">3.7&nbsp;</td><td><a href="#%28part._.Case_.Study__.A_.Fraction_.Module_with_an_.Invariant%29" class="tocviewlink" data-pltdoc="x">Case Study:<span class="mywbr"> &nbsp;</span> A Fraction Module with an Invariant</a></td></tr><tr><td align="right">3.8&nbsp;</td><td><a href="#%28part._.Modules_and_.Files%29" class="tocviewlink" data-pltdoc="x">Modules and Files</a></td></tr><tr><td align="right">3.9&nbsp;</td><td><a href="#%28part._.Extending_a_.Module_with_include%29" class="tocviewlink" data-pltdoc="x">Extending a Module with include</a></td></tr><tr><td align="right">3.10&nbsp;</td><td><a href="#%28part._.Exercises%29" class="tocviewlink" data-pltdoc="x">Exercises</a></td></tr><tr><td align="right">3.11&nbsp;</td><td><a href="#%28part._.Summary%29" class="tocviewlink" data-pltdoc="x">Summary</a></td></tr></table></div></div></div><div class="tocsub"><div class="tocsubtitle">On this page:</div><table class="tocsublist" cellspacing="0"><tr><td><span class="tocsublinknumber">3.1<span class="stt">&nbsp;</span></span><a href="#%28part._.Why_.Modules_%29" class="tocsubseclink" data-pltdoc="x">Why Modules?</a></td></tr><tr><td><span class="tocsublinknumber">3.2<span class="stt">&nbsp;</span></span><a href="#%28part._.Creating_a_.Module%29" class="tocsubseclink" data-pltdoc="x">Creating a Module</a></td></tr><tr><td><span class="tocsublinknumber">3.3<span class="stt">&nbsp;</span></span><a href="#%28part._.Scope_and_the_.Dot_.Operator%29" class="tocsubseclink" data-pltdoc="x">Scope and the Dot Operator</a></td></tr><tr><td><span class="tocsublinknumber">3.3.1<span class="stt">&nbsp;</span></span><a href="#%28part._.Opening_a_.Module%29" class="tocsubseclink" data-pltdoc="x">Opening a Module</a></td></tr><tr><td><span class="tocsublinknumber">3.3.2<span class="stt">&nbsp;</span></span><a href="#%28part._.Opening_.Multiple_.Modules%29" class="tocsubseclink" data-pltdoc="x">Opening Multiple Modules</a></td></tr><tr><td><span class="tocsublinknumber">3.3.3<span class="stt">&nbsp;</span></span><a href="#%28part._.Local_.Opens%29" class="tocsubseclink" data-pltdoc="x">Local Opens</a></td></tr><tr><td><span class="tocsublinknumber">3.4<span class="stt">&nbsp;</span></span><a href="#%28part._.Module_.Signatures%29" class="tocsubseclink" data-pltdoc="x">Module Signatures</a></td></tr><tr><td><span class="tocsublinknumber">3.4.1<span class="stt">&nbsp;</span></span><a href="#%28part._.Implementing_a_.Signature%29" class="tocsubseclink" data-pltdoc="x">Implementing a Signature</a></td></tr><tr><td><span class="tocsublinknumber">3.5<span class="stt">&nbsp;</span></span><a href="#%28part._.The_.Stack_.Signature%29" class="tocsubseclink" data-pltdoc="x">The Stack Signature</a></td></tr><tr><td><span class="tocsublinknumber">3.6<span class="stt">&nbsp;</span></span><a href="#%28part._.Abstract_.Types%29" class="tocsubseclink" data-pltdoc="x">Abstract Types</a></td></tr><tr><td><span class="tocsublinknumber">3.6.1<span class="stt">&nbsp;</span></span><a href="#%28part._.A_.Second_.Implementation__.Variant.Stack%29" class="tocsubseclink" data-pltdoc="x">A Second Implementation:<span class="mywbr"> &nbsp;</span> Variant<span class="mywbr"> &nbsp;</span>Stack</a></td></tr><tr><td><span class="tocsublinknumber">3.6.2<span class="stt">&nbsp;</span></span><a href="#%28part._.Functional_.Data_.Structures%29" class="tocsubseclink" data-pltdoc="x">Functional Data Structures</a></td></tr><tr><td><span class="tocsublinknumber">3.7<span class="stt">&nbsp;</span></span><a href="#%28part._.Case_.Study__.A_.Fraction_.Module_with_an_.Invariant%29" class="tocsubseclink" data-pltdoc="x">Case Study:<span class="mywbr"> &nbsp;</span> A Fraction Module with an Invariant</a></td></tr><tr><td><span class="tocsublinknumber">3.8<span class="stt">&nbsp;</span></span><a href="#%28part._.Modules_and_.Files%29" class="tocsubseclink" data-pltdoc="x">Modules and Files</a></td></tr><tr><td><span class="tocsublinknumber">3.8.1<span class="stt">&nbsp;</span></span><a href="#%28part._.Loading_.Compiled_.Modules_into_the_.Toplevel%29" class="tocsubseclink" data-pltdoc="x">Loading Compiled Modules into the Toplevel</a></td></tr><tr><td><span class="tocsublinknumber">3.9<span class="stt">&nbsp;</span></span><a href="#%28part._.Extending_a_.Module_with_include%29" class="tocsubseclink" data-pltdoc="x">Extending a Module with include</a></td></tr><tr><td><span class="tocsublinknumber">3.10<span class="stt">&nbsp;</span></span><a href="#%28part._.Exercises%29" class="tocsubseclink" data-pltdoc="x">Exercises</a></td></tr><tr><td><span class="tocsublinknumber">3.10.1<span class="stt">&nbsp;</span></span><a href="#%28part._modules-project%29" class="tocsubseclink" data-pltdoc="x">Project:<span class="mywbr"> &nbsp;</span> A Store Inventory Library</a></td></tr><tr><td><span class="tocsublinknumber">3.11<span class="stt">&nbsp;</span></span><a href="#%28part._.Summary%29" class="tocsubseclink" data-pltdoc="x">Summary</a></td></tr></table></div></div><div class="maincolumn"><div class="main"><div class="versionbox"><span class="version">9.1</span></div><div class="navsettop"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="ocaml.html" title="backward to &quot;2 Functional Programming with OCaml&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<a href="imperative-ocaml.html" title="forward to &quot;4 Imperative Programming with OCaml&quot;" data-pltdoc="x" rel="next">next &rarr;</a></span>&nbsp;</div><section class="SsectionLevel2" id="section 3"><h2 class="heading">3<span class="stt">&nbsp;</span><a name="(part._ocaml-modules)"></a>OCaml Modules<span class="button-group"><a href="#(part._ocaml-modules)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h2><table cellspacing="0" cellpadding="0"><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Why_.Modules_%29" class="toclink" data-pltdoc="x">3.1<span class="hspace">&nbsp;</span>Why Modules?</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Creating_a_.Module%29" class="toclink" data-pltdoc="x">3.2<span class="hspace">&nbsp;</span>Creating a Module</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Scope_and_the_.Dot_.Operator%29" class="toclink" data-pltdoc="x">3.3<span class="hspace">&nbsp;</span>Scope and the Dot Operator</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Module_.Signatures%29" class="toclink" data-pltdoc="x">3.4<span class="hspace">&nbsp;</span>Module Signatures</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.The_.Stack_.Signature%29" class="toclink" data-pltdoc="x">3.5<span class="hspace">&nbsp;</span>The Stack Signature</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Abstract_.Types%29" class="toclink" data-pltdoc="x">3.6<span class="hspace">&nbsp;</span>Abstract Types</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Case_.Study__.A_.Fraction_.Module_with_an_.Invariant%29" class="toclink" data-pltdoc="x">3.7<span class="hspace">&nbsp;</span>Case Study: A Fraction Module with an Invariant</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Modules_and_.Files%29" class="toclink" data-pltdoc="x">3.8<span class="hspace">&nbsp;</span>Modules and Files</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Extending_a_.Module_with_include%29" class="toclink" data-pltdoc="x">3.9<span class="hspace">&nbsp;</span>Extending a Module with include</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Exercises%29" class="toclink" data-pltdoc="x">3.10<span class="hspace">&nbsp;</span>Exercises</a></p></td></tr><tr><td><p><span class="hspace">&nbsp;&nbsp;&nbsp;&nbsp;</span><a href="#%28part._.Summary%29" class="toclink" data-pltdoc="x">3.11<span class="hspace">&nbsp;</span>Summary</a></p></td></tr></table><p><div class="SIntrapara">By the end of this chapter, you should be able to:
+</div><div class="SIntrapara"><ul><li><p>Explain why large programs are organized into modules.</p></li><li><p>Define OCaml modules with <span style="font-weight: bold">module ... = struct ... end</span> and access their members with the dot operator.</p></li><li><p>Control name visibility with <span style="font-weight: bold">open</span>, local opens, and explain shadowing when multiple modules are opened.</p></li><li><p>Write module signatures with <span style="font-weight: bold">module type ... = sig ... end</span> and use them to hide values and types.</p></li><li><p>Use abstract types to enforce data structure invariants and enable multiple implementations of the same interface.</p></li><li><p>Organize a multi-file OCaml program using <span style="font-weight: bold">.ml</span> and <span style="font-weight: bold">.mli</span> files and compile it with <span style="font-weight: bold">ocamlc</span> or <span style="font-weight: bold">dune</span>.</p></li></ul></div></p><section class="SsectionLevel3" id="section 3.1"><h3 class="heading">3.1<span class="stt">&nbsp;</span><a name="(part._.Why_.Modules_)"></a>Why Modules?<span class="button-group"><a href="#(part._.Why_.Modules_)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p><div class="SIntrapara">Real software is big. Some examples:
+</div><div class="SIntrapara"><ul><li><p>Windows Vista: about 50 million lines of code</p></li><li><p>Mac OS X 10.4 (Tiger): about 86 million lines of code</p></li><li><p>Google&rsquo;s codebase: about 2 billion lines of code</p></li></ul></div></p><p>When a program is small enough, we can keep all of its details in one file
+and hold the whole design in our heads. Real application programs are simply
+too large and too complex for that. To manage this complexity, we practice
+<span style="font-weight: bold">modular programming</span>: the code is composed of many separate
+<span style="font-weight: bold">modules</span> that are developed and understood independently.</p><p>A module groups together associated <span class="emph">types</span>, <span class="emph">functions</span>, and
+<span class="emph">data</span>. Each module has an <span class="emph">interface</span> that describes what it
+provides to its clients, while its implementation details stay hidden inside.
+You have already been using modules: the OCaml standard library is organized
+as a collection of modules such as <span style="font-weight: bold">List</span>, <span style="font-weight: bold">String</span>, and
+<span style="font-weight: bold">Printf</span>. When you write <span class="stt">List.filter</span>, you are calling the
+<span class="stt">filter</span> function of the <span style="font-weight: bold">List</span> module.</p><p><div class="SIntrapara">In this chapter we use two running examples:
+</div><div class="SIntrapara"><ul><li><p><span style="font-weight: bold">Stack</span> &#8212; a classic data structure, which we will implement in
+two different ways behind the same interface.</p></li><li><p><span style="font-weight: bold">Fraction</span> &#8212; a data type with an <span class="emph">invariant</span> (fractions are
+always stored in reduced form) that modules help us protect.</p></li></ul></div></p></section><section class="SsectionLevel3" id="section 3.2"><h3 class="heading">3.2<span class="stt">&nbsp;</span><a name="(part._.Creating_a_.Module)"></a>Creating a Module<span class="button-group"><a href="#(part._.Creating_a_.Module)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p>Modules in OCaml are created by <span style="font-weight: bold">module</span> definitions with the following
+syntax:</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> ModuleName = <span class="kw">struct</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">(* definitions *)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</div></p><p>The definitions inside <span style="font-weight: bold">struct ... end</span> may be anything we can write at
+the top level: <span class="stt">let</span> bindings, <span class="stt">type</span> definitions, <span class="stt">exception</span>
+definitions, even nested modules. Module names must begin with an
+<span style="font-weight: bold">uppercase</span> letter.</p><p>Here is our first version of a stack module. It represents a stack as an
+OCaml list, where the head of the list is the top of the stack:</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> ListStack = <span class="kw">struct</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> empty = [] </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> is_empty s = (s = []) </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> push x s = x :: s </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> peek = <span class="kw">function</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      | []   -&gt; <span class="dt">failwith</span> <span class="st">&quot;Empty&quot;</span> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      | x::_ -&gt; x </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> pop = <span class="kw">function</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      | []    -&gt; <span class="dt">failwith</span> <span class="st">&quot;Empty&quot;</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      | _::xs -&gt; xs </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;;</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> ListStack :</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">sig</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> empty : &#39;a <span class="dt">list</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> is_empty : &#39;a <span class="dt">list</span> -&gt; <span class="dt">bool</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> push : &#39;a -&gt; &#39;a <span class="dt">list</span> -&gt; &#39;a <span class="dt">list</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> peek : &#39;a <span class="dt">list</span> -&gt; &#39;a</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> pop : &#39;a <span class="dt">list</span> -&gt; &#39;a <span class="dt">list</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="kw">end</span></span></code></pre></div>
+</div></p></blockquote></blockquote><p>Notice that the toplevel replies with the module&rsquo;s <span class="emph">signature</span>: the
+names and types of everything defined inside it. Recall that
+<span class="stt">let peek = function ...</span> is shorthand for
+<span class="stt">let peek x = match x with ...</span>.</p></section><section class="SsectionLevel3" id="section 3.3"><h3 class="heading">3.3<span class="stt">&nbsp;</span><a name="(part._.Scope_and_the_.Dot_.Operator)"></a>Scope and the Dot Operator<span class="button-group"><a href="#(part._.Scope_and_the_.Dot_.Operator)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p>After a module has been defined, you can access the names within it using
+the <span style="font-weight: bold">.</span> (dot) operator:</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> M = <span class="kw">struct</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> x = <span class="dv">42</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> M.x;;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> M : <span class="kw">sig</span> <span class="kw">val</span> x : <span class="dt">int</span> <span class="kw">end</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">42</span></span></code></pre></div>
+</div></p></blockquote></blockquote><section class="SsectionLevel4" id="section 3.3.1"><h4 class="heading">3.3.1<span class="stt">&nbsp;</span><a name="(part._.Opening_a_.Module)"></a>Opening a Module<span class="button-group"><a href="#(part._.Opening_a_.Module)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>Prefixing every use with the module name can get verbose. <span style="font-weight: bold">Opening</span> a
+module brings all of its definitions into the current scope:</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> M = <span class="kw">struct</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> x = <span class="dv">42</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> x;; </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">open</span> M;; </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> x;;</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> M : <span class="kw">sig</span> <span class="kw">val</span> x : <span class="dt">int</span> <span class="kw">end</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">2</span>, characters <span class="dv">1-2</span>:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> |  x;; </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>     ^</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>Error: Unbound value x</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">42</span></span></code></pre></div>
+</div></p></blockquote></blockquote><p>Before <span class="stt">open M</span>, the name <span class="stt">x</span> is unbound and OCaml reports an error;
+after the open, <span class="stt">x</span> refers to <span class="stt">M.x</span>.</p></section><section class="SsectionLevel4" id="section 3.3.2"><h4 class="heading">3.3.2<span class="stt">&nbsp;</span><a name="(part._.Opening_.Multiple_.Modules)"></a>Opening Multiple Modules<span class="button-group"><a href="#(part._.Opening_.Multiple_.Modules)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>If two modules both define the same name and you open both of them, names
+opened <span class="emph">later</span> <span style="font-weight: bold">shadow</span> names opened earlier:</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> M = <span class="kw">struct</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> x = <span class="dv">42</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">module</span> N = <span class="kw">struct</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> x = <span class="st">&quot;CMSC330&quot;</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> <span class="kw">open</span> M;; </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> <span class="kw">open</span> N;; </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> x;;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> M : <span class="kw">sig</span> <span class="kw">val</span> x : <span class="dt">int</span> <span class="kw">end</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> N : <span class="kw">sig</span> <span class="kw">val</span> x : <span class="dt">string</span> <span class="kw">end</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> = <span class="st">&quot;CMSC330&quot;</span></span></code></pre></div>
+</div></p></blockquote></blockquote><details class="SubFlow"><summary class="SubFlow"><blockquote class="quiz-container"><p>Quiz: After <span class="stt">open M</span> followed by <span class="stt">open N</span> above, what is <span class="stt">x</span>?</p><p><label class="quiz-option"><input type="radio" name="q-mod-shadow" value="42"/> 42</label></p><p><label class="quiz-option"><input type="radio" name="q-mod-shadow" value="cmsc" data-correct="true"/> "CMSC330"</label></p><p><label class="quiz-option"><input type="radio" name="q-mod-shadow" value="error"/> Error: x is ambiguous</label></p><p><label class="quiz-option"><input type="radio" name="q-mod-shadow" value="both"/> Both values</label></p></blockquote></summary><p>Answer: <span class="stt">"CMSC330"</span>. Since <span class="stt">N</span> is opened after <span class="stt">M</span>, its
+definition of <span class="stt">x</span> shadows the one from <span class="stt">M</span>. Shadowing is not an
+error in OCaml &#8212; the most recent binding wins.</p></details></section><section class="SsectionLevel4" id="section 3.3.3"><h4 class="heading">3.3.3<span class="stt">&nbsp;</span><a name="(part._.Local_.Opens)"></a>Local Opens<span class="button-group"><a href="#(part._.Local_.Opens)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>Opening a module at the top of a file pollutes the entire scope. To limit an
+open to a single expression, OCaml provides <span style="font-weight: bold">local opens</span>. Compare:</p><p>Without opening <span style="font-weight: bold">List</span>:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> f x =</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> y = <span class="dt">List</span>.filter ((&gt;) <span class="dv">0</span>) x <span class="kw">in</span> ...</span></code></pre></div>
+</div></p><p>Opening <span style="font-weight: bold">List</span> locally:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> f x =</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> <span class="kw">open</span> <span class="dt">List</span> <span class="kw">in</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> y = filter ((&gt;) <span class="dv">0</span>) x <span class="kw">in</span> ...</span></code></pre></div>
+</div></p><p>Inside the body of the <span class="stt">let open</span>, the name <span class="stt">filter</span> is bound to
+<span class="stt">List.filter</span>. The open ends where the expression ends, so the rest of
+the program is unaffected. An equivalent, even more compact form is
+<span class="stt">List.(filter ((&gt;) 0) x)</span>.</p></section></section><section class="SsectionLevel3" id="section 3.4"><h3 class="heading">3.4<span class="stt">&nbsp;</span><a name="(part._.Module_.Signatures)"></a>Module Signatures<span class="button-group"><a href="#(part._.Module_.Signatures)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p>A <span style="font-weight: bold">signature</span> is the <span class="emph">interface</span> of a structure. A signature
+specifies which components of a structure are accessible from the outside,
+and with which types. Signatures are written with <span style="font-weight: bold">module type</span>:</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> SIGNAME = <span class="kw">sig</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">(* val and type declarations *)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</div></p><p>A signature can be used to <span style="font-weight: bold">hide</span> some components of a structure, such
+as local helper functions. In the following example, the signature
+<span style="font-weight: bold">FOO</span> only declares <span class="stt">add</span>, so the <span class="stt">mult</span> function of <span style="font-weight: bold">Foo</span>
+is not accessible from outside:</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> FOO = <span class="kw">sig</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> add : <span class="dt">int</span> -&gt; <span class="dt">int</span> -&gt; <span class="dt">int</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">module</span> Foo : FOO = <span class="kw">struct</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> add x y = x + y </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> mult x y = x * y </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> Foo.add <span class="dv">3</span> <span class="dv">4</span>;; </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> Foo.mult <span class="dv">3</span> <span class="dv">4</span>;;</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> FOO = <span class="kw">sig</span> <span class="kw">val</span> add : <span class="dt">int</span> -&gt; <span class="dt">int</span> -&gt; <span class="dt">int</span> <span class="kw">end</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> Foo : FOO</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">7</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">2</span>, characters <span class="dv">1-9</span>:</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> |  Foo.mult <span class="dv">3</span> <span class="dv">4</span>;;</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>     ^^^^^^^^</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>Error: Unbound value Foo.mult</span></code></pre></div>
+</div></p></blockquote></blockquote><p>The call <span class="stt">Foo.add 3 4</span> succeeds, but <span class="stt">Foo.mult 3 4</span> is rejected:
+<span class="stt">mult</span> exists inside the module, yet the signature makes it invisible to
+clients. A few things to know about signatures:</p><ul><li><p><span style="font-weight: bold">Convention</span>: signature names are often written in all-caps
+(this is a convention, not a requirement).</p></li><li><p>Items can be <span style="font-weight: bold">omitted</span> from a signature. This is what gives us
+the ability to hide values.</p></li><li><p>The <span style="font-weight: bold">default signature</span> of a module hides nothing. If you enter a
+module with no signature ascription, OCaml infers a signature that exposes
+everything &#8212; exactly what the toplevel printed back for <span class="stt">ListStack</span>
+above.</p></li></ul><section class="SsectionLevel4" id="section 3.4.1"><h4 class="heading">3.4.1<span class="stt">&nbsp;</span><a name="(part._.Implementing_a_.Signature)"></a>Implementing a Signature<span class="button-group"><a href="#(part._.Implementing_a_.Signature)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>A module <span class="stt">M : Sig</span> must provide <span class="emph">every</span> name declared in <span class="stt">Sig</span>,
+with types at least as general as the declared ones. The module may contain
+<span class="emph">more</span> definitions than the signature declares (they are simply
+hidden), but never fewer.</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> Sig = <span class="kw">sig</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> f : <span class="dt">int</span> -&gt; <span class="dt">int</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">module</span> M1 : Sig = <span class="kw">struct</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> f x = x + <span class="dv">1</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> <span class="kw">module</span> M2 : Sig = <span class="kw">struct</span> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> f x = x </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a> M2.f;;</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> Sig = <span class="kw">sig</span> <span class="kw">val</span> f : <span class="dt">int</span> -&gt; <span class="dt">int</span> <span class="kw">end</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> M1 : Sig</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> M2 : Sig</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> -&gt; <span class="dt">int</span> = &lt;<span class="kw">fun</span>&gt;</span></code></pre></div>
+</div></p></blockquote></blockquote><p><span class="stt">M1.f</span> has exactly the type <span class="stt">int -&gt; int</span> that the signature demands.
+<span class="stt">M2.f</span> on its own has the polymorphic type <span class="stt"></span><span class="stt">&rsquo;</span><span class="stt">a -&gt; </span><span class="stt">&rsquo;</span><span class="stt">a</span>, which is
+<span class="emph">more general</span> than <span class="stt">int -&gt; int</span>, so it is safe to use it where an
+<span class="stt">int -&gt; int</span> is required. Note the effect of the ascription: outside the
+module, <span class="stt">M2.f</span> has type <span class="stt">int -&gt; int</span> &#8212; the signature is what clients
+see, not the inferred type.</p></section></section><section class="SsectionLevel3" id="section 3.5"><h3 class="heading">3.5<span class="stt">&nbsp;</span><a name="(part._.The_.Stack_.Signature)"></a>The Stack Signature<span class="button-group"><a href="#(part._.The_.Stack_.Signature)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p>Let us give our stack a proper interface. Here is a signature for stacks,
+including the type of stacks themselves:</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> <span class="dt">Stack</span> = <span class="kw">sig</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">type</span> &#39;a stack = &#39;a <span class="dt">list</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> empty    : &#39;a stack</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> is_empty : &#39;a stack -&gt; <span class="dt">bool</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> push     : &#39;a -&gt; &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> peek     : &#39;a stack -&gt; &#39;a</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> pop      : &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</div></p><p>The declaration <span class="stt">type </span><span class="stt">&rsquo;</span><span class="stt">a stack = </span><span class="stt">&rsquo;</span><span class="stt">a list</span> says: a stack of <span class="stt"></span><span class="stt">&rsquo;</span><span class="stt">a</span>s
+<span class="emph">is</span> a list of <span class="stt"></span><span class="stt">&rsquo;</span><span class="stt">a</span>s. We can now ascribe this signature to our
+module and use it:</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> <span class="dt">Stack</span> = <span class="kw">sig</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> &#39;a stack = &#39;a <span class="dt">list</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> empty    : &#39;a stack </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> is_empty : &#39;a stack -&gt; <span class="dt">bool</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> push     : &#39;a -&gt; &#39;a stack -&gt; &#39;a stack </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> peek     : &#39;a stack -&gt; &#39;a </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> pop      : &#39;a stack -&gt; &#39;a stack </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> <span class="kw">module</span> ListStack : <span class="dt">Stack</span> = <span class="kw">struct</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> &#39;a stack = &#39;a <span class="dt">list</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> empty = [] </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> is_empty s = (s = []) </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> push x s = x :: s </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> peek = <span class="kw">function</span> </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      | []   -&gt; <span class="dt">failwith</span> <span class="st">&quot;Empty&quot;</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      | x::_ -&gt; x </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> pop = <span class="kw">function</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      | []    -&gt; <span class="dt">failwith</span> <span class="st">&quot;Empty&quot;</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      | _::xs -&gt; xs </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t = ListStack.empty;; </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t2 = ListStack.push <span class="dv">10</span> t;; </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t3 = ListStack.push <span class="dv">20</span> t2;; </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a> ListStack.peek t3;; </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t4 = ListStack.pop t3;;</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> <span class="dt">Stack</span> =</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="kw">sig</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> &#39;a stack = &#39;a <span class="dt">list</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> empty : &#39;a stack</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> is_empty : &#39;a stack -&gt; <span class="dt">bool</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> push : &#39;a -&gt; &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> peek : &#39;a stack -&gt; &#39;a</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> pop : &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="kw">end</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> ListStack : <span class="dt">Stack</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t : &#39;a ListStack.stack = []</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t2 : <span class="dt">int</span> ListStack.stack = [<span class="dv">10</span>]</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t3 : <span class="dt">int</span> ListStack.stack = [<span class="dv">20</span>; <span class="dv">10</span>]</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">20</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t4 : <span class="dt">int</span> ListStack.stack = [<span class="dv">10</span>]</span></code></pre></div>
+</div></p></blockquote></blockquote><p>Look carefully at the toplevel&rsquo;s answers: the values of <span class="stt">t2</span> and <span class="stt">t3</span>
+are printed as lists like <span class="stt">[10]</span> and <span class="stt">[20; 10]</span>. Because the signature
+made the type <span class="emph">equal</span> to <span class="stt"></span><span class="stt">&rsquo;</span><span class="stt">a list</span>, the representation is
+<span style="font-weight: bold">visible to the user</span>. Clients can see &#8212; and worse, exploit &#8212; the fact
+that a stack is a list. Nothing stops a client from writing
+<span class="stt">[1;2;3] |&gt; ListStack.peek</span> or pattern matching a stack against
+<span class="stt">x::xs</span>, which defeats the purpose of the interface.</p></section><section class="SsectionLevel3" id="section 3.6"><h3 class="heading">3.6<span class="stt">&nbsp;</span><a name="(part._.Abstract_.Types)"></a>Abstract Types<span class="button-group"><a href="#(part._.Abstract_.Types)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p>We can fix this by making the type <span style="font-weight: bold">abstract</span>: declare the type in the
+signature <span class="emph">without</span> giving its definition.</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> <span class="dt">Stack</span> = <span class="kw">sig</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">type</span> &#39;a stack            <span class="co">(* type is abstract *)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> empty    : &#39;a stack</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> is_empty : &#39;a stack -&gt; <span class="dt">bool</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> push     : &#39;a -&gt; &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> peek     : &#39;a stack -&gt; &#39;a</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> pop      : &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</div></p><p><div class="SIntrapara">A module that implements <span style="font-weight: bold">Stack</span> must
+</div><div class="SIntrapara"><ul><li><p>specify a <span class="emph">concrete</span> type for the abstract type <span class="stt"></span><span class="stt">&rsquo;</span><span class="stt">a stack</span>, and</p></li><li><p>define all the names declared in the signature.</p></li></ul></div><div class="SIntrapara">Clients, on the other hand, can only create and manipulate stacks through
+the functions listed in the signature. Let us repeat the earlier session
+with the abstract signature:</div></p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> <span class="dt">Stack</span> = <span class="kw">sig</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> &#39;a stack </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> empty    : &#39;a stack </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> is_empty : &#39;a stack -&gt; <span class="dt">bool</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> push     : &#39;a -&gt; &#39;a stack -&gt; &#39;a stack </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> peek     : &#39;a stack -&gt; &#39;a </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> pop      : &#39;a stack -&gt; &#39;a stack </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> <span class="kw">module</span> ListStack : <span class="dt">Stack</span> = <span class="kw">struct</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> &#39;a stack = &#39;a <span class="dt">list</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> empty = [] </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> is_empty s = (s = []) </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> push x s = x :: s </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> peek = <span class="kw">function</span> </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      | []   -&gt; <span class="dt">failwith</span> <span class="st">&quot;Empty&quot;</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>      | x::_ -&gt; x </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> pop = <span class="kw">function</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      | []    -&gt; <span class="dt">failwith</span> <span class="st">&quot;Empty&quot;</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      | _::xs -&gt; xs </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t = ListStack.empty;; </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t2 = ListStack.push <span class="dv">10</span> t;; </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t3 = ListStack.push <span class="dv">20</span> t2;; </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a> ListStack.peek t3;; </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t4 = ListStack.pop t3;;</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> <span class="dt">Stack</span> =</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="kw">sig</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> &#39;a stack</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> empty : &#39;a stack</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> is_empty : &#39;a stack -&gt; <span class="dt">bool</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> push : &#39;a -&gt; &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> peek : &#39;a stack -&gt; &#39;a</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> pop : &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="kw">end</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> ListStack : <span class="dt">Stack</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t : &#39;a ListStack.stack = &lt;abstr&gt;</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t2 : <span class="dt">int</span> ListStack.stack = &lt;abstr&gt;</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t3 : <span class="dt">int</span> ListStack.stack = &lt;abstr&gt;</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">20</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t4 : <span class="dt">int</span> ListStack.stack = &lt;abstr&gt;</span></code></pre></div>
+</div></p></blockquote></blockquote><p>The implementation is <span style="font-weight: bold">not visible</span> anymore: every stack value is
+printed as <span class="stt">&lt;abstr&gt;</span>. The only way to build or inspect a stack is through
+<span class="stt">empty</span>, <span class="stt">push</span>, <span class="stt">peek</span>, <span class="stt">pop</span>, and <span class="stt">is_empty</span>. This is
+<span class="emph">data abstraction</span>, the same idea as private fields plus a public
+interface in object-oriented languages &#8212; but enforced by the type system at
+the module boundary.</p><section class="SsectionLevel4" id="section 3.6.1"><h4 class="heading">3.6.1<span class="stt">&nbsp;</span><a name="(part._.A_.Second_.Implementation__.Variant.Stack)"></a>A Second Implementation: VariantStack<span class="button-group"><a href="#(part._.A_.Second_.Implementation__.Variant.Stack)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>Because clients can no longer depend on the representation, we are free to
+implement the same signature with a completely different data type. Here is
+a stack built from a custom variant type instead of a list:</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> <span class="dt">Stack</span> = <span class="kw">sig</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> &#39;a stack </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> empty    : &#39;a stack </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> is_empty : &#39;a stack -&gt; <span class="dt">bool</span> </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> push     : &#39;a -&gt; &#39;a stack -&gt; &#39;a stack </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> peek     : &#39;a stack -&gt; &#39;a </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> pop      : &#39;a stack -&gt; &#39;a stack </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> <span class="kw">module</span> VarStack : <span class="dt">Stack</span> = <span class="kw">struct</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> &#39;a stack = </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>      | Empty </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      | Entry <span class="kw">of</span> &#39;a * &#39;a stack </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> empty = Empty </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> is_empty s = (s = Empty) </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> push x s = Entry (x, s) </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> peek = <span class="kw">function</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      | Empty      -&gt; <span class="dt">failwith</span> <span class="st">&quot;Empty&quot;</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      | Entry(x,_) -&gt; x </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> pop = <span class="kw">function</span> </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      | Empty      -&gt; <span class="dt">failwith</span> <span class="st">&quot;Empty&quot;</span> </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      | Entry(_,s) -&gt; s </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> t = VarStack.push <span class="dv">20</span> (VarStack.push <span class="dv">10</span> VarStack.empty);; </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a> VarStack.peek t;;</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> <span class="dt">Stack</span> =</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="kw">sig</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> &#39;a stack</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> empty : &#39;a stack</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> is_empty : &#39;a stack -&gt; <span class="dt">bool</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> push : &#39;a -&gt; &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> peek : &#39;a stack -&gt; &#39;a</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> pop : &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="kw">end</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> VarStack : <span class="dt">Stack</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> t : <span class="dt">int</span> VarStack.stack = &lt;abstr&gt;</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">20</span></span></code></pre></div>
+</div></p></blockquote></blockquote><p><span style="font-weight: bold">ListStack</span> and <span style="font-weight: bold">VarStack</span> implement the <span class="emph">same</span> signature
+with different representations. Any code written against the <span style="font-weight: bold">Stack</span>
+signature works with either one, and we can swap implementations (say, for
+performance) without touching client code. This is the key payoff of
+signatures: <span class="emph">one interface, many implementations</span>.</p><details class="SubFlow"><summary class="SubFlow"><blockquote class="quiz-container"><p>Quiz: With the abstract <span class="stt">Stack</span> signature, which of the
+following expressions type checks?</p><p><label class="quiz-option"><input type="radio" name="q-mod-abstr" value="a"/> ListStack.peek [1;2;3]</label></p><p><label class="quiz-option"><input type="radio" name="q-mod-abstr" value="b" data-correct="true"/> ListStack.peek (ListStack.push 1 ListStack.empty)</label></p><p><label class="quiz-option"><input type="radio" name="q-mod-abstr" value="c"/> 1 :: ListStack.empty</label></p><p><label class="quiz-option"><input type="radio" name="q-mod-abstr" value="d"/> VarStack.peek (ListStack.push 1 ListStack.empty)</label></p></blockquote></summary><p>Answer: only <span class="stt">ListStack.peek (ListStack.push 1 ListStack.empty)</span>.
+Since <span class="stt"></span><span class="stt">&rsquo;</span><span class="stt">a stack</span> is abstract, a plain list is not a stack (rules out the
+first and third options), and <span class="stt">ListStack</span> and <span class="stt">VarStack</span> have
+<span class="emph">distinct</span> abstract types, so a <span class="stt">ListStack.stack</span> cannot be passed
+to <span class="stt">VarStack.peek</span>.</p></details></section><section class="SsectionLevel4" id="section 3.6.2"><h4 class="heading">3.6.2<span class="stt">&nbsp;</span><a name="(part._.Functional_.Data_.Structures)"></a>Functional Data Structures<span class="button-group"><a href="#(part._.Functional_.Data_.Structures)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>Our stacks are <span style="font-weight: bold">immutable, persistent</span> data structures: updating the
+data structure with one of its operations does <span style="font-weight: bold">not change</span> the
+existing version, but instead produces a <span class="emph">new</span> version.</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> ListStack</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> s  = empty</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> s2 = push <span class="dv">10</span> s</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> s3 = push <span class="dv">20</span> s2</span></code></pre></div>
+</div></p><p>Pushing onto <span class="stt">s2</span> does not destroy <span class="stt">s2</span>: after the third line, both
+<span class="stt">s2</span> (one element) and <span class="stt">s3</span> (two elements) exist. Both versions
+persist and can be used independently. This is the normal way of the
+functional world &#8212; the same reason appending to a list creates a new list &#8212;
+and it makes reasoning about programs easier because values never change
+behind your back.</p></section></section><section class="SsectionLevel3" id="section 3.7"><h3 class="heading">3.7<span class="stt">&nbsp;</span><a name="(part._.Case_.Study__.A_.Fraction_.Module_with_an_.Invariant)"></a>Case Study: A Fraction Module with an Invariant<span class="button-group"><a href="#(part._.Case_.Study__.A_.Fraction_.Module_with_an_.Invariant)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p>Abstraction is not just about hiding helper functions; it lets a module
+<span class="emph">enforce invariants</span> on its data. Consider a module for fractions with
+the invariant that fractions are always stored in <span style="font-weight: bold">reduced</span> form (e.g.,
+<span class="stt">2/8</span> is stored as <span class="stt">1/4</span>).</p><p>First, a version whose signature <span class="emph">exposes</span> the representation:</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> FRACTION = <span class="kw">sig</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> fraction = Frac <span class="kw">of</span> <span class="dt">int</span> * <span class="dt">int</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">exception</span> BadFrac </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> make : <span class="dt">int</span> * <span class="dt">int</span> -&gt; fraction </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> add : fraction * fraction -&gt; fraction </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> toString : fraction -&gt; <span class="dt">string</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> <span class="kw">module</span> Fraction : FRACTION = <span class="kw">struct</span> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> fraction = Frac <span class="kw">of</span> <span class="dt">int</span> * <span class="dt">int</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">exception</span> BadFrac </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">(* gcd and reduce are not in the signature: hidden helpers *)</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">rec</span> gcd (x,y) = </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> (x,y) = <span class="kw">if</span> x &gt;= y <span class="kw">then</span> (x,y) <span class="kw">else</span> (y,x) <span class="kw">in</span> </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> y = <span class="dv">0</span> <span class="kw">then</span> x <span class="kw">else</span> gcd (y, x <span class="kw">mod</span> y) </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> reduce (Frac(x,y)) = </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> d = gcd (x,y) <span class="kw">in</span> </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      Frac (x/d, y/d) </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">(* the denominator cannot be 0 *)</span> </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> make (x,y) = </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> y = <span class="dv">0</span> <span class="kw">then</span> <span class="dt">raise</span> BadFrac </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> reduce (Frac(x,y)) </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> add (r1,r2) = </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      <span class="kw">match</span> (r1,r2) <span class="kw">with</span> </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        (Frac(a,b), Frac(c,d)) -&gt; reduce (Frac(a*d + b*c, b*d)) </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> toString (Frac(a,b)) = </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> b = <span class="dv">1</span> <span class="kw">then</span> <span class="dt">string_of_int</span> a </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">if</span> a = <span class="dv">0</span> <span class="kw">then</span> <span class="st">&quot;0&quot;</span> </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="dt">string_of_int</span> a ^ <span class="st">&quot;/&quot;</span> ^ <span class="dt">string_of_int</span> b </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> f1 = Fraction.make (<span class="dv">2</span>,<span class="dv">8</span>);; </span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> f2 = Fraction.make (<span class="dv">25</span>,<span class="dv">100</span>);; </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a> Fraction.toString (Fraction.add (f1,f2));; </span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> bad = Fraction.Frac (<span class="dv">10</span>,<span class="dv">20</span>);; </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a> Fraction.toString bad;;</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> FRACTION =</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="kw">sig</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> fraction = Frac <span class="kw">of</span> <span class="dt">int</span> * <span class="dt">int</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="kw">exception</span> BadFrac</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> make : <span class="dt">int</span> * <span class="dt">int</span> -&gt; fraction</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> add : fraction * fraction -&gt; fraction</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> toString : fraction -&gt; <span class="dt">string</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  <span class="kw">end</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> Fraction : FRACTION</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> f1 : Fraction.fraction = Fraction.Frac (<span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> f2 : Fraction.fraction = Fraction.Frac (<span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> = <span class="st">&quot;1/2&quot;</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> bad : Fraction.fraction = Fraction.Frac (<span class="dv">10</span>, <span class="dv">20</span>)</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> = <span class="st">&quot;10/20&quot;</span></span></code></pre></div>
+</div></p></blockquote></blockquote><p>The functions <span class="stt">gcd</span> and <span class="stt">reduce</span> are omitted from the signature, so
+they are invisible outside the module &#8212; clients only get <span class="stt">make</span>,
+<span class="stt">add</span>, and <span class="stt">toString</span>, and every fraction built with <span class="stt">make</span> is
+reduced. But there is a hole: because the signature reveals
+<span class="stt">type fraction = Frac of int * int</span>, a client can <span class="emph">bypass</span>
+<span class="stt">make</span> and build <span class="stt">Fraction.Frac (10,20)</span> directly &#8212; an unreduced
+fraction (and nothing would stop <span class="stt">Frac (1,0)</span> either). The invariant is
+broken.</p><p>The fix is the same as for stacks: make the type abstract.</p><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><span class="emph">OCaml REPL</span></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> FRACTION = <span class="kw">sig</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> fraction            <span class="co">(* hide the representation *)</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">exception</span> BadFrac </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> make : <span class="dt">int</span> * <span class="dt">int</span> -&gt; fraction </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> add : fraction * fraction -&gt; fraction </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> toString : fraction -&gt; <span class="dt">string</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> <span class="kw">module</span> Fraction : FRACTION = <span class="kw">struct</span> </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> fraction = Frac <span class="kw">of</span> <span class="dt">int</span> * <span class="dt">int</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">exception</span> BadFrac </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">rec</span> gcd (x,y) = </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> (x,y) = <span class="kw">if</span> x &gt;= y <span class="kw">then</span> (x,y) <span class="kw">else</span> (y,x) <span class="kw">in</span> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> y = <span class="dv">0</span> <span class="kw">then</span> x <span class="kw">else</span> gcd (y, x <span class="kw">mod</span> y) </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> reduce (Frac(x,y)) = </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> d = gcd (x,y) <span class="kw">in</span> </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      Frac (x/d, y/d) </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> make (x,y) = </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> y = <span class="dv">0</span> <span class="kw">then</span> <span class="dt">raise</span> BadFrac </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> reduce (Frac(x,y)) </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> add (r1,r2) = </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      <span class="kw">match</span> (r1,r2) <span class="kw">with</span> </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        (Frac(a,b), Frac(c,d)) -&gt; reduce (Frac(a*d + b*c, b*d)) </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> toString (Frac(a,b)) = </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      <span class="kw">if</span> b = <span class="dv">1</span> <span class="kw">then</span> <span class="dt">string_of_int</span> a </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="kw">if</span> a = <span class="dv">0</span> <span class="kw">then</span> <span class="st">&quot;0&quot;</span> </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      <span class="kw">else</span> <span class="dt">string_of_int</span> a ^ <span class="st">&quot;/&quot;</span> ^ <span class="dt">string_of_int</span> b </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a> <span class="kw">end</span>;; </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> f1 = Fraction.make (<span class="dv">2</span>,<span class="dv">8</span>);; </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a> <span class="kw">let</span> f2 = Fraction.make (<span class="dv">25</span>,<span class="dv">100</span>);; </span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a> Fraction.toString (Fraction.add (f1,f2));; </span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a> Fraction.Frac (<span class="dv">10</span>,<span class="dv">20</span>);;</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>[Output]</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> FRACTION =</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="kw">sig</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">type</span> fraction</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">exception</span> BadFrac</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> make : <span class="dt">int</span> * <span class="dt">int</span> -&gt; fraction</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> add : fraction * fraction -&gt; fraction</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="kw">val</span> toString : fraction -&gt; <span class="dt">string</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  <span class="kw">end</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> Fraction : FRACTION</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> f1 : Fraction.fraction = &lt;abstr&gt;</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> f2 : Fraction.fraction = &lt;abstr&gt;</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">string</span> = <span class="st">&quot;1/2&quot;</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>Line <span class="dv">2</span>, characters <span class="dv">1-14</span>:</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> |  Fraction.Frac (<span class="dv">10</span>,<span class="dv">20</span>);;</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>     ^^^^^^^^^^^^^</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>Error: Unbound constructor Fraction.Frac</span></code></pre></div>
+</div></p></blockquote></blockquote><p>Now the constructor <span class="stt">Frac</span> is unbound outside the module: the
+<span class="emph">only</span> way to create a fraction is <span class="stt">make</span>, which validates the
+denominator and reduces. Every <span class="stt">fraction</span> in the program is guaranteed to
+satisfy the invariant. This pattern &#8212; a hidden representation, a small set
+of <span class="emph">smart constructors</span>, and operations that re-establish the invariant
+&#8212; is one of the most important uses of the module system.</p></section><section class="SsectionLevel3" id="section 3.8"><h3 class="heading">3.8<span class="stt">&nbsp;</span><a name="(part._.Modules_and_.Files)"></a>Modules and Files<span class="button-group"><a href="#(part._.Modules_and_.Files)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p>So far we defined modules interactively. In real projects, modules
+correspond to <span style="font-weight: bold">files</span>:</p><ul><li><p>A file <span class="stt">foo.ml</span> automatically defines a module named <span style="font-weight: bold">Foo</span>
+(the file name, capitalized).</p></li><li><p>A file <span class="stt">foo.mli</span>, if present, is the <span class="emph">signature</span> for
+<span style="font-weight: bold">Foo</span>: only what is declared in the <span class="stt">.mli</span> is visible to other
+files. With no <span class="stt">.mli</span>, everything in <span class="stt">foo.ml</span> is exposed.</p></li></ul><p>Let us organize the abstract stack as a small project with three files.
+The complete code is in the course repository under
+<span class="stt">notes/modules/code/</span>.</p><p><span style="font-weight: bold"><span class="stt">Stack.mli</span></span> &#8212; the shared signature:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> <span class="kw">type</span> <span class="dt">Stack</span> = <span class="kw">sig</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">(* The type of a stack whose elements are type &#39;a *)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">type</span> &#39;a stack</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">(* The empty stack *)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> empty : &#39;a stack</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">(* Whether the stack is empty *)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> is_empty : &#39;a stack -&gt; <span class="dt">bool</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">(* [push x s] is the stack [s] with [x] pushed on the top *)</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> push : &#39;a -&gt; &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">(* [peek s] is the top element of [s].</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">     Raises Failure if [s] is empty. *)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> peek : &#39;a stack -&gt; &#39;a</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">(* [pop s] pops and discards the top element of [s].</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">     Raises Failure if [s] is empty. *)</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> pop : &#39;a stack -&gt; &#39;a stack</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</div></p><p><span style="font-weight: bold"><span class="stt">liststack.ml</span></span> &#8212; an implementation:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* Stack implemented as an OCaml list *)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> <span class="dt">Stack</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> ListStack : <span class="dt">Stack</span> = <span class="kw">struct</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">type</span> &#39;a stack = &#39;a <span class="dt">list</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> empty = []</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> is_empty s = (s = [])</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> push x s = x :: s</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> peek = <span class="kw">function</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    | []   -&gt; <span class="dt">failwith</span> <span class="st">&quot;Empty&quot;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    | x::_ -&gt; x</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> pop = <span class="kw">function</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    | []    -&gt; <span class="dt">failwith</span> <span class="st">&quot;Empty&quot;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    | _::xs -&gt; xs</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</div></p><p><span style="font-weight: bold"><span class="stt">main.ml</span></span> &#8212; a client program:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> Liststack</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> () =</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">print_endline</span> <span class="st">&quot;ListStack example&quot;</span>;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> s = ListStack.empty <span class="kw">in</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> s = ListStack.push <span class="dv">10</span> s <span class="kw">in</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> s = ListStack.push <span class="dv">20</span> s <span class="kw">in</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> s = ListStack.push <span class="dv">30</span> s <span class="kw">in</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Printf</span>.printf <span class="st">&quot;%d</span><span class="ch">\n</span><span class="st">&quot;</span> (ListStack.peek s);</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> s = ListStack.pop s <span class="kw">in</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Printf</span>.printf <span class="st">&quot;%d</span><span class="ch">\n</span><span class="st">&quot;</span> (ListStack.peek s)</span></code></pre></div>
+</div></p><p>Compile each unit in dependency order, then link:</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode fish"><code class="sourceCode fish"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ocamlc</span> -c Stack.mli      <span class="co"># produces Stack.cmi (compiled interface)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ocamlc</span> -c liststack.ml   <span class="co"># produces liststack.cmo (compiled object)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ocamlc</span> -c main.ml</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ocamlc</span> -o main liststack.cmo main.cmo</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./</span><span class="fu">main</span></span></code></pre></div>
+</div></p><p>Expected output:
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode fish"><code class="sourceCode fish"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>30</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>20</span></code></pre></div>
+</div></p><p>Compiling an <span class="stt">.mli</span> produces a <span style="font-weight: bold">.cmi</span> (compiled interface) file;
+compiling an <span class="stt">.ml</span> produces a <span style="font-weight: bold">.cmo</span> (compiled object) file. To swap
+in the variant-based implementation, we would compile <span class="stt">varstack.ml</span>
+instead and change <span class="stt">open Liststack</span> to <span class="stt">open Varstack</span> &#8212; nothing else
+in <span class="stt">main.ml</span> changes, because the client only relies on the <span style="font-weight: bold">Stack</span>
+signature. For larger projects, <span style="font-weight: bold">dune</span> (see the previous chapter)
+automates this: it discovers the dependencies among files and invokes the
+compiler in the right order.</p><section class="SsectionLevel4" id="section 3.8.1"><h4 class="heading">3.8.1<span class="stt">&nbsp;</span><a name="(part._.Loading_.Compiled_.Modules_into_the_.Toplevel)"></a>Loading Compiled Modules into the Toplevel<span class="button-group"><a href="#(part._.Loading_.Compiled_.Modules_into_the_.Toplevel)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>You can also experiment with compiled modules interactively. After building
+with a tool that puts artifacts in <span class="stt">_build</span> (e.g., <span class="stt">ocamlbuild
+main.byte</span>), load them into the toplevel with the <span class="stt">#directory</span> and
+<span class="stt">#load</span> directives:</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">#directory &quot;_build&quot;;;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">#load &quot;liststack.cmo&quot;;;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> Liststack;;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ot">#show ListStack;;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> ListStack : <span class="dt">Stack</span>.<span class="dt">Stack</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a># ListStack.empty;;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>- : &#39;a Liststack.ListStack.stack = &lt;abstr&gt;</span></code></pre></div>
+</div></p><p>The <span class="stt">#show</span> directive prints the signature of a module &#8212; handy for
+exploring what a module provides (try <span class="stt">#show List;;</span>).</p></section></section><section class="SsectionLevel3" id="section 3.9"><h3 class="heading">3.9<span class="stt">&nbsp;</span><a name="(part._.Extending_a_.Module_with_include)"></a>Extending a Module with include<span class="button-group"><a href="#(part._.Extending_a_.Module_with_include)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p>Suppose we want to add a function <span class="stt">max</span> to the standard <span style="font-weight: bold">List</span>
+module. We cannot modify the standard library, but we can build a new module
+that <span style="font-weight: bold">include</span>s it:</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">module</span> MyList = <span class="kw">struct</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">include</span> <span class="dt">List</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> <span class="dt">max</span> lst = fold_left Stdlib.<span class="dt">max</span> (hd lst) (tl lst)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+</div></p><p><span class="stt">include List</span> re-exports <span class="emph">all</span> of <span style="font-weight: bold">List</span>&rsquo;s definitions inside
+<span style="font-weight: bold">MyList</span>, so <span class="stt">#show MyList;;</span> lists every standard list function
+<span class="emph">plus</span> our new <span class="stt">max</span>. Clients can use <span class="stt">MyList</span> as a drop-in
+replacement for <span style="font-weight: bold">List</span>:</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a># MyList.length [<span class="dv">1</span>;<span class="dv">2</span>;<span class="dv">3</span>];;</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">3</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a># MyList.<span class="dt">max</span> [<span class="dv">3</span>;<span class="dv">7</span>;<span class="dv">2</span>];;</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>- : <span class="dt">int</span> = <span class="dv">7</span></span></code></pre></div>
+</div></p><p>Note the difference between <span style="font-weight: bold">include</span> and <span style="font-weight: bold">open</span>: <span class="stt">open List</span>
+would only bring names into scope <span class="emph">inside</span> the definition of
+<span class="stt">MyList</span>; <span class="stt">include List</span> makes them part of <span class="stt">MyList</span>&rsquo;s own
+interface.</p></section><section class="SsectionLevel3" id="section 3.10"><h3 class="heading">3.10<span class="stt">&nbsp;</span><a name="(part._.Exercises)"></a>Exercises<span class="button-group"><a href="#(part._.Exercises)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p><span style="font-weight: bold">Basic</span></p><ol><li><p>Define a module <span class="stt">Circle</span> containing a constant <span class="stt">pi = 3.14159</span>
+and a function <span class="stt">area : float -&gt; float</span> that computes the area of a circle
+from its radius. Use it both with the dot operator and after <span class="stt">open</span>.</p></li><li><p>Given <span class="stt">module A = struct let v = 1 end</span> and
+<span class="stt">module B = struct let v = 2 end</span>, what is the value of <span class="stt">v</span> after
+<span class="stt">open B</span> followed by <span class="stt">open A</span>? Explain.</p></li><li><p>Write a signature <span class="stt">MATH</span> that exposes only <span class="stt">double : int -&gt; int</span>
+from a module that also defines a helper <span class="stt">times : int -&gt; int -&gt; int</span>.
+Verify that <span class="stt">times</span> is inaccessible from outside.</p></li><li><p>The signature <span class="stt">Sig</span> declares <span class="stt">val f : int -&gt; int</span>. Which of
+these implementations satisfy it, and why?
+<div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> f x = x + <span class="dv">1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> f x = x</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> f x = <span class="dt">string_of_int</span> x</span></code></pre></div>
+</div></p></li></ol><p><span style="font-weight: bold">Intermediate</span></p><ol><li><p>Write a signature <span class="stt">Queue</span> with an abstract type <span class="stt"></span><span class="stt">&rsquo;</span><span class="stt">a queue</span> and
+operations <span class="stt">empty</span>, <span class="stt">enqueue</span>, <span class="stt">front</span>, and <span class="stt">dequeue</span>. Implement
+it with a module <span class="stt">ListQueue</span> that represents a queue as a list.</p></li><li><p>Give a second implementation <span class="stt">TwoListQueue</span> of your <span class="stt">Queue</span>
+signature that stores the queue as a pair of lists (a front list and a
+reversed back list). Client code should run unchanged against either
+implementation.</p></li><li><p>Extend the abstract <span class="stt">Fraction</span> module with
+<span class="stt">mult : fraction * fraction -&gt; fraction</span> and
+<span class="stt">equal : fraction * fraction -&gt; bool</span>. Make sure <span class="stt">mult</span> preserves the
+reduced-form invariant. Why can <span class="stt">equal</span> be implemented with <span class="stt">=</span> on the
+representation, given the invariant?</p></li><li><p>Split your <span class="stt">Queue</span> exercise into files (<span class="stt">Queue.mli</span>,
+<span class="stt">listqueue.ml</span>, <span class="stt">main.ml</span>) and compile it with <span class="stt">ocamlc</span>, then with
+<span class="stt">dune</span>.</p></li></ol><p><span style="font-weight: bold">Advanced</span></p><ol><li><p>Suppose the <span class="stt">Stack</span> signature made the type concrete
+(<span class="stt">type </span><span class="stt">&rsquo;</span><span class="stt">a stack = </span><span class="stt">&rsquo;</span><span class="stt">a list</span>). Give a concrete example of client code that
+works with <span class="stt">ListStack</span> but breaks when the implementation is switched to
+<span class="stt">VarStack</span>, and explain how the abstract type prevents this situation
+from ever arising.</p></li><li><p>Design a module <span class="stt">IntSet</span> for sets of integers with an abstract
+type, maintaining the invariant that the internal list is sorted and
+duplicate-free. Which operations must re-establish the invariant? Could a
+client observe the difference if you later switched the representation to a
+binary search tree?</p></li><li><p>Using <span class="stt">include</span>, build a module <span class="stt">SafeList</span> that extends
+<span style="font-weight: bold">List</span> with <span class="stt">safe_hd : </span><span class="stt">&rsquo;</span><span class="stt">a list -&gt; </span><span class="stt">&rsquo;</span><span class="stt">a option</span> and
+<span class="stt">safe_tl : </span><span class="stt">&rsquo;</span><span class="stt">a list -&gt; </span><span class="stt">&rsquo;</span><span class="stt">a list option</span>, which return <span class="stt">None</span> instead of
+raising exceptions. Then restrict <span class="stt">SafeList</span> with a signature that hides
+the exception-raising <span class="stt">hd</span> and <span class="stt">tl</span> it inherited.</p></li></ol><section class="SsectionLevel4" id="section 3.10.1"><h4 class="heading">3.10.1<span class="stt">&nbsp;</span><a name="(part._modules-project)"></a>Project: A Store Inventory Library<span class="button-group"><a href="#(part._modules-project)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h4><p>This is a complete, realistic project that exercises everything in this
+chapter: you will implement two modules, write their signatures, and build
+and test the result with <span style="font-weight: bold">dune</span> and <span style="font-weight: bold">OUnit</span>. The starter code is
+in the course repository under
+<a href="code/modules/inventory/README.md"><span class="stt">code/modules/inventory</span></a>, with
+the following layout:</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode fish"><code class="sourceCode fish"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">inventory/</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>├── <span class="fu">dune-project</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>├── <span class="ex">lib/</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>│   ├── <span class="fu">dune</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>│   ├── <span class="fu">item.ml</span>            <span class="op">&lt;</span>- module Item  <span class="sc">(</span><span class="fu">you</span> complete this<span class="sc">)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>│   └── <span class="fu">stock.ml</span>           <span class="op">&lt;</span>- module Stock <span class="sc">(</span><span class="fu">you</span> complete this<span class="sc">)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>├── <span class="ex">bin/</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>│   ├── <span class="fu">dune</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>│   └── <span class="fu">main.ml</span>            <span class="op">&lt;</span>- demo executable <span class="sc">(</span><span class="fu">given</span><span class="sc">)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>└── <span class="ex">test/</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    ├── <span class="fu">dune</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    └── <span class="fu">test_inventory.ml</span>  <span class="op">&lt;</span>- OUnit test suite <span class="sc">(</span><span class="fu">given</span><span class="sc">)</span></span></code></pre></div>
+</div></p><p>The <span class="stt">lib/</span> directory is a dune <span class="emph">library</span> named <span class="stt">inventory</span>.
+Dune wraps the library&rsquo;s files into one top-level module, so from the
+outside the modules are <span style="font-weight: bold">Inventory.Item</span> and <span style="font-weight: bold">Inventory.Stock</span> &#8212;
+modules nested inside a module. The library models a store&rsquo;s inventory:</p><ul><li><p><span style="font-weight: bold">Item</span> (<span class="stt">lib/item.ml</span>) &#8212; one product held in stock: a name, a
+unit price, and a quantity on hand. <span class="stt">make</span> must reject a negative price
+or quantity (an <span class="emph">invariant</span>, like <span class="stt">Fraction.make</span>). Operations:
+<span class="stt">make</span>, <span class="stt">name</span>, <span class="stt">price</span>, <span class="stt">qty</span>, <span class="stt">restock</span>, <span class="stt">value</span>.</p></li><li><p><span style="font-weight: bold">Stock</span> (<span class="stt">lib/stock.ml</span>) &#8212; a <span class="emph">persistent</span> collection of
+items with at most one item per name (another invariant). Operations:
+<span class="stt">empty</span>, <span class="stt">is_empty</span>, <span class="stt">size</span>, <span class="stt">find</span>, <span class="stt">add</span> (merges
+quantities when the name already exists), <span class="stt">remove</span> (raises
+<span class="stt">Not_found</span> for an unknown name, drops an item whose quantity reaches
+zero), and <span class="stt">total_value</span>.</p></li></ul><p>The precise specifications are written as comments in the starter files and,
+in executable form, as the test suite. Your tasks:</p><ol><li><p><span style="font-weight: bold">Implement the modules.</span> Replace every <span class="stt">failwith "TODO"</span> in
+<span class="stt">lib/item.ml</span> and <span class="stt">lib/stock.ml</span>, checking your progress with
+<span class="stt">dune build</span>.</p></li><li><p><span style="font-weight: bold">Test with dune.</span> Install OUnit if needed
+(<span class="stt">opam install ounit2</span>), then run <span class="stt">dune runtest</span> until all tests
+pass.</p></li><li><p><span style="font-weight: bold">Define signatures.</span> With no <span class="stt">.mli</span> files, everything is
+exposed: clients can see that <span class="stt">Item.t</span> is a record and can bypass
+<span class="stt">make</span> to build an item with a negative price. Write <span class="stt">lib/item.mli</span>
+and <span class="stt">lib/stock.mli</span> that make both types <span style="font-weight: bold">abstract</span> and expose
+<span class="emph">only</span> the specified operations, hiding any helpers you wrote. The
+tests must still pass.</p></li><li><p><span style="font-weight: bold">Check the abstraction.</span> Temporarily add
+<span class="stt">let broken = Inventory.Item.{ name = "Free monitor"; price = -129.0; qty = 4 }</span>
+to <span class="stt">bin/main.ml</span>. It compiles before task 3 and must be rejected after.
+Explain why.</p></li><li><p><span style="font-weight: bold">Swap the representation.</span> Change <span class="stt">Stock.t</span> to an association
+list <span class="stt">(string * Item.t) list</span>. Which files other than <span class="stt">stock.ml</span> did
+you have to touch, and why?</p></li></ol><p>Build, test, and run the demo with:</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode fish"><code class="sourceCode fish"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dune</span> build</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dune</span> runtest</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dune</span> exec bin/main.exe</span></code></pre></div>
+</div></p><p>Once the library is implemented, the demo prints:</p><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode fish"><code class="sourceCode fish"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Keyboard:</span> 7 in stock</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Total</span> value: <span class="va">$825</span>.73</span></code></pre></div>
+</div></p><p>The starter files, with the specifications in comments:</p><details class="SubFlow"><summary><span style="font-weight: bold">Starter: <span class="stt">lib/item.ml</span></span> (click to expand)</summary><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><a href="code/modules/inventory/lib/item.ml"><span class="stt">modules/inventory/lib/item.ml</span></a></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* An item held in a store&#39;s inventory.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">   Representation: a record with the item&#39;s name, unit price, and</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">   quantity on hand. You may change this representation -- the test</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">   suite only uses the functions below. *)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> t = { name : <span class="dt">string</span>; price : <span class="dt">float</span>; qty : <span class="dt">int</span> }</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">(* [make name price qty] creates an item.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">   Raises [Invalid_argument &quot;Item.make&quot;] if [price &lt; 0.0] or [qty &lt; 0]. *)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> make (_name : <span class="dt">string</span>) (_price : <span class="dt">float</span>) (_qty : <span class="dt">int</span>) : t =</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">failwith</span> <span class="st">&quot;TODO&quot;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">(* Accessors. *)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> name (item : t) : <span class="dt">string</span> = item.name</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> price (item : t) : <span class="dt">float</span> = item.price</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> qty (item : t) : <span class="dt">int</span> = item.qty</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">(* [restock n item] is [item] with [n] more units on hand.</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">   Raises [Invalid_argument &quot;Item.restock&quot;] if [n &lt; 0]. *)</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> restock (_n : <span class="dt">int</span>) (_item : t) : t =</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">failwith</span> <span class="st">&quot;TODO&quot;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">(* [value item] is the total value of the units on hand:</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">   the unit price times the quantity. *)</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> value (_item : t) : <span class="dt">float</span> =</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">failwith</span> <span class="st">&quot;TODO&quot;</span></span></code></pre></div>
+</div></p></blockquote></blockquote></details><details class="SubFlow"><summary><span style="font-weight: bold">Starter: <span class="stt">lib/stock.ml</span></span> (click to expand)</summary><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><a href="code/modules/inventory/lib/stock.ml"><span class="stt">modules/inventory/lib/stock.ml</span></a></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* A store&#39;s stock: a collection of items, indexed by item name.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">   Representation: a list of items containing at most one item per</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">   name. This is an invariant your functions must maintain! You may</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">   change the representation -- the test suite only uses the</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">   functions below.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">   Stocks are persistent (immutable): every operation returns a new</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">   stock and leaves the old one unchanged. *)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> t = Item.t <span class="dt">list</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">(* The empty stock. *)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> empty : t = []</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">(* [is_empty s] is whether [s] contains no items. *)</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> is_empty (_s : t) : <span class="dt">bool</span> =</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">failwith</span> <span class="st">&quot;TODO&quot;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">(* [size s] is the number of distinct items in [s]. *)</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> size (_s : t) : <span class="dt">int</span> =</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">failwith</span> <span class="st">&quot;TODO&quot;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">(* [find name s] is [Some item] if [s] contains an item called</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">   [name], and [None] otherwise. *)</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> find (_name : <span class="dt">string</span>) (_s : t) : Item.t <span class="dt">option</span> =</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">failwith</span> <span class="st">&quot;TODO&quot;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">(* [add item s] adds [item] to [s]. If [s] already contains an item</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">   with the same name, the quantities are merged and the price of</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">   [item] (the most recent price) wins. *)</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> add (_item : Item.t) (_s : t) : t =</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">failwith</span> <span class="st">&quot;TODO&quot;</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co">(* [remove name n s] removes [n] units of the item called [name].</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">   If the quantity on hand drops to 0, the item disappears from the</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">   stock entirely.</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">   Raises [Not_found] if there is no item called [name].</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">   Raises [Invalid_argument &quot;Stock.remove&quot;] if [n &lt; 0] or [n] is</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co">   more than the quantity on hand. *)</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> remove (_name : <span class="dt">string</span>) (_n : <span class="dt">int</span>) (_s : t) : t =</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="dt">failwith</span> <span class="st">&quot;TODO&quot;</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co">(* [total_value s] is the sum of the values of all items in [s]. *)</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> total_value (_s : t) : <span class="dt">float</span> =</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="dt">failwith</span> <span class="st">&quot;TODO&quot;</span></span></code></pre></div>
+</div></p></blockquote></blockquote></details><details class="SubFlow"><summary><span style="font-weight: bold">Test suite: <span class="stt">test/test_inventory.ml</span></span> (click to expand)</summary><blockquote class="Rfilebox"><p class="Rfiletitle"><span class="Rfilename"><a href="code/modules/inventory/test/test_inventory.ml"><span class="stt">modules/inventory/test/test_inventory.ml</span></a></span></p><blockquote class="Rfilecontent"><p><div class='fancy-box'><div class="sourceCode" id="cb1"><pre
+class="sourceCode ocaml"><code class="sourceCode ocaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">(* Test suite for the store inventory exercise.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">   Run with: dune runtest *)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> OUnit2</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">open</span> Inventory</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> feq = cmp_float ~epsilon:<span class="fl">1e-9</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">(* A small stock used by several tests:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">   20 USB cables at $4.99, 10 keyboards at $29.99 *)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> sample =</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  Stock.empty</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  |&gt; Stock.add (Item.make <span class="st">&quot;USB cable&quot;</span> <span class="fl">4.99</span> <span class="dv">20</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  |&gt; Stock.add (Item.make <span class="st">&quot;Keyboard&quot;</span> <span class="fl">29.99</span> <span class="dv">10</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> item_tests =</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Item&quot;</span> &gt;::: [</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;make_and_accessors&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> it = Item.make <span class="st">&quot;Monitor&quot;</span> <span class="fl">129.00</span> <span class="dv">4</span> <span class="kw">in</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      assert_equal <span class="st">&quot;Monitor&quot;</span> (Item.name it);</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      assert_equal ~cmp:feq ~printer:<span class="dt">string_of_float</span> <span class="fl">129.00</span> (Item.price it);</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      assert_equal ~printer:<span class="dt">string_of_int</span> <span class="dv">4</span> (Item.qty it));</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;make_negative_price&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>      assert_raises (<span class="dt">Invalid_argument</span> <span class="st">&quot;Item.make&quot;</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        (<span class="kw">fun</span> () -&gt; Item.make <span class="st">&quot;Monitor&quot;</span> (<span class="fl">-129.00</span>) <span class="dv">4</span>));</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;make_negative_qty&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>      assert_raises (<span class="dt">Invalid_argument</span> <span class="st">&quot;Item.make&quot;</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>        (<span class="kw">fun</span> () -&gt; Item.make <span class="st">&quot;Monitor&quot;</span> <span class="fl">129.00</span> (<span class="dv">-4</span>)));</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;value&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> it = Item.make <span class="st">&quot;Monitor&quot;</span> <span class="fl">129.00</span> <span class="dv">4</span> <span class="kw">in</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      assert_equal ~cmp:feq ~printer:<span class="dt">string_of_float</span> <span class="fl">516.00</span> (Item.value it));</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;restock&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> it = Item.make <span class="st">&quot;Monitor&quot;</span> <span class="fl">129.00</span> <span class="dv">4</span> <span class="kw">in</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> it = Item.restock <span class="dv">6</span> it <span class="kw">in</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>      assert_equal ~printer:<span class="dt">string_of_int</span> <span class="dv">10</span> (Item.qty it));</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;restock_negative&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> it = Item.make <span class="st">&quot;Monitor&quot;</span> <span class="fl">129.00</span> <span class="dv">4</span> <span class="kw">in</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>      assert_raises (<span class="dt">Invalid_argument</span> <span class="st">&quot;Item.restock&quot;</span>)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        (<span class="kw">fun</span> () -&gt; Item.restock (<span class="dv">-1</span>) it));</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> stock_tests =</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Stock&quot;</span> &gt;::: [</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;empty_is_empty&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>      assert_bool <span class="st">&quot;empty stock&quot;</span> (Stock.is_empty Stock.empty);</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>      assert_equal ~printer:<span class="dt">string_of_int</span> <span class="dv">0</span> (Stock.size Stock.empty));</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;add_and_find&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>      assert_equal ~printer:<span class="dt">string_of_int</span> <span class="dv">2</span> (Stock.size sample);</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>      <span class="kw">match</span> Stock.find <span class="st">&quot;USB cable&quot;</span> sample <span class="kw">with</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>      | <span class="dt">None</span> -&gt; assert_failure <span class="st">&quot;USB cable should be in stock&quot;</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>      | <span class="dt">Some</span> it -&gt; assert_equal ~printer:<span class="dt">string_of_int</span> <span class="dv">20</span> (Item.qty it));</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;find_missing&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>      assert_equal <span class="dt">None</span> (Stock.find <span class="st">&quot;Webcam&quot;</span> sample));</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;add_merges_quantities&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>      <span class="co">(* Adding an item that already exists merges the quantities</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co">         and keeps the most recent price. *)</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> s = Stock.add (Item.make <span class="st">&quot;USB cable&quot;</span> <span class="fl">5.49</span> <span class="dv">5</span>) sample <span class="kw">in</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>      assert_equal ~printer:<span class="dt">string_of_int</span> <span class="dv">2</span> (Stock.size s);</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>      <span class="kw">match</span> Stock.find <span class="st">&quot;USB cable&quot;</span> s <span class="kw">with</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>      | <span class="dt">None</span> -&gt; assert_failure <span class="st">&quot;USB cable should be in stock&quot;</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>      | <span class="dt">Some</span> it -&gt;</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>        assert_equal ~printer:<span class="dt">string_of_int</span> <span class="dv">25</span> (Item.qty it);</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>        assert_equal ~cmp:feq ~printer:<span class="dt">string_of_float</span> <span class="fl">5.49</span> (Item.price it));</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;remove_some&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> s = Stock.remove <span class="st">&quot;Keyboard&quot;</span> <span class="dv">3</span> sample <span class="kw">in</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>      <span class="kw">match</span> Stock.find <span class="st">&quot;Keyboard&quot;</span> s <span class="kw">with</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>      | <span class="dt">None</span> -&gt; assert_failure <span class="st">&quot;Keyboard should still be in stock&quot;</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>      | <span class="dt">Some</span> it -&gt; assert_equal ~printer:<span class="dt">string_of_int</span> <span class="dv">7</span> (Item.qty it));</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;remove_all_drops_item&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> s = Stock.remove <span class="st">&quot;Keyboard&quot;</span> <span class="dv">10</span> sample <span class="kw">in</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>      assert_equal <span class="dt">None</span> (Stock.find <span class="st">&quot;Keyboard&quot;</span> s);</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>      assert_equal ~printer:<span class="dt">string_of_int</span> <span class="dv">1</span> (Stock.size s));</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;remove_missing_raises&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>      assert_raises <span class="dt">Not_found</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>        (<span class="kw">fun</span> () -&gt; Stock.remove <span class="st">&quot;Webcam&quot;</span> <span class="dv">1</span> sample));</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;remove_too_many_raises&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>      assert_raises (<span class="dt">Invalid_argument</span> <span class="st">&quot;Stock.remove&quot;</span>)</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>        (<span class="kw">fun</span> () -&gt; Stock.remove <span class="st">&quot;Keyboard&quot;</span> <span class="dv">11</span> sample));</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;total_value&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>      <span class="co">(* 20 * 4.99 + 10 * 29.99 = 99.80 + 299.90 = 399.70 *)</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>      assert_equal ~cmp:feq ~printer:<span class="dt">string_of_float</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>        <span class="fl">399.70</span> (Stock.total_value sample));</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;persistence&quot;</span> &gt;:: (<span class="kw">fun</span> _ -&gt;</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>      <span class="co">(* Stocks are immutable: removing from [sample] must not</span></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="co">         change [sample] itself. *)</span></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>      <span class="kw">let</span> _ = Stock.remove <span class="st">&quot;Keyboard&quot;</span> <span class="dv">10</span> sample <span class="kw">in</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>      <span class="kw">match</span> Stock.find <span class="st">&quot;Keyboard&quot;</span> sample <span class="kw">with</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>      | <span class="dt">None</span> -&gt; assert_failure <span class="st">&quot;sample must be unchanged&quot;</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>      | <span class="dt">Some</span> it -&gt; assert_equal ~printer:<span class="dt">string_of_int</span> <span class="dv">10</span> (Item.qty it));</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>  ]</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> () =</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>  run_test_tt_main (<span class="st">&quot;inventory&quot;</span> &gt;::: [item_tests; stock_tests])</span></code></pre></div>
+</div></p></blockquote></blockquote></details></section></section><section class="SsectionLevel3" id="section 3.11"><h3 class="heading">3.11<span class="stt">&nbsp;</span><a name="(part._.Summary)"></a>Summary<span class="button-group"><a href="#(part._.Summary)" class="heading-anchor" title="Link to here">🔗</a><span style="visibility: hidden"> </span></span></h3><p><div class="SIntrapara">Key takeaways:
+</div><div class="SIntrapara"><ul><li><p>Modules decompose large programs into units that group related types,
+functions, and data.</p></li><li><p><span style="font-weight: bold">module M = struct ... end</span> defines a module; members are
+accessed as <span class="stt">M.x</span>, or without the prefix after <span style="font-weight: bold">open</span> (later opens
+shadow earlier ones; use local opens to limit scope).</p></li><li><p><span style="font-weight: bold">module type</span> defines a signature &#8212; an interface that lists
+exactly what clients may see. Anything omitted is hidden.</p></li><li><p>An <span style="font-weight: bold">abstract type</span> (a <span class="stt">type</span> declared without a definition)
+hides a module&rsquo;s representation. Clients can only use the operations in the
+signature, which lets the module enforce invariants and lets us swap
+implementations freely.</p></li><li><p>Each file <span class="stt">foo.ml</span> is a module <span style="font-weight: bold">Foo</span>; a matching <span class="stt">foo.mli</span>
+is its signature. <span style="font-weight: bold">include</span> extends an existing module with new
+definitions.</p></li></ul></div></p><p>Terminology: <span style="font-weight: bold">module</span> / <span style="font-weight: bold">structure</span> (the implementation,
+<span class="stt">struct ... end</span>), <span style="font-weight: bold">signature</span> / <span style="font-weight: bold">module type</span> (the interface,
+<span class="stt">sig ... end</span>), <span style="font-weight: bold">signature ascription</span> (<span class="stt">module M : Sig</span>),
+<span style="font-weight: bold">abstract type</span>, <span style="font-weight: bold">invariant</span>, <span style="font-weight: bold">persistent data structure</span>,
+<span style="font-weight: bold">open</span> vs. <span style="font-weight: bold">include</span>.</p><p><div class="SIntrapara">Common mistakes:
+</div><div class="SIntrapara"><ul><li><p>Forgetting that module names must start with an uppercase letter.</p></li><li><p>Confusing <span style="font-weight: bold">open</span> (brings names into scope) with <span style="font-weight: bold">include</span>
+(re-exports names as part of the new module).</p></li><li><p>Exposing a type&rsquo;s definition in the signature and then being surprised
+that clients depend on (or corrupt) the representation &#8212; hide the type if
+the representation is not part of the contract.</p></li><li><p>Expecting <span class="stt">push</span>/<span class="stt">pop</span> to mutate a stack: functional data
+structures return <span class="emph">new</span> versions and leave the old ones unchanged.</p></li><li><p>Declaring a name in a signature but not defining it in the structure &#8212;
+the module fails to type check against the signature.</p></li></ul></div></p><p>Looking ahead, signatures and abstract types are OCaml&rsquo;s take on ideas you
+will meet repeatedly in this course: interfaces and information hiding in
+object-oriented languages, type classes and traits (in Rust), and the
+general principle that a type system can enforce a design discipline. The
+stack and fraction modules also preview <span class="emph">algebraic data types</span> at work
+in real APIs, and the persistent-data-structure style reappears when we
+study interpreters and garbage collection.</p></section></section><div class="navsetbottom"><span class="navleft"><div class="nosearchform"></div>&nbsp;&nbsp;<span class="tocsettoggle">&nbsp;&nbsp;<a href="javascript:void(0);" title="show/hide table of contents" onclick="TocsetToggle();">contents</a></span></span><span class="navright">&nbsp;&nbsp;<a href="ocaml.html" title="backward to &quot;2 Functional Programming with OCaml&quot;" data-pltdoc="x" rel="prev">&larr; prev</a>&nbsp;&nbsp;<a href="index.html" title="up to &quot;CMSC 330 Lecture Notes&quot;" data-pltdoc="x">up</a>&nbsp;&nbsp;<a href="imperative-ocaml.html" title="forward to &quot;4 Imperative Programming with OCaml&quot;" data-pltdoc="x" rel="next">next &rarr;</a></span>&nbsp;</div></div></div><div id="contextindicator">&nbsp;</div></body></html>

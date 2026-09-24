@@ -1,4 +1,4 @@
 (library
  (name regex)
- (libraries str re)
+ (libraries re)
  )
